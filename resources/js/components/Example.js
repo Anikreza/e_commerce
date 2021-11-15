@@ -1,10 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { BrowserRouter as Router,Switch, Route, useHistory} from 'react-router-dom';
+import Header from '../components/Header'
 
 function Example() {
     return (
         <div>
-            <h2> Hello Miss Zain</h2>
+            <Router>
+                <Header/>
+            </Router>
         </div>
     );
 }
