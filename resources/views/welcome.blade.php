@@ -6,7 +6,7 @@
 
         <title>Laravel</title>
 
-         <link rel="stylesheet" href="../css/app.css">
+         <link rel="stylesheet" href='../sass/app.scss'>
     </head>
     <body>
         <div id="app">

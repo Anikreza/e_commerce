@@ -1,11 +1,18 @@
-import Example from "./components/Example";
-
-
-require('./components/Example');
-
+import Index from "./components/Index";
+require('./components/Index');
 import ReactDOM from 'react-dom'
-import Index from "./components/Example";
+import '../sass/app.scss'
+import reducer, {initialState} from '../js/reducer';
+import {StateProvider} from '../js/StateProvider';
+import React from 'react';
 
 if (document.getElementById('app')) {
-    ReactDOM.render(<Example />, document.getElementById('app'));
+    ReactDOM.render(
+        <React.StrictMode>
+            <StateProvider initialState={initialState} reducer={reducer}>
+                <Index/>
+            </StateProvider>
+        </React.StrictMode>,
+        document.getElementById('app')
+    );
 }

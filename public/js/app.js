@@ -2,6 +2,38 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./resources/js/StateProvider.js":
+/*!***************************************!*\
+  !*** ./resources/js/StateProvider.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "StateContext": () => (/* binding */ StateContext),
+/* harmony export */   "StateProvider": () => (/* binding */ StateProvider),
+/* harmony export */   "useStateValue": () => (/* binding */ useStateValue)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+var StateContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)();
+var StateProvider = function StateProvider(_ref) {
+  var reducer = _ref.reducer,
+      initialState = _ref.initialState,
+      children = _ref.children;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(StateContext.Provider, {
+    value: (0,react__WEBPACK_IMPORTED_MODULE_0__.useReducer)(reducer, initialState),
+    children: children
+  });
+};
+var useStateValue = function useStateValue() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(StateContext);
+};
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -9,51 +41,33 @@
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Example__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
+/* harmony import */ var _components_Index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Index */ "./resources/js/components/Index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _sass_app_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sass/app.scss */ "./resources/sass/app.scss");
+/* harmony import */ var _js_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../js/reducer */ "./resources/js/reducer.js");
+/* harmony import */ var _js_StateProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../js/StateProvider */ "./resources/js/StateProvider.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
-__webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
+__webpack_require__(/*! ./components/Index */ "./resources/js/components/Index.js");
+
+
+
 
 
 
 
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_Example__WEBPACK_IMPORTED_MODULE_0__["default"], {}), document.getElementById('app'));
-}
-
-/***/ }),
-
-/***/ "./resources/js/components/Example.js":
-/*!********************************************!*\
-  !*** ./resources/js/components/Example.js ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-
-function Example() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.BrowserRouter, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_1__["default"], {})
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react__WEBPACK_IMPORTED_MODULE_5__.StrictMode, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_js_StateProvider__WEBPACK_IMPORTED_MODULE_4__.StateProvider, {
+      initialState: _js_reducer__WEBPACK_IMPORTED_MODULE_3__.initialState,
+      reducer: _js_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_Index__WEBPACK_IMPORTED_MODULE_0__["default"], {})
     })
-  });
+  }), document.getElementById('app'));
 }
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Example);
 
 /***/ }),
 
@@ -231,6 +245,80 @@ var Header = function Header() {
 
 /***/ }),
 
+/***/ "./resources/js/components/Index.js":
+/*!******************************************!*\
+  !*** ./resources/js/components/Index.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.js");
+/* harmony import */ var _sass_app_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../sass/app.scss */ "./resources/sass/app.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+function Index() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.BrowserRouter, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_1__["default"], {})
+    })
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Index);
+
+/***/ }),
+
+/***/ "./resources/js/reducer.js":
+/*!*********************************!*\
+  !*** ./resources/js/reducer.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initialState": () => (/* binding */ initialState),
+/* harmony export */   "actionTypes": () => (/* binding */ actionTypes),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var initialState = {
+  user: null
+};
+var actionTypes = {
+  SET_USER: "SET_USER"
+};
+
+var reducer = function reducer(state, action) {
+  switch (action.type) {
+    case actionTypes.SET_USER:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        user: action.user
+      });
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/sass/header.scss":
 /*!**************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/sass/header.scss ***!
@@ -247,7 +335,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".navbar {\n  position: fixed;\n  min-height: 50px;\n  min-width: 100vw;\n  background-color: #e9e9e9;\n  z-index: 200;\n}\n.navbar .nav-ul ul {\n  display: flex;\n  justify-content: space-between;\n  justify-content: center;\n  margin-left: -17%;\n  font-size: 18px;\n}\n.navbar .nav-ul li {\n  list-style: none;\n  margin-left: 30px;\n  font-weight: lighter;\n  text-decoration: none;\n}\n\n.user-name-nav {\n  position: fixed;\n  right: 4.5%;\n  top: 1%;\n  z-index: 200;\n}\n.user-name-nav p {\n  color: #753939;\n}\n.user-name-nav .hide {\n  display: none;\n}\n.user-name-nav .modal-logout {\n  padding: 8px;\n  background-color: #6d3f3f;\n  border-radius: 7px;\n}\n.user-name-nav .modal-logout button {\n  border-style: none;\n  background-color: #6d3f3f;\n  font-size: 16px;\n  color: #e4e0e0;\n}\n\n.home-logo {\n  margin-right: 40%;\n}\n\n.logo {\n  position: absolute;\n  top: 4%;\n  width: 200px;\n  height: 55px;\n}\n\na {\n  text-decoration: none;\n  color: black;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".navbar {\n  margin: -8px;\n  position: fixed;\n  min-height: 50px;\n  min-width: 100vw;\n  background-color: #e9e9e9;\n  z-index: 200;\n}\n.navbar .nav-ul ul {\n  display: flex;\n  justify-content: space-between;\n  justify-content: center;\n  margin-left: -17%;\n  font-size: 18px;\n}\n.navbar .nav-ul li {\n  list-style: none;\n  margin-left: 30px;\n  font-weight: lighter;\n  text-decoration: none;\n}\n\n.user-name-nav {\n  position: fixed;\n  right: 4.5%;\n  top: 1%;\n  z-index: 200;\n}\n.user-name-nav p {\n  color: #753939;\n}\n.user-name-nav .hide {\n  display: none;\n}\n.user-name-nav .modal-logout {\n  padding: 8px;\n  background-color: #6d3f3f;\n  border-radius: 7px;\n}\n.user-name-nav .modal-logout button {\n  border-style: none;\n  background-color: #6d3f3f;\n  font-size: 16px;\n  color: #e4e0e0;\n}\n\n.home-logo {\n  margin-right: 40%;\n}\n\n.logo {\n  position: absolute;\n  top: 4%;\n  width: 200px;\n  height: 55px;\n}\n\na {\n  text-decoration: none;\n  color: black;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

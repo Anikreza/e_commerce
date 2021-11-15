@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router,Switch, Route, useHistory} from 'react-router-dom';
 import Header from '../components/Header'
+import '../../sass/app.scss'
 
-function Example() {
+function Index() {
     return (
         <div>
             <Router>
@@ -12,5 +13,5 @@ function Example() {
     );
 }
 
-export default Example;
+export default Index;
 
