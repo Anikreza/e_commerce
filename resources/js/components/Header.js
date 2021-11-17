@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import '../../sass/header.scss'
 import {IoIosArrowDropdown} from 'react-icons/io';
-import a from '../images/logo.png'
+import a from '../resources/logo.png'
 
 const Header = () => {
 
