@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import {actionTypes} from '../reducer';
-import {useStateValue} from '../StateProvider';
+import React, {useState, useEffect} from 'react'
+import {actionTypes} from '../helpers/reducer';
+import {useStateValue} from '../helpers/StateProvider';
 import {useNavigate} from 'react-router';
 import '../../sass/registration.scss'
 
@@ -15,10 +15,6 @@ const Register = () => {
 
     const Reg = async () => {
         let User = {name, email, password};
-        dispatch({
-            type: actionTypes.SET_USER,
-            user: User,
-        })
 
         let API = fetch('http://localhost:8000/api/register', {
             method: 'POST',
@@ -29,8 +25,12 @@ const Register = () => {
             }
         })
         API = await (await API).json();
+        dispatch({
+            type: actionTypes.SET_USER,
+            user: JSON.stringify(API),
+        })
         window.localStorage.setItem('user', JSON.stringify(API));
-        navigate('/home');
+        window.location.replace('/')
     }
 
     return (
@@ -50,7 +50,7 @@ const Register = () => {
             <button style={{backgroundColor: '#b58b8b'}} onClick={Reg}>Sign Up</button>
             <button style={{backgroundColor: '#859e7e'}} onClick={() => {
                 navigate('/login')
-            }}>Sign In
+            }}>Log In
             </button>
         </div>
     )

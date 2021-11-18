@@ -17,7 +17,7 @@
 .bg {
     min-height: 90vh;
     max-width: 60vw;
-    background: url("../js/resources/g.jpg");
+    background: url("../js/assets/g.jpg");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -50,12 +50,20 @@
 
     .service {
         position: absolute;
-        top: 50%;
+        top: 35%;
         width: 100%;
+        font-family: sherif;
+
+        img{
+            width: 220px;
+            height: 180px;
+            border-radius: 100%;
+            margin-left: 66%;
+        }
 
         h1 {
             color: $home-text;
-            font-size: 24px;
+            font-size: 16px;
             max-width: 28%;
             border-radius: 10%;
             margin-left: 66%;
@@ -78,7 +86,7 @@
     }
 
     p {
-        font-size: 15px;
+        font-size: 13px;
         font-family: Arial;
         font-weight: lighter;
         color: $home-text;
@@ -88,7 +96,7 @@
     }
 
     h3 {
-        font-size: 19px;
+        font-size: 15px;
         color: $home-text;
         font-weight: lighter;
         padding-top: 10px;
