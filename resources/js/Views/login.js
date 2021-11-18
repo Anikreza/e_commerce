@@ -10,7 +10,6 @@ const Login = () => {
     let user = JSON.parse(window.localStorage.getItem('user'));
 
     const login = async () => {
-        let user = JSON.parse(window.localStorage.getItem('user'));
         let userdata = {email, password};
         let API = fetch('http://localhost:8000/api/login', {
             method: 'POST',
@@ -22,12 +21,13 @@ const Login = () => {
         })
         API = await (await API).json();
         window.localStorage.setItem('user', JSON.stringify(API));
-        if (!user) {
-            navigate('/');
-            window.location.reload();
+        let user = JSON.parse(window.localStorage.getItem('user'));
+        console.log('user is: ', user)
+        if (user.message) {
+            alert(user.message)
         } else {
-            navigate('/home');
-            window.location.reload();
+            window.location.replace('/')
+
         }
     }
 
@@ -40,10 +40,10 @@ const Login = () => {
                 <input type='password' placeholder='password' onChange={(e) => setPassword(e.target.value)}/>
                 <br/>
                 <br/>
-                <button style={{backgroundColor: '#859e7e'}} onClick={login}> Sign In</button>
+                <button style={{backgroundColor: '#859e7e'}} onClick={login}> Log In</button>
                 <button style={{backgroundColor: '#b58b8b'}} onClick={() => {
                     navigate('/register')
-                }}> Sign Up
+                }}> Register
                 </button>
             </div>
         </div>

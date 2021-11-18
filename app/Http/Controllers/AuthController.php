@@ -65,14 +65,14 @@ class AuthController extends Controller
         // check password
         if(!$user || !Hash::check($fields['password'], $user->password)){
             return response([
-                'message' => 'not match'
+                'message' => 'username and password did not match'
             ],401);
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
         $response = [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
 
         return response($response, 201);

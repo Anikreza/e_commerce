@@ -2,17 +2,16 @@ import React, {useState} from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import '../../sass/header.scss'
 import {IoIosArrowDropdown} from 'react-icons/io';
-import a from '../resources/logo.png'
+import a from '../assets/logo.png'
+
 
 const Header = () => {
 
-    let user = JSON.parse(window.localStorage.getItem('user'));
+    let user=JSON.parse(window.localStorage.getItem('user'));
     const [modal, setModal] = useState(false)
 
     const logout = (e) => {
         window.localStorage.clear();
-        window.location.replace('/');
-        window.location.reload();
     }
     return (
 
@@ -69,10 +68,10 @@ const Header = () => {
                 }
             </div>
 
-            {(user?.name) ?
+            {(user?.token) ?
                 <div className='user-name-nav' style={{cursor: 'pointer'}} onClick={() => setModal(!modal)}>
                     <p>
-                        {user?.name}
+                        {user?.user.name}
                         <span><IoIosArrowDropdown style={{cursor: 'pointer'}} color='black'/> </span>
                     </p>
                     <span className={modal ? 'modal-logout' : 'hide'}><button

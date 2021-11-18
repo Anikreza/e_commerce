@@ -1,10 +1,10 @@
 import React, {useState, useRef} from 'react'
 import '../../sass/home.scss'
-import logo from '../resources/logo.png'
-import a from '../resources/g.jpg'
-import b from '../resources/b.jpg'
-import c from '../resources/c.jpg'
-import d from '../resources/d.png'
+import logo from '../assets/logo.png'
+import a from '../assets/g.jpg'
+import b from '../assets/b.jpg'
+import c from '../assets/c.jpg'
+import d from '../assets/d.png'
 import Footer from "./footer";
 
 
@@ -30,6 +30,7 @@ const Home = () => {
                 </div>
                 <div className='home-content'>
                     <div className='service'>
+                        <img src={logo}/>
                         <h1>SERVICES</h1>
                         <div className='services'>
                             <h3>3D MODELING</h3>
