@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import {useNavigate} from 'react-router';
 import '../../sass/registration.scss'
 
@@ -7,11 +7,12 @@ const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const navigate = useNavigate();
+    const api=process.env.MIX_API;
     let user = JSON.parse(window.localStorage.getItem('user'));
 
     const login = async () => {
         let userdata = {email, password};
-        let API = fetch('http://localhost:8000/api/login', {
+        let API = fetch(`${api}/login`, {
             method: 'POST',
             body: JSON.stringify(userdata),
             headers: {

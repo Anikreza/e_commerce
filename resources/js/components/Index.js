@@ -2,16 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router,Routes, Route} from 'react-router-dom';
 import { actionTypes } from '../helpers/reducer';
 import {useStateValue} from "../helpers/StateProvider";
-import Header from '../components/Header';
+import Header from './base/Header';
 import Register from '../Views/register';
 import Login from "../Views/login";
-import Home from '../components/home';
+import UploadProduct from './card/uploadProduct'
+import Home from './base/home';
 import '../../sass/app.scss';
 
 function Index() {
     const [{user}, dispatch] = useStateValue();
     let User=JSON.parse(user);
-    console.log('user is: ',User);
     return (
         <div>
             <Router>
@@ -19,8 +19,9 @@ function Index() {
                 <Routes>
                     <Route exact path='/' element={<Home/>}/>
                     <Route path='/home' element={<Home/>}/>
-                    <Route path='register' element={<Register/>}/>
-                    <Route path='login' element={<Login/>}/>
+                    <Route path='/register' element={<Register/>}/>
+                    <Route path='/login' element={<Login/>}/>
+                    <Route path='/add' element={<UploadProduct/>}/>
                 </Routes>
             </Router>
         </div>

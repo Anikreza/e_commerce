@@ -1,0 +1,41 @@
+.add-page{
+    text-align: center;
+    padding-top: 10%;
+    min-height: 100vh;
+    background:url('../js/assets/c.jpg');
+    background-size: cover;
+    filter:drop-shadow();
+
+    input{
+        width: 50%;
+        padding:10px;
+        background-color: rgb(185, 185, 185);
+    }
+    input:focus{
+        outline: none;
+    }
+    textarea{
+        resize: none;
+        font-family:sans-serif;
+        border:none;
+        font-size: 17px;
+        min-height: 50px;
+        background-color: rgb(177, 177, 177);
+    }
+    button{
+        width: fit-content;
+        padding:10px;
+        background-color: rgb(15, 71, 43);
+        color: white;
+    }
+
+}
+
+.auto_height {
+    width: 50%;
+    padding:10px;
+    white-space: pre-line;
+}
+.auto_height:focus{
+    outline:none;
+}

@@ -12,11 +12,12 @@ const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const api=process.env.MIX_API;
 
     const Reg = async () => {
         let User = {name, email, password};
 
-        let API = fetch('http://localhost:8000/api/register', {
+        let API = fetch(`${api}/register`, {
             method: 'POST',
             body: JSON.stringify(User),
             headers: {
