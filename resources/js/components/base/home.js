@@ -5,8 +5,6 @@ import CategoryCard from '../card/categoryCard'
 
 
 const Home = () => {
-
-
     const [height, setHeight] = useState(false);
     const ScrollHeight = () => {
         if (window.scrollY >= 450) {
@@ -15,10 +13,7 @@ const Home = () => {
             setHeight(false)
         }
     }
-
     window.addEventListener('scroll', ScrollHeight);
-
-
     return (
         <div>
             <div className={!height ? 'home' : 'home2'}>
