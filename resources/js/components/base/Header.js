@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Link, NavLink} from 'react-router-dom'
-import '../../sass/header.scss'
+import '../../../sass/header.scss'
 import {IoIosArrowDropdown} from 'react-icons/io';
-import a from '../assets/logo.png'
+import a from '../../assets/logo.png'
 
 
 const Header = () => {
 
+    let admin=process.env.MIX_ADMIN;
     let user=JSON.parse(window.localStorage.getItem('user'));
-    const [modal, setModal] = useState(false)
-
+    const [modal, setModal] = useState(false);
     const logout = (e) => {
         window.localStorage.clear();
     }
@@ -18,10 +18,15 @@ const Header = () => {
         <div>
             <div className='navbar'>
                 {
-                    (user?.name === 'Anik Reza') ?
+                    (user?.user.email === admin) ?
                         <>
                             <div className='nav-ul'>
                                 <ul>
+                                    <li className='home-logo'><NavLink to='/home' activeStyle={{
+                                        fontWeight: "bold",
+                                        color: 'rgb(29, 99, 27)'
+                                    }}><img className='logo' src={a}/></NavLink></li>
+
                                     <li><NavLink to='/add' activeStyle={{
                                         fontWeight: "300",
                                         color: 'rgb(29, 99, 27)'

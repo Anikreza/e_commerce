@@ -1,11 +1,11 @@
 import React from 'react'
-import '../../sass/footer.scss'
+import '../../../sass/footer.scss'
 import { AiFillFacebook } from 'react-icons/ai';
 import { AiFillTwitterSquare } from 'react-icons/ai';
 import { IoLogoYoutube } from 'react-icons/io';
 import { FaInstagramSquare } from 'react-icons/fa';
 import { FaPatreon } from 'react-icons/fa';
-import logo from '../assets/logo.png'
+import logo from '../../assets/logo.png'
 
 
 const Footer = () => {
