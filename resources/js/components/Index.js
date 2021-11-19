@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router,Routes, Route} from 'react-router-dom';
-import { actionTypes } from '../helpers/reducer';
 import {useStateValue} from "../helpers/StateProvider";
 import Header from './base/Header';
 import Register from '../Views/register';
@@ -13,7 +12,7 @@ function Index() {
     const [{user}, dispatch] = useStateValue();
     let User=JSON.parse(user);
     return (
-        <div>
+        <div className='index-app'>
             <Router>
                 <Header/>
                 <Routes>
