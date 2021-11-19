@@ -3,6 +3,7 @@ import {Link, NavLink} from 'react-router-dom'
 import '../../../sass/header.scss'
 import {IoIosArrowDropdown} from 'react-icons/io';
 import a from '../../assets/logo.png'
+import SearchCard from "../card/SearchCard";
 
 
 const Header = () => {
@@ -46,27 +47,7 @@ const Header = () => {
                                         fontWeight: "bold",
                                         color: 'rgb(29, 99, 27)'
                                     }}><img className='logo' src={a}/></NavLink></li>
-
-                                    <li><NavLink to='/about' activeStyle={{
-                                        fontWeight: "300",
-                                        color: 'rgb(29, 99, 27)'
-                                    }}>About</NavLink></li>
-
-                                    <li><NavLink to='/list' activeStyle={{
-                                        fontWeight: "300",
-                                        color: 'rgb(29, 99, 27)'
-                                    }}> Shop </NavLink></li>
-
-                                    <li><NavLink to='/works' activeStyle={{
-                                        fontWeight: "300",
-                                        color: 'rgb(29, 99, 27)'
-                                    }}>Works</NavLink></li>
-
-                                    <li><NavLink to='/contact' activeStyle={{
-                                        fontWeight: "300",
-                                        color: 'rgb(29, 99, 27)'
-                                    }}>Contact</NavLink></li>
-
+                                    <SearchCard/>
                                 </ul>
                             </div>
                         </>

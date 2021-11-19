@@ -1,7 +1,8 @@
 @import "../sass/variables";
 
 .home {
-    min-height: 230vh;
+    margin:-8px;
+    min-height: 300vh;
     background: $bg;
     background-size: cover;
     background-attachment: fixed;
@@ -9,13 +10,15 @@
 }
 
 .home2 {
-    min-height: 230vh;
+    margin:-8px;
+    min-height: 300vh;
     background: $bg2;
     background-size: cover;
 }
 
 .bg {
-    min-height: 90vh;
+    margin-left: 0.1%;
+    min-height: 80vh;
     max-width: 80vw;
     background: url("../js/assets/a.jpg");
     background-size: contain;
@@ -40,8 +43,8 @@
 .category-box {
     border-radius: 4px;
     width: 90vw;
+    margin-top: 6%;
     margin-left: 1vw;
-    margin-top: 5%;
     padding-top: 10px;
     padding-bottom: 5px;
     background-color: #ffffff;

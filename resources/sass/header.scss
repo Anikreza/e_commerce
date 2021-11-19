@@ -1,18 +1,33 @@
 .navbar {
     margin:-8px;
     position: fixed;
-    min-height: 50px;
+    min-height: 40px;
     min-width: 100vw;
-    background-color: #e9e9e9;
+    background: linear-gradient(to right, #d3decf, rgb(232, 232, 224), rgb(255, 255, 255));
     z-index: 200;
-
     .nav-ul {
         ul {
             display: flex;
-            justify-content: space-between;
-            justify-content: center;
-            margin-left: -17%;
             font-size: 18px;
+            input{
+                width: 40vw;
+                height: 45px;
+                border-radius: 5px;
+                border-style: inset;
+                color: #230d0a;
+                background-color: whitesmoke;
+            }
+            button{
+                margin-left: -5%;
+                border-style: hidden;
+                color: #0f1a0d;
+                background-color: inherit;
+                cursor: pointer;
+            }
+            .home-search{
+                margin-left: -36%;
+                padding-bottom: .4%;
+            }
         }
 
         li {
@@ -69,3 +84,4 @@ a {
     text-decoration: none;
     color: rgb(0, 0, 0);
 }
+
