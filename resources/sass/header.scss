@@ -1,3 +1,4 @@
+@import "../sass/variables";
 .navbar {
     margin:-8px;
     position: fixed;
@@ -13,7 +14,7 @@
                 width: 40vw;
                 height: 45px;
                 border-radius: 5px;
-                border-style: inset;
+                border-style: ridge;
                 color: #230d0a;
                 background-color: whitesmoke;
             }
@@ -43,11 +44,15 @@
 .user-name-nav {
     position: fixed;
     right: 4.5%;
-    top: 1%;
+    top: 2%;
     z-index: 200;
 
+    a{
+        color: $userinfo;
+    }
+
     p {
-        color: rgb(117, 57, 57);
+        color: $userinfo;
     }
 
     .hide {
@@ -55,15 +60,27 @@
     }
 
     .modal-logout {
-        padding: 8px;
-        background-color: rgb(109, 63, 63);
-        border-radius: 7px;
-
         button {
             border-style: none;
-            background-color: rgb(109, 63, 63);
-            font-size: 16px;
+            background-color: $userinfo2;
+            font-size: 14px;
+            float: right;
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
             color: rgb(228, 224, 224);
+            cursor: pointer;
+        }
+        .modal-cart{
+            background-color: $userinfo;
+            padding: 8px;
+            color: rgb(228, 224, 224);
+            float: right;
+            width: 90%;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 14px;
         }
     }
 }
@@ -85,3 +102,6 @@ a {
     color: rgb(0, 0, 0);
 }
 
+input:focus{
+    outline: none;
+}

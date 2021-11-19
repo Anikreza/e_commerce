@@ -8,8 +8,8 @@ import SearchCard from "../card/SearchCard";
 
 const Header = () => {
 
-    let admin=process.env.MIX_ADMIN;
-    let user=JSON.parse(window.localStorage.getItem('user'));
+    let admin = process.env.MIX_ADMIN;
+    let user = JSON.parse(window.localStorage.getItem('user'));
     const [modal, setModal] = useState(false);
     const logout = (e) => {
         window.localStorage.clear();
@@ -60,8 +60,12 @@ const Header = () => {
                         {user?.user.name}
                         <span><IoIosArrowDropdown style={{cursor: 'pointer'}} color='black'/> </span>
                     </p>
-                    <span className={modal ? 'modal-logout' : 'hide'}><button
-                        onClick={logout}>LogOut</button> </span>
+                    <span className={modal ? 'modal-logout' : 'hide'}>
+                        <NavLink to='/cart' className='modal-cart'> Your Cart</NavLink>
+                        <br/>
+                        <hr/>
+                        <button onClick={logout}>Log Out</button>
+                    </span>
                 </div>
                 :
                 <div className='user-name-nav'>
