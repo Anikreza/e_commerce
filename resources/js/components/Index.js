@@ -21,6 +21,7 @@ function Index() {
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/add' element={<UploadProduct/>}/>
+                    {/*<Route path='/store' element={<UploadProduct/>}/>*/}
                 </Routes>
             </Router>
         </div>

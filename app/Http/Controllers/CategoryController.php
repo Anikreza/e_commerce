@@ -35,7 +35,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new Product();
+        $image = $request->file;
+        if($image){
+            $image_ext = $image->getClientOriginalExtension();
+            $image_full_name = time().'.'.$image_ext;
+            $upload_path = 'assets/images/';
+            $image_url = $upload_path.$image_full_name;
+
+            $success = $image->move($upload_path,$image_full_name);
+        }
+        else{
+            $image_url = '';
+        }
+
+        $product->product_img = $image_url;
+        $product->title =  $request->name;
+        $product->products_in_stock =  $request->stock;
+        $product->price =  $request->price;
+        $product->description =  $request->description;
+        $product->category_id =  $category->id;
+        $product->save();
     }
 
     /**

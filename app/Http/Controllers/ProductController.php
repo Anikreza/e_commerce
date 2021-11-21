@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -10,19 +11,24 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Category[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $catagory_type = Category::all();
+        return $catagory_type;
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Product[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
      */
-    public function create()
+    public function get()
+    {
+    }
+
+    public function list()
     {
         //
     }
@@ -35,7 +41,39 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        $category = new Category();
+//        $category->book_type =  $request->bookType;
+//        $category->cover_type =  $request->coverType;
+//        $category->save();
+
+        $product = new Product();
+              $image = $request->file;
+              if($image){
+                $image_ext = $image->getClientOriginalExtension();
+                $image_full_name = time().'.'.$image_ext;
+                $upload_path = 'assets/images/';
+                $image_url = $upload_path.$image_full_name;
+
+                $success = $image->move($upload_path,$image_full_name);
+              }
+              else{
+                  $image_url = '';
+              }
+
+        $product->product_img = $image_url;
+        $product->title =  $request->name;
+        $product->products_in_stock =  $request->stock;
+        $product->price =  $request->price;
+        $product->description =  $request->description;
+        $product->category_id =  $category->id;
+        $product->save();
+
+        $response = [
+            'product' => $product
+        ];
+
+        return response($response, 201);
+
     }
 
     /**

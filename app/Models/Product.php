@@ -11,6 +11,13 @@ class Product extends Model
         'title',
         'product_img',
         'price',
+        'products_in_stock',
+        'order_number',
         'description'
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_id');
+    }
 }
