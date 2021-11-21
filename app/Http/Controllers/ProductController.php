@@ -41,10 +41,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-//        $category = new Category();
-//        $category->book_type =  $request->bookType;
-//        $category->cover_type =  $request->coverType;
-//        $category->save();
+       $category = new Category();
+       $category->bookType =  $request->bookType;
+       $category->coverType =  $request->coverType;
+       $category->save();
 
         $product = new Product();
               $image = $request->file;
