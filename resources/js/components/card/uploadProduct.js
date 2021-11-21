@@ -33,11 +33,7 @@ const Add = () => {
 
         let result = await fetch(`${api}/store`, {
             method: 'POST',
-            body: Data,
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
+            body: Data
         })
         alert('saved your data')
     }
