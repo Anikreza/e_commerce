@@ -2,73 +2,89 @@ import React, {useState, useEffect} from 'react'
 import '../../../sass/upload.scss'
 import TextareaAutosize from 'react-textarea-autosize';
 import { BsImage } from 'react-icons/bs';
+import axios from "axios";
 
 const Add = () => {
     const [name, setName] = useState('');
+    const [author, setAuthor] = useState('');
     const [stock, setStock] = useState('');
     const [price, setPrice] = useState('');
-    const [bookType, setBookType] = useState('A');
-    const [coverType, setCoverType] = useState('B');
-    const [category, setCategory] = useState([]);
+    const [bookType, setBookType] = useState('Fantasy');
+    const [coverType, setCoverType] = useState('Hard');
+    const [categoryType, setCategoryType] = useState([]);
+    const [categoryCover, setCategoryCover] = useState([]);
     const [description, setDescription] = useState('');
     const [file, setFile] = useState('');
     const api = process.env.MIX_API;
 
     useEffect(async () => {
-        let result = await fetch(`${api}/addCategoryType`)
-        let Result = await result.json();
-        setCategory(Result)
-    }, [])
+        await axios.get(`${api}/addCategoryType`)
+            .then(async (res) => {
+                setCategoryType(res.data.book_type)
+                setCategoryCover(res.data.cover_type)
+            }).catch((error)=>{
+                alert(error)
+            }).then(()=>{
+                console.log('Type',bookType)
+            })
+    }, [categoryType])
 
     async function upload() {
         console.log(name, price, description,bookType,coverType,stock,file.name)
         const Data = new FormData();
         Data.append('file', file);
         Data.append('name', name);
+        Data.append('author', author);
         Data.append('stock', stock);
         Data.append('price', price);
         Data.append('bookType', bookType);
         Data.append('coverType', coverType);
         Data.append('description', description);
 
-        let result = await fetch(`${api}/store`, {
-            method: 'POST',
-            body: Data
+        await axios.post(`${api}/store`,Data
+        ).then((response)=>{
+            alert(response.statusText)
+        }).catch((error)=>{
+            alert(error)
+        }).then(()=>{
+            console.log('always executed')
         })
-        alert('saved your data')
     }
 
     return (
         <div>
             <div className='add-page'>
-                <input type='text' placeholder='name' name='name' onChange={(e) => setName(e.target.value)}/>
+                <input type='text' placeholder='Title Of The Book' name='name' onChange={(e)=>setName(e.target.value)}/>
+                <br/>
+                <br/>
+                <input type='text' placeholder='Author Of The Book' name='author' onChange={(e)=>setAuthor(e.target.value)}/>
                 <br/>
                 <br/>
                 <label htmlFor="book">Choose Book Genre:</label>
-                <select id='book' name='bookType' onChange={(e)=>setBookType(e.target.value)}>
+                <select id='book'  >
                     {
-                        category.map((data) => (
-                            <option>
-                                {data.bookType}
+                        categoryType.map((data) => (
+                            <option name='bookType' onClick={(e) => setBookType(data.id)}>
+                                {data.category_book_types}
                             </option>
                         ))
                     }
                 </select>
                 <br/>
                 <br/>
-                <label for="cover">Choose Cover type:</label>
-                <select id='cover' name='coverType' onChange={(e)=>setCoverType(e.target.value)}>
+                <label htmlFor="cover">Choose Cover type:</label>
+                <select id='cover'  >
                     {
-                        category.map((data) => (
-                            <option>
-                                {data.coverType}
+                        categoryCover.map((data) => (
+                            <option name='coverType' onClick={(e) => setCoverType(data.id)}>
+                                {data.category_cover_types}
                             </option>
                         ))
                     }
                 </select>
                 <br/>
                 <br/>
-                <input type='text' placeholder='stock' name='stock' onChange={(e) => setStock(e.target.value)}/>
+                <input type='text' placeholder='Reserved Stock Of The Book' name='stock' onChange={(e) => setStock(e.target.value)}/>
                 <br/>
                 <br/>
                 <label htmlFor="image"><BsImage size={20} style={{cursor:"pointer"}}/> Upload Product Image</label>
