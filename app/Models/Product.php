@@ -16,8 +16,14 @@ class Product extends Model
         'description'
     ];
 
-    public function categories()
+    public function categoryBookType(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'category_id');
+        return $this->belongsToMany(CategoryBookType::class, 'category_book_type_id');
+
+    }
+
+    public function categoryCoverType(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(CategoryCoverType::class, 'category_cover_type_id');
     }
 }

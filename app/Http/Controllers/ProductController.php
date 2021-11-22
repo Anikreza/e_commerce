@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\CategoryCoverType;
+use App\Models\CategoryBookType;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $catagory_type = Category::all();
-        return $catagory_type;
+        $category_book_type = CategoryBookType::all();
+        $category_cover_type = CategoryCoverType::all();
+
+        $response = [
+            'book_type' => $category_book_type,
+            'cover_type' => $category_cover_type
+        ];
+
+        return response($response, 201);
     }
 
     /**
@@ -41,10 +49,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-       $category = new Category();
-       $category->bookType =  $request->bookType;
-       $category->coverType =  $request->coverType;
-       $category->save();
 
         $product = new Product();
               $image = $request->file;
@@ -62,10 +66,12 @@ class ProductController extends Controller
 
         $product->product_img = $image_url;
         $product->title =  $request->name;
+        $product->author =  $request->author;
         $product->products_in_stock =  $request->stock;
         $product->price =  $request->price;
         $product->description =  $request->description;
-        $product->category_id =  $category->id;
+        $product->category_book_type_id =  $request->bookType;
+        $product->category_cover_type_id =  $request->coverType;
         $product->save();
 
         $response = [
