@@ -38,7 +38,46 @@ class ProductController extends Controller
 
     public function list()
     {
-        //
+        $listProducts = Product::with('categoryBookType','categoryCoverType')->get();
+
+        $response = [
+            'listProducts' => $listProducts
+        ];
+        return response($response, 201);
+    }
+
+    public function showProductsByCategory()
+    {
+        $ProductsCoverTypeHard = CategoryCoverType::with('products')
+            ->where('category_book_types.id', 1)
+            ->get();
+        $ProductsCoverTypeSoft = CategoryCoverType::with('products')
+            ->where('category_book_types.id', 2)
+            ->get();
+        $ProductsCoverTypeAudio = CategoryCoverType::with('products')
+            ->where('category_book_types.id', 3)
+            ->get();
+
+        $ProductsBookTypeAdventure = CategoryBookType::with('products')
+            ->where('category_cover_types.id', 1)
+            ->get();
+        $ProductsBookTypeHorror = CategoryBookType::with('products')
+            ->where('category_cover_types.id', 2)
+            ->get();
+        $ProductsBookTypeThriller = CategoryBookType::with('products')
+            ->where('category_cover_types.id', 3)
+            ->get();
+
+        $response = [
+            'ProductsCoverTypeHard' => $ProductsCoverTypeHard,
+            'ProductsCoverTypeSoft' => $ProductsCoverTypeSoft,
+            'ProductsCoverTypeAudio' => $ProductsCoverTypeAudio,
+
+            'ProductsBookTypeThriller' => $ProductsBookTypeThriller,
+            'ProductsBookTypeHorror' => $ProductsBookTypeHorror,
+            'ProductsBookTypeAdventure' => $ProductsBookTypeAdventure,
+        ];
+        return response($response, 201);
     }
 
     /**
@@ -86,9 +125,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
+        $showProduct = Product::with('categoryBookType','categoryCoverType')->first();
 
+        $response = [
+            'showProduct' => $showProduct
+        ];
+        return response($response, 201);
     }
 
     /**

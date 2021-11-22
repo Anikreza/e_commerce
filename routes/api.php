@@ -21,6 +21,9 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/addCategoryType', [ProductController::class, 'index']);
 Route::post('/store',[ProductController::class, 'store']);
+Route::get('/Products/byCategory',[ProductController::class, 'showProductsByCategory']);
+Route::get('/Products/list',[ProductController::class, 'list']);
+Route::get('/Products/show/{id}',[ProductController::class, 'show']);
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
