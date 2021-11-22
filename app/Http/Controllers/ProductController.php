@@ -77,9 +77,7 @@ class ProductController extends Controller
         $response = [
             'product' => $product
         ];
-
         return response($response, 201);
-
     }
 
     /**
@@ -90,7 +88,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+
     }
 
     /**

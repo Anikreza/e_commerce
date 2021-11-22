@@ -21,7 +21,7 @@ const Footer = () => {
                     <a href='https://twitter.com/TanvirRezaAnik1' target='blank'> <AiFillTwitterSquare className='ttricon' size='30px' color='black'/></a>
                     <a href='https://www.patreon.com/user?u=36041123' target='blank'> <FaPatreon className='pticon' size='30px' color='black' /></a>
                 </div>
-                <p1>Copyright ©2021 3dClubBD</p1>
+                <p>Copyright ©2021 3dClubBD</p>
             </div>
         </div>
     )

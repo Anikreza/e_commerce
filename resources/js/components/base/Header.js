@@ -23,10 +23,15 @@ const Header = () => {
                         <>
                             <div className='nav-ul'>
                                 <ul>
-                                    <li className='home-logo'><NavLink to='/home' activeStyle={{
-                                        fontWeight: "bold",
-                                        color: 'rgb(29, 99, 27)'
-                                    }}><img className='logo' src={a}/></NavLink></li>
+                                    <li className='home-logo'>
+                                        <NavLink to='/home'
+                                                 activeStyle={{
+                                                     fontWeight: "bold",
+                                                     color: 'rgb(29, 99, 27)'
+                                                 }}>
+                                            <img className='logo' src={a}/>
+                                        </NavLink>
+                                    </li>
 
                                     <li><NavLink to='/add' activeStyle={{
                                         fontWeight: "300",
