@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Product;
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -14,7 +17,19 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+//        $listCarts = Cart::where('user_id','users.id')->latest()->get();
+        $listCarts = DB::table('carts')
+            ->join('products', 'products.id', '=', 'carts.product_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->select('carts.*', 'users.id as id')
+            ->whereRaw('carts.user_id = users.id')
+            ->latest()
+            ->get();
+
+        $response = [
+            'listCarts' => $listCarts
+        ];
+        return response($response, 201);
     }
 
     /**
@@ -33,21 +48,47 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$product_id)
     {
-        //
-    }
+        $check = DB::table('carts')
+            ->join('products', 'products.id', '=', 'carts.product_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->select('carts.*', 'users.id as id')
+            ->where('product_id',$product_id)
+            ->whereRaw('carts.user_id = users.id')
+            ->find($product_id);
+        if($check)
+        {
+            DB::table('carts')
+            ->join('products', 'products.id', '=', 'carts.product_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->select('carts.*', 'users.id as id')
+            ->where('product_id',$product_id)
+            ->whereRaw('carts.user_id = users.id')
+            ->increment('quantity');
+        }
+        else
+        {
+            $cart = New Cart;
+            $cart->quantity = 1;
+            $cart->product_id = $request->product_id;
+            $cart->user_id = $request->user_id;
 
+            $cart->save();
+        }
+
+        $response = [
+            'check' => $check,
+            'cart' => $cart
+        ];
+        return response($response, 201);
+    }
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(Cart $cart)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

@@ -6,6 +6,7 @@ use App\Models\CategoryCoverType;
 use App\Models\CategoryBookType;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {

@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('title')->nullable();;
             $table->string('author')->nullable();;
             $table->string('product_img')->nullable();
-            $table->bigInteger('price')->nullable();;
+           c
             $table->bigInteger('products_in_stock')->nullable();
             $table->bigInteger('order_number')->nullable();;
             $table->longText('description')->nullable();

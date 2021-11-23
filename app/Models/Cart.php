@@ -8,17 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     protected $fillable = [
-        'product_id',
-        'category_id'
+        'quantity'
     ];
 
-    public function products()
+    public function user()
     {
-        return $this->belongsToMany(Product::class, 'product_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
-
-    public function categories()
+    public function product()
     {
-        return $this->belongsToMany(Category::class, 'category_id');
+        return $this->belongsTo('App\Models\Product', 'product_id');
     }
 }
