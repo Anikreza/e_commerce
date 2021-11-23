@@ -1,30 +1,19 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link, NavLink, BrowserRouter } from "react-router-dom";
+import {BrowserRouter as Router, Route, Link, NavLink, BrowserRouter} from "react-router-dom";
 
-const SliderData = ({header, image, caption, link}) => {
+const SliderData = ({title, image, author, link}) => {
     return (
-        <div className='slider'>
-
-            <Link to={link}>
-
+        <div className='slider' onClick={()=>window.location.replace(link)} style={{cursor:'pointer'}}>
                 <div className='slider-image'>
                     <img src={image}/>
                 </div>
-
                 <div className='slider-header'>
-                    <h2>{header}</h2>
+                    <h2>{title}</h2>
                 </div>
-
                 <div className='slider-caption'>
-                    <p> {caption}...</p>
+                    <p> {author}...</p>
                 </div>
-
-
-            </Link>
-
             <br/>
-
-
         </div>
     )
 }

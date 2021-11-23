@@ -17,7 +17,7 @@ const Add = () => {
     const [file, setFile] = useState('');
     const api = process.env.MIX_API;
 
-    const getBookType = useCallback( async () => {
+    const getBookType = useCallback(async () => {
         await axios.get(`${api}/addCategoryType`)
             .then(async (res) => {
                 console.log(res.data)
@@ -58,55 +58,75 @@ const Add = () => {
     return (
         <div>
             <div className='add-page'>
-                <form onSubmit={(e)=>e.preventDefault()}>
-                    <input type='text' placeholder='Title Of The Book' name='name'
-                           onChange={(e) => setName(e.target.value)}/>
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <input
+                        type='text'
+                        placeholder='Title Of The Book'
+                        name='name'
+                        onChange={(e) => setName(e.target.value)}/>
                     <br/>
                     <br/>
-                    <input type='text' placeholder='Author Of The Book' name='author'
-                           onChange={(e) => setAuthor(e.target.value)}/>
+                    <input
+                        type='text'
+                        placeholder='Author Of The Book'
+                        name='author'
+                        onChange={(e) => setAuthor(e.target.value)}/>
                     <br/>
                     <br/>
-                    <select id='book'
-                            name="bookType"
-                            onChange={(e) => setBookType(e.target.value)}
-                            value={bookType}>
+                    <select
+                        id='book'
+                        name="bookType"
+                        onChange={(e) => setBookType(e.target.value)}
+                        value={bookType}
+                    >
                         <option> Choose Book Genre</option>
-
-                        {
-                            categoryType.map((data) => (
-                                <option key={data.id} value={data.id}>
-                                    {data.category_book_types}
-                                </option>
-                            ))
-                        }
+                            {
+                                categoryType.map((data) => (
+                                    <option key={data.id} value={data.id}>
+                                        {data.category_book_types}
+                                    </option>
+                                ))
+                            }
                     </select>
                     <br/>
                     <br/>
-                    <select id='cover'
-                            name="coverType"
-                            onChange={(e) => setCoverType(e.target.value)}
-                            value={coverType}>
+                    <select
+                        id='cover'
+                        name="coverType"
+                        onChange={(e) => setCoverType(e.target.value)}
+                        value={coverType}
+                    >
                         <option> Choose Cover type</option>
-                        {
-                            categoryCover.map((Data) => (
-                                <option key={Data.id} value={Data.id}>
-                                    {Data.category_cover_types}
-                                </option>
-                            ))
-                        }
+                            {
+                                categoryCover.map((Data) => (
+                                    <option key={Data.id} value={Data.id}>
+                                        {Data.category_cover_types}
+                                    </option>
+                                ))
+                            }
                     </select>
                     <br/>
                     <br/>
-                    <input type='text' placeholder='Reserved Stock Of The Book' name='stock'
-                           onChange={(e) => setStock(e.target.value)}/>
+                    <input
+                        type='text'
+                        placeholder='Reserved Stock Of The Book'
+                        name='stock'
+                        onChange={(e) => setStock(e.target.value)}/>
                     <br/>
                     <br/>
-                    <input style={{color:'grey'}}  id='image' type='file' placeholder='file' name='file'
-                           onChange={(e) => setFile(e.target.files[0])}/>
+                    <input
+                        style={{color: 'grey'}}
+                        type='file'
+                        placeholder='file'
+                        name='file'
+                        onChange={(e) => setFile(e.target.files[0])}/>
                     <br/>
                     <br/>
-                    <input type='text' placeholder='price' name='price' onChange={(e) => setPrice(e.target.value)}/>
+                    <input
+                        type='text'
+                        placeholder='price'
+                        name='price'
+                        onChange={(e) => setPrice(e.target.value)}/>
                     <br/>
                     <br/>
                     <TextareaAutosize
@@ -119,7 +139,9 @@ const Add = () => {
                     />
                     <br/>
                     <br/>
-                    <button onClick={upload}>Add Product</button>
+                    <button onClick={upload}>
+                        Add Product
+                    </button>
                 </form>
             </div>
         </div>

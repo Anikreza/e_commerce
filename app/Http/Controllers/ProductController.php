@@ -41,56 +41,29 @@ class ProductController extends Controller
         $listProducts = Product::with(['categoryBookType','categoryCoverType'])->get();
 
         $response = [
-            'listProducts' => $listProducts
+            'allBooks' => $listProducts
         ];
         return response($response, 201);
     }
 
     public function showProductsByCategory()
     {
-//        $getDataByCoverType = Product::with('categoryCoverType')->get();
-//            ->select(`products.*`, `category_book_types.id`)
-//            ->where('category_book_types.id','=', 1)
-//            ->get();
-//        $getData =
-        $ProductsCoverTypeHard = Product::where('category_cover_type_id', 1)->get();
-        $ProductsCoverTypeSoft = Product::where('category_cover_type_id', 2)->get();
-        $ProductsCoverTypeAudio = Product::where('category_cover_type_id', 3)->get();
+        $HardCover = Product::where('category_cover_type_id', 1)->get();
+        $SoftCover = Product::where('category_cover_type_id', 2)->get();
+        $AudioBook = Product::where('category_cover_type_id', 3)->get();
 
-        $ProductsBookTypeAdventure = Product::where('category_book_type_id', 1)->get();
-        $ProductsBookTypeHorror = Product::where('category_book_type_id', 2)->get();
-        $ProductsBookTypeThriller = Product::where('category_book_type_id', 3)->get();
-
-//        $ProductsCoverTypeHard = $getDataByCoverType->where('category_cover_types.id', 1)->get();
-//        $ProductsCoverTypeSoft = $getDataByCoverType->where('category_cover_types.id', 2)->all();
-//        $ProductsCoverTypeAudio = $getDataByCoverType->where('category_cover_types.id', 3)->all();
-
-
-        //        $ProductsCoverTypeSoft = Product::with('category_book_types')
-//            ->where('category_book_types.id','=', 2)
-//            ->get();
-////        $ProductsCoverTypeAudio = Product::with('category_book_types')
-////            ->where('category_book_types.id', 3)
-////            ->get();
-//
-//        $ProductsBookTypeAdventure = Product::with('category_cover_types')
-//            ->where('category_cover_types.id', '=',1)
-//            ->get();
-//        $ProductsBookTypeHorror = Product::with('category_cover_types')
-//            ->where('category_cover_types.id', '=',2)
-//            ->get();
-//        $ProductsBookTypeThriller = Product::with('category_cover_types')
-//            ->where('category_cover_types.id', 3)
-//            ->get();
+        $FantasyBooks = Product::where('category_book_type_id', 1)->get();
+        $AdventureBooks = Product::where('category_book_type_id', 2)->get();
+        $RomanceBooks = Product::where('category_book_type_id', 3)->get();
 
         $response = [
-            'ProductsCoverTypeHard' => $ProductsCoverTypeHard,
-            'ProductsCoverTypeSoft' => $ProductsCoverTypeSoft,
-            'ProductsCoverTypeAudio' => $ProductsCoverTypeAudio,
-//
-            'ProductsBookTypeThriller' => $ProductsBookTypeThriller,
-            'ProductsBookTypeHorror' => $ProductsBookTypeHorror,
-            'ProductsBookTypeAdventure' => $ProductsBookTypeAdventure,
+            'hardCover' => $HardCover,
+            'softCover' => $SoftCover,
+            'audioBook' => $AudioBook,
+
+            'fantasyBooks' => $FantasyBooks,
+            'adventureBooks' => $AdventureBooks,
+            'romanceBooks' => $RomanceBooks,
         ];
         return response($response, 201);
     }
@@ -142,7 +115,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $showProduct = Product::with('categoryBookType','categoryCoverType')->first();
+        $showProduct = Product::with('categoryBookType','categoryCoverType')->find($id);
 
         $response = [
             'showProduct' => $showProduct
