@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from 'react'
+import axios from "axios";
 import DivCarousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import SliderData from "../../helpers/sliderData";
@@ -8,8 +9,13 @@ import b from '../../assets/ny.jpg'
 import c from '../../assets/aqotwf.jpg'
 import d from '../../assets/wap.jpg'
 import e from '../../assets/ww.jpg'
+import { actionTypes } from '../../helpers/reducer';
+import {useStateValue} from "../../helpers/StateProvider";
 
-const comp = ({title}) => {
+
+const comp = ({title, bookData}) => {
+
+    const [{},dispatch] = useStateValue();
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -35,7 +41,8 @@ const comp = ({title}) => {
             <div className='title-level'>
                 <h2>{title}</h2>
             </div>
-            <DivCarousel
+            <div className='setHeight'>
+                <DivCarousel
                 className='carousel'
                 swipeable={false}
                 draggable={false}
@@ -52,29 +59,26 @@ const comp = ({title}) => {
                 removeArrowOnDeviceType={["tablet", "mobile"]}
                 dotListClass="custom-dot-list-style"
                 itemClass="carousel-item-padding-10-px"
-                deviceType={'desktop'}
-            >
-                <div>
-                    <SliderData link={'/nagaland'} image={a} header={'The Children of Jocasta'}
-                                caption={'by Natalie Haynes'}/>
-                </div>
-                <div>
-                    <SliderData link={'/ourgirls'} image={b} header={'New York'}
-                                caption={' by Edward Rutherfurd'}/>
-                </div>
-                <div>
-                    <SliderData link={'/hillroute'} image={c} header={'All Quiet on the Western Front'}
-                                caption={'by Erich Maria Remarque'}/>
-                </div>
-                <div>
-                    <SliderData link={'/hillroute'} image={d} header={'War and Peace'}
-                                caption={'by Leo Tolstoy'}/>
-                </div>
-                <div>
-                    <SliderData link={'/hillroute'} image={e} header={'White Is for Witching'}
-                                caption={'by Helen Oyeyemi'}/>
-                </div>
+                deviceType={'desktop'}>
+                {
+                    bookData.map((data) =>
+                        (
+                            <div onClick={()=>dispatch({
+                                type: actionTypes.SET_BOOK_ID,
+                                user: data.id,
+                            })}>
+                                <SliderData
+                                    id={data.id}
+                                    link={`/singleBook/${data.id}`}
+                                    image={data.product_img}
+                                    title={data.title}
+                                    author={data.author}
+                                />
+                            </div>
+                        ))
+                }
             </DivCarousel>
+            </div>
         </div>
     )
 }

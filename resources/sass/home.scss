@@ -1,7 +1,7 @@
 @import "../sass/variables";
 
 .home {
-    margin:-8px;
+    margin: -8px;
     min-height: 300vh;
     background: $bg;
     background-size: cover;
@@ -10,7 +10,7 @@
 }
 
 .home2 {
-    margin:-8px;
+    margin: -8px;
     min-height: 300vh;
     background: $bg2;
     background-size: cover;
@@ -19,6 +19,7 @@
 .bg {
     margin-left: 0.1%;
     min-height: 80vh;
+    margin-bottom: 4%;
     max-width: 80vw;
     background: url("../js/assets/a.jpg");
     background-size: contain;
@@ -29,9 +30,9 @@
 }
 
 .title-level {
-    margin-top: 10px;
+    margin-top: 25px;
+    margin-bottom: 4px;
     min-width: fit-content;
-
     h2 {
         font-weight: lighter;
         margin-left: 5%;
@@ -43,11 +44,10 @@
 .category-box {
     border-radius: 4px;
     width: 90vw;
-    margin-top: 6%;
     margin-left: 1vw;
     padding-top: 10px;
     padding-bottom: 5px;
-    background-color: #ffffff;
+    background-color: inherit;
     mask-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8));
 }
 
@@ -56,52 +56,50 @@
     margin-left: 5%;
     border-top-left-radius: 1%;
     border-top-right-radius: 1%;
-    max-height: fit-content;
     width: 95%;
-    img{
-        max-width: 70%;
-    }
-
+    max-height: 80vh;
 }
 
 .slider {
     border-right-style: inset;
     border-width: thin;
-    margin-left: 5px;
-    padding-right: 7px;
-    max-width: fit-content;
-    max-height: fit-content;
-    border-radius: 1%;
-    a{
+    margin-left: 22px;
+    padding-right: 5px;
+    padding-top: 50px;
+    border-radius: 2%;
+    max-height: 500px;
+    min-height: 500px;
+    background-color: #e1e1e1;
+
+    a {
         text-decoration: none;
         color: rgb(86, 65, 44);
     }
 }
 
-
-.slider-header{
+.slider-header {
     h2 {
         text-align: center;
-        font-size: 18px;
+        font-size: 16px;
         padding-bottom: 10px;
-        padding-top: 10px;
         font-weight: bold;
         color: #974034;
     }
 }
 
-.slider-image{
+.slider-image {
     img {
-        width: 80%;
+        width: 70%;
         border-radius: 10px;
-        padding-left: 10%;
+        padding-left: 15%;
+        padding-top: 2%;
     }
 }
 
-.slider-caption{
+.slider-caption {
     p {
         text-align: center;
-        font-size: 15px;
+        font-size: 14px;
         padding-bottom: 10px;
     }
 }

@@ -1,0 +1,70 @@
+.detailed{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 15%;
+    padding-right: 15%;
+    display: flex;
+    .detailed-left{
+        display: flex;
+        flex-direction: column;
+        img{
+            width: 250px;
+            height: 350px;
+            border-radius: 2px;
+        }
+        button{
+            padding: 10px;
+            color: #e7e7e7;
+            background-color: #475e42;
+            border-color: #475e42;
+            cursor: pointer;
+            font-size: 17px;
+        }
+        .stockButton{
+            padding: 10px;
+            color: #000000;
+            background-color: #79745c;
+            border-style: none;
+            cursor: pointer;
+            font-size: 17px;
+        }
+    }
+
+}
+.detail{
+    height: 100%;
+    width: 100%;
+    background-image: url("../js/assets/bg4.jpg");
+    filter: sepia(40%);
+    background-size: cover;
+}
+
+.product-info{
+    background: linear-gradient(to top, rgb(121, 108, 92), rgb(255, 255, 255));
+    padding: 5%;
+    margin-top: 4%;
+    border-radius: 15px;
+    box-shadow:  3px 2px 5px #202020;
+    .title-d{
+        font-size: 26px;
+        text-transform: uppercase;
+        color: rgb(6, 44, 22);
+    }
+    .price-d{
+        font-size: 20px;
+        color: rgb(169, 52, 52);
+    }
+    .description-d{
+        letter-spacing: 1px;
+        font-size: 17px;
+        color: rgb(14, 23, 14);
+    }
+}
+
+.cartbox{
+    position: fixed;
+    right: 1%;
+    top: 4%;
+    z-index: 1000;
+    cursor: pointer;
+}

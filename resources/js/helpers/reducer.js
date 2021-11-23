@@ -1,9 +1,11 @@
 export const initialState = {
     user:null,
+    findBook:'',
 };
 
 export const actionTypes = {
     SET_USER : "SET_USER",
+    SET_BOOK_ID : "SET_BOOK_ID",
 };
 
 const reducer = (state, action) => {
@@ -12,6 +14,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 user: action.user,
+            };
+        case actionTypes.SET_BOOK_ID:
+            return {
+                ...state,
+                findBook: action.findBook,
             };
 
         default:
