@@ -16,14 +16,21 @@ class Product extends Model
         'description'
     ];
 
-    public function categoryBookType(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(CategoryBookType::class, 'category_book_type_id');
+//    public function categoryCoverType(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+//    {
+//        return $this->belongsTo(CategoryCoverType::class, 'category_cover_type_id');
+//    }
+//    public function CategoryBookType(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+//    {
+//        return $this->belongsTo(CategoryCoverType::class, 'category_book_type_id');
+//    }
 
+    public function CategoryBookType()
+    {
+        return $this->belongsTo('App\Models\CategoryBookType','category_book_type_id');
     }
-
-    public function categoryCoverType(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function categoryCoverType()
     {
-        return $this->belongsToMany(CategoryCoverType::class, 'category_cover_type_id');
+        return $this->belongsTo('App\Models\CategoryCoverType','category_cover_type_id');
     }
 }

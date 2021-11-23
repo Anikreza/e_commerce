@@ -48,31 +48,46 @@ class ProductController extends Controller
 
     public function showProductsByCategory()
     {
-        $ProductsCoverTypeHard = CategoryCoverType::with('products')
-            ->where('category_book_types.id', 1)
-            ->get();
-        $ProductsCoverTypeSoft = CategoryCoverType::with('products')
-            ->where('category_book_types.id', 2)
-            ->get();
-        $ProductsCoverTypeAudio = CategoryCoverType::with('products')
-            ->where('category_book_types.id', 3)
-            ->get();
+//        $getDataByCoverType = Product::with('categoryCoverType')->get();
+//            ->select(`products.*`, `category_book_types.id`)
+//            ->where('category_book_types.id','=', 1)
+//            ->get();
+//        $getData =
+        $ProductsCoverTypeHard = Product::where('category_cover_type_id', 1)->get();
+        $ProductsCoverTypeSoft = Product::where('category_cover_type_id', 2)->get();
+        $ProductsCoverTypeAudio = Product::where('category_cover_type_id', 3)->get();
 
-        $ProductsBookTypeAdventure = CategoryBookType::with('products')
-            ->where('category_cover_types.id', 1)
-            ->get();
-        $ProductsBookTypeHorror = CategoryBookType::with('products')
-            ->where('category_cover_types.id', 2)
-            ->get();
-        $ProductsBookTypeThriller = CategoryBookType::with('products')
-            ->where('category_cover_types.id', 3)
-            ->get();
+        $ProductsBookTypeAdventure = Product::where('category_book_type_id', 1)->get();
+        $ProductsBookTypeHorror = Product::where('category_book_type_id', 2)->get();
+        $ProductsBookTypeThriller = Product::where('category_book_type_id', 3)->get();
+
+//        $ProductsCoverTypeHard = $getDataByCoverType->where('category_cover_types.id', 1)->get();
+//        $ProductsCoverTypeSoft = $getDataByCoverType->where('category_cover_types.id', 2)->all();
+//        $ProductsCoverTypeAudio = $getDataByCoverType->where('category_cover_types.id', 3)->all();
+
+
+        //        $ProductsCoverTypeSoft = Product::with('category_book_types')
+//            ->where('category_book_types.id','=', 2)
+//            ->get();
+////        $ProductsCoverTypeAudio = Product::with('category_book_types')
+////            ->where('category_book_types.id', 3)
+////            ->get();
+//
+//        $ProductsBookTypeAdventure = Product::with('category_cover_types')
+//            ->where('category_cover_types.id', '=',1)
+//            ->get();
+//        $ProductsBookTypeHorror = Product::with('category_cover_types')
+//            ->where('category_cover_types.id', '=',2)
+//            ->get();
+//        $ProductsBookTypeThriller = Product::with('category_cover_types')
+//            ->where('category_cover_types.id', 3)
+//            ->get();
 
         $response = [
             'ProductsCoverTypeHard' => $ProductsCoverTypeHard,
             'ProductsCoverTypeSoft' => $ProductsCoverTypeSoft,
             'ProductsCoverTypeAudio' => $ProductsCoverTypeAudio,
-
+//
             'ProductsBookTypeThriller' => $ProductsBookTypeThriller,
             'ProductsBookTypeHorror' => $ProductsBookTypeHorror,
             'ProductsBookTypeAdventure' => $ProductsBookTypeAdventure,
