@@ -6,7 +6,8 @@ import Login from "../Views/login";
 import UploadProduct from './card/uploadProduct'
 import Home from './base/home';
 import '../../sass/app.scss';
-import ProductCard from "./card/ProductCard";
+import SingleProductCard from "./card/SingleProductCard";
+import DisplayProducts from "./base/DisplayProducts";
 
 function Index() {
     return (
@@ -19,7 +20,8 @@ function Index() {
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/add' element={<UploadProduct/>}/>
-                    <Route path='/singleBook/:id' element={<ProductCard/>}/>
+                    <Route path='/singleBook/:id' element={<SingleProductCard/>}/>
+                    <Route exact path='books/:id' element={<DisplayProducts/>}/>
                 </Routes>
             </Router>
         </div>

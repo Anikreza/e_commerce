@@ -6,15 +6,15 @@ const comp = () => {
     return (
         <div className='nav'>
             <div className='Ul'>
-                <NavLink to='/list' activeStyle={{
+                <NavLink to='/books/Adventure' activeStyle={{
                     fontWeight: "300", color: 'rgb(29, 99, 27)'
                 }}>Adventure </NavLink>
 
-                <NavLink to='/list' activeStyle={{
+                <NavLink to='/books/Romance' activeStyle={{
                     fontWeight: "300", color: 'rgb(29, 99, 27)'
-                }}>History </NavLink>
+                }}>Romance </NavLink>
 
-                <NavLink to='/list' activeStyle={{
+                <NavLink to='/books/Fantasy' activeStyle={{
                     fontWeight: "300", color: 'rgb(29, 99, 27)'
                 }}>Fantasy </NavLink>
             </div>

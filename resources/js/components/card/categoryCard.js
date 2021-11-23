@@ -41,7 +41,6 @@ const comp = ({title, bookData}) => {
             <div className='title-level'>
                 <h2>{title}</h2>
             </div>
-            <div className='setHeight'>
                 <DivCarousel
                 className='carousel'
                 swipeable={false}
@@ -63,7 +62,7 @@ const comp = ({title, bookData}) => {
                 {
                     bookData.map((data) =>
                         (
-                            <div onClick={()=>dispatch({
+                            <div key={data.id} onClick={()=>dispatch({
                                 type: actionTypes.SET_BOOK_ID,
                                 user: data.id,
                             })}>
@@ -78,7 +77,6 @@ const comp = ({title, bookData}) => {
                         ))
                 }
             </DivCarousel>
-            </div>
         </div>
     )
 }
