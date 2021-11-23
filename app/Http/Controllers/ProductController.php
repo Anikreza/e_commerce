@@ -38,7 +38,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        $listProducts = Product::with('categoryBookType','categoryCoverType')->get();
+        $listProducts = Product::with(['categoryBookType','categoryCoverType'])->get();
 
         $response = [
             'listProducts' => $listProducts
