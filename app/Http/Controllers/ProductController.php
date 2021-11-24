@@ -40,15 +40,21 @@ class ProductController extends Controller
     public function list()
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         $listProducts = Product::with(['categoryBookType','categoryCoverType'])->get();
 
         $response = [
             'allBooks' => $listProducts
 =======
+=======
+>>>>>>> Stashed changes
         $listProducts = Product::with('categoryBookType','categoryCoverType')->get();
 
         $response = [
             'listProducts' => $listProducts
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         ];
         return response($response, 201);
@@ -56,6 +62,7 @@ class ProductController extends Controller
 
     public function showProductsByCategory()
     {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         $HardCover = Product::where('category_cover_type_id', 1)->get();
         $SoftCover = Product::where('category_cover_type_id', 2)->get();
@@ -74,6 +81,8 @@ class ProductController extends Controller
             'adventureBooks' => $AdventureBooks,
             'romanceBooks' => $RomanceBooks,
 =======
+=======
+>>>>>>> Stashed changes
         $ProductsCoverTypeHard = CategoryCoverType::with('products')
             ->where('category_book_types.id', 1)
             ->get();
@@ -102,6 +111,9 @@ class ProductController extends Controller
             'ProductsBookTypeThriller' => $ProductsBookTypeThriller,
             'ProductsBookTypeHorror' => $ProductsBookTypeHorror,
             'ProductsBookTypeAdventure' => $ProductsBookTypeAdventure,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         ];
         return response($response, 201);
@@ -155,7 +167,11 @@ class ProductController extends Controller
     public function show($id)
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         $showProduct = Product::with('categoryBookType','categoryCoverType')->find($id);
+=======
+        $showProduct = Product::with('categoryBookType','categoryCoverType')->first();
+>>>>>>> Stashed changes
 =======
         $showProduct = Product::with('categoryBookType','categoryCoverType')->first();
 >>>>>>> Stashed changes
