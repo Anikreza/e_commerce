@@ -39,16 +39,24 @@ class ProductController extends Controller
 
     public function list()
     {
+<<<<<<< Updated upstream
         $listProducts = Product::with(['categoryBookType','categoryCoverType'])->get();
 
         $response = [
             'allBooks' => $listProducts
+=======
+        $listProducts = Product::with('categoryBookType','categoryCoverType')->get();
+
+        $response = [
+            'listProducts' => $listProducts
+>>>>>>> Stashed changes
         ];
         return response($response, 201);
     }
 
     public function showProductsByCategory()
     {
+<<<<<<< Updated upstream
         $HardCover = Product::where('category_cover_type_id', 1)->get();
         $SoftCover = Product::where('category_cover_type_id', 2)->get();
         $AudioBook = Product::where('category_cover_type_id', 3)->get();
@@ -65,6 +73,36 @@ class ProductController extends Controller
             'fantasyBooks' => $FantasyBooks,
             'adventureBooks' => $AdventureBooks,
             'romanceBooks' => $RomanceBooks,
+=======
+        $ProductsCoverTypeHard = CategoryCoverType::with('products')
+            ->where('category_book_types.id', 1)
+            ->get();
+        $ProductsCoverTypeSoft = CategoryCoverType::with('products')
+            ->where('category_book_types.id', 2)
+            ->get();
+        $ProductsCoverTypeAudio = CategoryCoverType::with('products')
+            ->where('category_book_types.id', 3)
+            ->get();
+
+        $ProductsBookTypeAdventure = CategoryBookType::with('products')
+            ->where('category_cover_types.id', 1)
+            ->get();
+        $ProductsBookTypeHorror = CategoryBookType::with('products')
+            ->where('category_cover_types.id', 2)
+            ->get();
+        $ProductsBookTypeThriller = CategoryBookType::with('products')
+            ->where('category_cover_types.id', 3)
+            ->get();
+
+        $response = [
+            'ProductsCoverTypeHard' => $ProductsCoverTypeHard,
+            'ProductsCoverTypeSoft' => $ProductsCoverTypeSoft,
+            'ProductsCoverTypeAudio' => $ProductsCoverTypeAudio,
+
+            'ProductsBookTypeThriller' => $ProductsBookTypeThriller,
+            'ProductsBookTypeHorror' => $ProductsBookTypeHorror,
+            'ProductsBookTypeAdventure' => $ProductsBookTypeAdventure,
+>>>>>>> Stashed changes
         ];
         return response($response, 201);
     }
@@ -116,7 +154,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+<<<<<<< Updated upstream
         $showProduct = Product::with('categoryBookType','categoryCoverType')->find($id);
+=======
+        $showProduct = Product::with('categoryBookType','categoryCoverType')->first();
+>>>>>>> Stashed changes
 
         $response = [
             'showProduct' => $showProduct
