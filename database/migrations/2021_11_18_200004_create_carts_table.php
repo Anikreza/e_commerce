@@ -16,12 +16,16 @@ class CreateCartsTable extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('quantity')->nullable();;
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('user_id')->nullable();;
+//            $table->unsignedBigInteger('user_id');
+//            $table->foreign('user_id')->references('id')->on('users');
 
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-
+            $table->unsignedBigInteger('category_book_type_id')->nullable();
+            $table->foreign('category_book_type_id')->references('id')->on('category_book_types');
+            $table->unsignedBigInteger('category_cover_type_id')->nullable();
+            $table->foreign('category_cover_type_id')->references('id')->on('category_cover_types');
             $table->timestamps();
         });
     }
