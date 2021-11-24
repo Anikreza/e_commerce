@@ -66,18 +66,15 @@ class CartController extends Controller
             ->join('category_book_types', 'category_book_types.id', '=', 'carts.category_book_type_id')
             ->join('category_cover_types', 'category_cover_types.id', '=', 'carts.category_cover_type_id')
 //            ->join('users', 'users.id', '=', 'carts.user_id')
-            ->select('carts.*', 'products.title as title','products.product_img as product_img',
+            ->select('carts.*', 'products.title as title', 'products.price as price','products.product_img as product_img',
                 'products.products_in_stock as products_in_stock','products.order_number as order_number',
                 'products.description as description','category_cover_types.category_cover_types as category_cover_types',
-                'category_cover_types.category_cover_types as category_cover_types')
+                'category_book_types.category_book_types as category_book_types')
             ->where('carts.user_id', $user_id)
             ->latest()
             ->get();
 
-        $response = [
-            'listCarts' => $listCarts
-        ];
-        return response($response, 201);
+        return  $listCarts;
     }
     /**
      * Show the form for editing the specified resource.
