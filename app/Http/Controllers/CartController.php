@@ -17,20 +17,9 @@ class CartController extends Controller
      */
     public function index()
     {
-//        $listCarts = Cart::where('user_id','users.id')->latest()->get();
-        $listCarts = DB::table('carts')
-            ->join('products', 'products.id', '=', 'carts.product_id')
-            ->join('users', 'users.id', '=', 'carts.user_id')
-            ->select('carts.*', 'users.id as id')
-            ->whereRaw('carts.user_id = users.id')
-            ->latest()
-            ->get();
 
-        $response = [
-            'listCarts' => $listCarts
-        ];
-        return response($response, 201);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,37 +37,17 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$product_id)
+    public function store(Request $request)
     {
-        $check = DB::table('carts')
-            ->join('products', 'products.id', '=', 'carts.product_id')
-            ->join('users', 'users.id', '=', 'carts.user_id')
-            ->select('carts.*', 'users.id as id')
-            ->where('product_id',$product_id)
-            ->whereRaw('carts.user_id = users.id')
-            ->find($product_id);
-        if($check)
-        {
-            DB::table('carts')
-            ->join('products', 'products.id', '=', 'carts.product_id')
-            ->join('users', 'users.id', '=', 'carts.user_id')
-            ->select('carts.*', 'users.id as id')
-            ->where('product_id',$product_id)
-            ->whereRaw('carts.user_id = users.id')
-            ->increment('quantity');
-        }
-        else
-        {
-            $cart = New Cart;
-            $cart->quantity = 1;
-            $cart->product_id = $request->product_id;
-            $cart->user_id = $request->user_id;
-
-            $cart->save();
-        }
+        $cart = New Cart;
+        $cart->quantity = 1;
+        $cart->product_id = $request->product_id;
+        $cart->category_book_type_id = $request->category_book_type_id;
+        $cart->category_cover_type_id = $request->category_cover_type_id;
+        $cart->user_id = $request->user_id;
+        $cart->save();
 
         $response = [
-            'check' => $check,
             'cart' => $cart
         ];
         return response($response, 201);
@@ -89,7 +58,27 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
+    public function show($user_id)
+    {
+//        $listCarts = Cart::where('user_id','users.id')->latest()->get();
+        $listCarts = DB::table('carts')
+            ->join('products', 'products.id', '=', 'carts.product_id')
+            ->join('category_book_types', 'category_book_types.id', '=', 'carts.category_book_type_id')
+            ->join('category_cover_types', 'category_cover_types.id', '=', 'carts.category_cover_type_id')
+//            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->select('carts.*', 'products.title as title','products.product_img as product_img',
+                'products.products_in_stock as products_in_stock','products.order_number as order_number',
+                'products.description as description','category_cover_types.category_cover_types as category_cover_types',
+                'category_cover_types.category_cover_types as category_cover_types')
+            ->where('carts.user_id', $user_id)
+            ->latest()
+            ->get();
 
+        $response = [
+            'listCarts' => $listCarts
+        ];
+        return response($response, 201);
+    }
     /**
      * Show the form for editing the specified resource.
      *
