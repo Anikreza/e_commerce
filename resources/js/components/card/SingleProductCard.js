@@ -6,17 +6,17 @@ import '../../../sass/productDetail.scss';
 const SingleProductCard = () => {
 
     let user=JSON.parse(window.localStorage.getItem('user'));
-    const userID=user.id;
+    const userID=user.user.id;
     const [{findBook}, dispatch] = useStateValue();
     const [data, setData] = useState([])
     const [quantity, setQuantity] = useState(0)
     const api = process.env.MIX_API;
     const url = process.env.MIX_URL;
-    const ID = window.location.href.split('/')[4]
+    const productID = window.location.href.split('/')[4]
 
     const getBooks = useCallback(
         async () => {
-            await axios.get(`${api}/products/` + ID)
+            await axios.get(`${api}/products/` + productID)
                 .then(async (res) => {
                     setData(res.data.showProduct);
                     console.log('singleData', res.data.showProduct);
@@ -33,22 +33,20 @@ const SingleProductCard = () => {
         getBooks().then(r => r)
     }, [getBooks]);
 
-    async function addToCart(productID) {
-
-        let data={productID,userID}
-        axios.post(`${api}/cart/store`, {
+    async function addToCart() {
+        console.log(data);
+        let coverType=data.category_cover_type_id;
+        let bookType=data.category_book_type_id;
+        let Data={quantity,productID,userID,bookType,coverType}
+        let result= fetch(`${api}/cart/store`,{
+            method:'POST',
+            body:JSON.stringify(Data),
             headers:{
                 'Content-Type':'application/json',
                 'Accept':'application/json'
-            },
-            data
+            }
         })
-            .then((response) => {
-                console.log(response.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+
     }
 
     function Increase() {
@@ -77,7 +75,7 @@ const SingleProductCard = () => {
                         <span> {quantity} </span>
                         <p2 onClick={Increase}>+</p2>
                     </button>
-                    <button onClick={() => addToCart(data.id)}>Add to Cart</button>
+                    <button onClick={() => addToCart()}>Add to Cart</button>
                 </div>
                 <div className='product-info'>
                     <p className='title-d'>{data.title}</p>
