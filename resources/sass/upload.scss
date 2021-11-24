@@ -1,0 +1,70 @@
+.add-page{
+    text-align: center;
+    padding-top: 5%;
+    min-height: 100vh;
+    background:url('../js/assets/bg.jpg');
+    background-size: cover;
+    filter:sepia(20%);
+
+    form{
+        border-radius: 20px;
+        opacity: 0.9;
+        width: 40%;
+        padding: 2% 0% 1% 0%;
+        background: #252d25;
+        margin-left: 44%;
+        max-height: fit-content;
+        select{
+            background: inherit;
+            border-style: solid;
+            border-color: #475e42;
+            color: #cecdcd;
+            option{
+                width: 20vw;
+                padding: 20px;
+                border-radius: 10px;
+                color: #d3d3d3;
+            }
+        }
+        input{
+            padding:10px;
+            width: 60%;
+            background-color: inherit;
+            border-style: solid;
+            border-color: #475e42;
+            color: #ffffff;
+        }
+        input:focus{
+            outline: none;
+        }
+        textarea{
+            resize: none;
+            font-family:sans-serif;
+            font-size: 17px;
+            min-height: 50px;
+            border-style: solid;
+            border-color: #475e42;
+            background-color: inherit;
+        }
+        button{
+            width: fit-content;
+            padding:10px;
+            background-color: darkolivegreen;
+            color: white;
+            border-color: #475e42;
+            border-radius: 5px;
+            border-color: #475e42;
+        }
+    }
+}
+.auto_height {
+    width: 50%;
+    padding:10px;
+    background-color: rgb(217, 236, 226);
+    border-radius: 10px;
+    white-space: pre-line;
+    color: white;
+}
+.auto_height:focus{
+    outline:none;
+}
