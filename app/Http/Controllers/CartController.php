@@ -97,9 +97,22 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request, $cartID)
     {
-        //
+        $updateCart = DB::table('carts')
+            ->where('carts.user_id', $cartID)
+            ->update([
+                'quantity' => $request->quantity,
+                'product_id' => $request->product_id,
+                'category_book_type_id' => $request->category_book_type_id,
+                'category_cover_type_id' => $request->category_cover_type_id,
+                'user_id' => $request->user_id
+            ]);
+
+        $response = [
+            'updateCart' => $updateCart
+        ];
+        return response($response, 201);
     }
 
     /**
