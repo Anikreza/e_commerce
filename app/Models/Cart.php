@@ -19,6 +19,10 @@ class Cart extends Model
 //    {
 //        return $this->belongsTo('App\Models\User', 'user_id');
 //    }
+    /**
+     * @var mixed
+     */
+
     public function product()
     {
         return $this->belongsTo('App\Models\Product', 'product_id');

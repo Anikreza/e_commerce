@@ -34,12 +34,12 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $cart = New Cart;
+        $cart = new Cart;
         $cart->quantity = $request->quantity;
         $cart->product_id = $request->productID;
         $cart->category_book_type_id = $request->bookType;
@@ -52,10 +52,11 @@ class CartController extends Controller
         ];
         return response($response, 201);
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
     public function show($user_id)
@@ -66,20 +67,21 @@ class CartController extends Controller
             ->join('category_book_types', 'category_book_types.id', '=', 'carts.category_book_type_id')
             ->join('category_cover_types', 'category_cover_types.id', '=', 'carts.category_cover_type_id')
 //            ->join('users', 'users.id', '=', 'carts.user_id')
-            ->select('carts.*', 'products.title as title', 'products.price as price','products.product_img as product_img',
-                'products.products_in_stock as products_in_stock','products.order_number as order_number',
-                'products.description as description','category_cover_types.category_cover_types as category_cover_types',
+            ->select('carts.*', 'products.title as title', 'products.price as price', 'products.product_img as product_img',
+                'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
+                'products.description as description', 'category_cover_types.category_cover_types as category_cover_types',
                 'category_book_types.category_book_types as category_book_types')
             ->where('carts.user_id', $user_id)
             ->latest()
             ->get();
 
-        return  $listCarts;
+        return $listCarts;
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
     public function edit(Cart $cart)
@@ -90,8 +92,8 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cart  $cart
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $cartID)
@@ -115,7 +117,7 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
     public function destroy(Cart $cart)
