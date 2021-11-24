@@ -40,11 +40,11 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $cart = New Cart;
-        $cart->quantity = 1;
-        $cart->product_id = $request->product_id;
-        $cart->category_book_type_id = $request->category_book_type_id;
-        $cart->category_cover_type_id = $request->category_cover_type_id;
-        $cart->user_id = $request->user_id;
+        $cart->quantity = $request->quantity;
+        $cart->product_id = $request->productID;
+        $cart->category_book_type_id = $request->bookType;
+        $cart->category_cover_type_id = $request->coverType;
+        $cart->user_id = $request->userID;
         $cart->save();
 
         $response = [
