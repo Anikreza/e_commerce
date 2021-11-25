@@ -28,6 +28,7 @@ Route::get('/products/{id}',[ProductController::class, 'show']);
 Route::post('/cart/store',[CartController::class, 'store']);
 Route::get('/cart/show/{user_id}',[CartController::class, 'show']);
 Route::post('/cart/update/{cart_id}',[CartController::class, 'update']);
+Route::get('/cart/delete/{id}',[CartController::class, 'destroy']);
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
