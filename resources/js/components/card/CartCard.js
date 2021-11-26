@@ -12,7 +12,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     const userID = user.user.id;
 
     useEffect(() => {
-        console.log('updatedStock',stock)
+        update().then(r=>r)
     }, [updatedQuantity]);
 
 
@@ -27,31 +27,39 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
             }
         })
     }
-    async function updateStock() {
-        const Data = {userID,productID}
-        let result = fetch(`${api}/cart/updateStock`, {
-            method: 'POST',
-            body: JSON.stringify(Data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-    }
-    async function depleteStock() {
-        const Data = {userID,productID}
-        let result = fetch(`${api}/cart/depleteStock`, {
-            method: 'POST',
-            body: JSON.stringify(Data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-    }
+
+    const updateStock = useCallback(
+        async () => {
+            const Data = {userID,productID}
+            let result = fetch(`${api}/cart/updateStock`, {
+                method: 'POST',
+                body: JSON.stringify(Data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+        },
+        [price,sum,quantity],
+    );
+
+        const depleteStock = useCallback(
+        async () => {
+            const Data = {userID,productID}
+            let result = fetch(`${api}/cart/depleteStock`, {
+                method: 'POST',
+                body: JSON.stringify(Data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+        },
+        [price,sum,quantity],
+    );
+
 
     function Increase() {
-        update().then(r => r)
             if ( stock >= updatedQuantity) {
                 setUpdatedQuantity(updatedQuantity + 1)
                 depleteStock().then(r=>r)
@@ -62,7 +70,6 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     }
 
     function Decrease() {
-        update().then(r => r)
         if (stock>0 && updatedQuantity>=1) {
             setUpdatedQuantity(updatedQuantity - 1)
             updateStock().then(r=>r)
