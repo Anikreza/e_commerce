@@ -122,4 +122,11 @@
             }
         }
     }
+    .cartbox{
+        position: fixed;
+        right: 1%;
+        top: 44%;
+        z-index: 1000;
+        cursor: pointer;
+    }
 }

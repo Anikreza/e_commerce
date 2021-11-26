@@ -51,28 +51,37 @@ const SingleProductCard = () => {
         else{
             alert('please add at least one book')
         }
+
     }
-    async function depleteStock() {
-        const Data = {productID}
-        let result = fetch(`${api}/cart/depleteStock`, {
-            method: 'POST',
-            body: JSON.stringify(Data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-    }    async function updateStock() {
-        const Data = {productID}
-        let result = fetch(`${api}/cart/updateStock`, {
-            method: 'POST',
-            body: JSON.stringify(Data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-    }
+    const updateStock = useCallback(
+        async () => {
+            const Data = {userID, productID}
+            let result = fetch(`${api}/cart/updateStock`, {
+                method: 'POST',
+                body: JSON.stringify(Data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+        },
+        [quantity],
+    );
+
+    const depleteStock = useCallback(
+        async () => {
+            const Data = {userID, productID}
+            let result = fetch(`${api}/cart/depleteStock`, {
+                method: 'POST',
+                body: JSON.stringify(Data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+        },
+        [quantity],
+    );
 
     function Increase() {
         if (data.products_in_stock >= quantity) {
@@ -81,7 +90,7 @@ const SingleProductCard = () => {
         else {
             alert('Out Of Stock!!!')
         }
-        depleteStock().then(r=>r)
+        depleteStock().then(r => r)
     }
 
     function Decrease() {
