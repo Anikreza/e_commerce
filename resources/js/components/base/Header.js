@@ -4,6 +4,7 @@ import '../../../sass/header.scss'
 import {IoIosArrowDropdown} from 'react-icons/io';
 import a from '../../assets/logo.png'
 import SearchCard from "../card/SearchCard";
+import Cartbox from "../card/CartBox";
 
 
 const Header = () => {
@@ -21,6 +22,7 @@ const Header = () => {
                 {
                     (user?.user.email === admin) ?
                         <>
+                            <Cartbox/>
                             <div className='nav-ul'>
                                 <ul>
                                     <li className='home-logo'>
