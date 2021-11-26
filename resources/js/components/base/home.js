@@ -5,6 +5,7 @@ import CategoryCard from '../card/categoryCard'
 import NavBar from "../card/NavBar";
 import axios from "axios";
 import {useStateValue} from "../../helpers/StateProvider";
+import Cartbox from "../card/CartBox";
 
 
 const Home = () => {

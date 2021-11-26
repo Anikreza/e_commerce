@@ -137,13 +137,16 @@ class CartController extends Controller
      * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart,$id)
+    public function destroy(Request $req)
     {
-        $deletedCarts = Cart::where('id', $id)->delete();
+        $Product = DB::table('products')
+        ->join('carts', 'products.id', '=', 'carts.product_id')
+        ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
+        ->where('products.id', '=',$req->productID)
+        ->where('carts.user_id', '=',$req->userID)
+        ->increment('products_in_stock',$req->updatedQuantity);
 
-        $response = [
-            'deletedCarts' => $deletedCarts
-        ];
-        return response($response, 201);
+        $result= Cart::where([['product_id',$req->productID],['user_id',$req->userID]])->delete();
+
     }
 }

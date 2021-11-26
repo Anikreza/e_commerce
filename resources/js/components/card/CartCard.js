@@ -12,12 +12,12 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     const userID = user.user.id;
 
     useEffect(() => {
-        update().then(r=>r)
+        update().then(r => r)
     }, [updatedQuantity]);
 
 
     async function update() {
-        const Data = {updatedQuantity,productID}
+        const Data = {updatedQuantity, productID}
         let result = fetch(`${api}/cart/update/` + userID, {
             method: 'POST',
             body: JSON.stringify(Data),
@@ -30,7 +30,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
 
     const updateStock = useCallback(
         async () => {
-            const Data = {userID,productID}
+            const Data = {userID, productID}
             let result = fetch(`${api}/cart/updateStock`, {
                 method: 'POST',
                 body: JSON.stringify(Data),
@@ -40,12 +40,12 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
                 }
             })
         },
-        [price,sum,quantity],
+        [price, sum, quantity],
     );
 
-        const depleteStock = useCallback(
+    const depleteStock = useCallback(
         async () => {
-            const Data = {userID,productID}
+            const Data = {userID, productID}
             let result = fetch(`${api}/cart/depleteStock`, {
                 method: 'POST',
                 body: JSON.stringify(Data),
@@ -55,25 +55,36 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
                 }
             })
         },
-        [price,sum,quantity],
+        [price, sum, quantity],
     );
 
-
     function Increase() {
-            if ( stock >= updatedQuantity) {
-                setUpdatedQuantity(updatedQuantity + 1)
-                depleteStock().then(r=>r)
-            }
-            else {
-                alert('Out Of Stock!!!')
-            }
+        if (stock >= updatedQuantity) {
+            setUpdatedQuantity(updatedQuantity + 1)
+            depleteStock().then(r => r)
+        } else {
+            alert('Out Of Stock!!!')
+        }
     }
 
     function Decrease() {
-        if (stock>0 && updatedQuantity>=1) {
+        if (stock > 0 && updatedQuantity >= 1) {
             setUpdatedQuantity(updatedQuantity - 1)
-            updateStock().then(r=>r)
+            updateStock().then(r => r)
         }
+    }
+
+    async function Delete() {
+        let Data={userID,productID,updatedQuantity};
+        await fetch(`${api}/cart/delete`,{
+            method:'DELETE',
+            body:JSON.stringify(Data),
+            headers:{
+                'Content-Type':'application/json',
+                'Accept':'application/json'
+            }
+        })
+
     }
 
     return (
@@ -85,7 +96,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
                 <div className='bookInfo'>
                     <p>{title}</p>
                     <h4>{author}</h4>
-                    <h5><RiDeleteBin6Line size='20px'/></h5>
+                    <h5><RiDeleteBin6Line onClick={Delete} style={{cursor:'pointer'}} size='20px'/></h5>
                 </div>
                 <div className='PricingInfo'>
                     <div style={{display: 'flex'}}>
