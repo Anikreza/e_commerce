@@ -105,6 +105,7 @@ class CartController extends Controller
                 'quantity' => $request->updatedQuantity,
             ]);
 
+
         $response = [
             'updateCart' => $updateCart,
         ];
@@ -113,16 +114,14 @@ class CartController extends Controller
     }
     public function updateStock(Request $request)
     {
-        $Product= new Product;
-        $Product::where('id', $request->productID)->increment('products_in_stock',1);
-        $Product->save();
+        $Product=new Product;
+        $Product::where('id','=',$request->productID)->increment('products_in_stock',1);
+        return $Product;
     }
-
     public function depleteStock(Request $request)
     {
-        $Product= new Product;
-        $Product::where('id', $request->productID)->decrement('products_in_stock',1);
-        $Product->save();
+
+        product::where('id','=',$request->productID)->decrement('products_in_stock',1);
     }
 
     /**
