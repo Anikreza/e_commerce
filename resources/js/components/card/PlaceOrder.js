@@ -1,7 +1,7 @@
-import React, {useState, useEffect,useCallback} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import '../../../sass/PlaceOrder.scss'
 
-const PlaceOrder = ({sum,userID,cartID}) => {
+const PlaceOrder = ({sum, userID}) => {
 
     const api = process.env.MIX_API;
     const [name, setName] = useState('');
@@ -9,42 +9,46 @@ const PlaceOrder = ({sum,userID,cartID}) => {
     const [mobile, setMobile] = useState('');
 
 
-    const SendOrder = useCallback(
-        async (e) => {
-            e.preventDefault()
-            const Data = {userID,cartID,sum,mobile,name,address}
-            let result = fetch(`${api}/productOrder/add`, {
-                method: 'POST',
-                body: JSON.stringify(Data),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-        },
-        [],
-    );
-
-    useEffect(() => {
-        console.log('cartID',cartID)
-    }, [SendOrder]);
-
+     const SendOrder=async (e) => {
+         e.preventDefault()
+         console.log(userID, sum, mobile, name, address)
+         const Data = {userID, sum, mobile, name, address}
+         let result = await fetch(`${api}/productOrder/store`, {
+             method: 'POST',
+             body: JSON.stringify(Data),
+             headers: {
+                 'Content-Type': 'application/json',
+                 'Accept': 'application/json'
+             }
+         })
+     }
 
     return (
         <div className='PlaceOrder'>
             <div className='givenInfo'>
-                <h2>SubTotal: <span>${sum}</span></h2>
+                <h2>SubTotal: <span>${sum.toFixed(2)}</span></h2>
                 <hr/>
                 <h4>Delivery Charge: <span>$7</span></h4>
                 <hr/>
-                <h5>Payable Total: <span>${sum+7}</span></h5>
+                <h5>Payable Total: <span>${(sum+7).toFixed(2)}</span></h5>
             </div>
 
-            <form>
-                <input name='name' type='text' placeholder='Name'/>
-                <input name='mobile' type='text' placeholder='Mobile'/>
-                <input name='address' type='text' placeholder='Address'/>
-                <button onClick={SendOrder}> Place Order</button>
+            <form onSubmit={SendOrder}>
+                <input
+                    name='name'
+                    onChange={(e) => setName(e.target.value)}
+                    type='text'
+                    placeholder='Name'/>
+                <input name='mobile'
+                       type='text'
+                       onChange={(e) => setMobile(e.target.value)}
+                       placeholder='Mobile'/>
+                <input
+                    name='address'
+                    type='text'
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder='Address'/>
+                <button> Place Order</button>
             </form>
         </div>
     )

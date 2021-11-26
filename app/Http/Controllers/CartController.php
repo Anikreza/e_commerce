@@ -63,7 +63,7 @@ class CartController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Cart $cart
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Support\Collection
      */
     public function show($user_id)
     {
@@ -146,11 +146,11 @@ class CartController extends Controller
     public function destroy(Request $req)
     {
         $Product = DB::table('products')
-        ->join('carts', 'products.id', '=', 'carts.product_id')
-        ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-        ->where('products.id', '=',$req->productID)
-        ->where('carts.user_id', '=',$req->userID)
-        ->increment('products_in_stock',$req->updatedQuantity);
+            ->join('carts', 'products.id', '=', 'carts.product_id')
+            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
+            ->where('products.id', '=',$req->productID)
+            ->where('carts.user_id', '=',$req->userID)
+            ->increment('products_in_stock',$req->updatedQuantity);
 
         $result= Cart::where([['product_id',$req->productID],['user_id',$req->userID]])->delete();
 

@@ -53,7 +53,7 @@ const DisplayCart = () => {
             <div className='cartBox'>
                 <div className='PayOut'>
                     <h1>Your Cart ({data.length})</h1>
-                    <h2>Total Payable: <span>${sum}</span></h2>
+                    <h2>Total Payable: <span>${sum.toFixed(2)}</span></h2>
                 </div>
 
                 <hr/>

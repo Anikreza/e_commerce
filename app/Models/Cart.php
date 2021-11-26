@@ -26,7 +26,8 @@ class Cart extends Model
     public function product()
     {
         return $this->belongsTo('App\Models\Product', 'product_id');
-    }public function category_book_type()
+    }
+    public function category_book_type()
     {
         return $this->belongsTo('App\Models\CategoryBookType', 'category_book_type_id');
     }
