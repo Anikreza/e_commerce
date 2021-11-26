@@ -79,18 +79,18 @@ class ProductController extends Controller
     {
 
         $product = new Product();
-              $image = $request->file;
-              if($image){
-                $image_ext = $image->getClientOriginalExtension();
-                $image_full_name = time().'.'.$image_ext;
-                $upload_path = 'assets/images/';
-                $image_url = $upload_path.$image_full_name;
+        $image = $request->file;
+        if($image){
+            $image_ext = $image->getClientOriginalExtension();
+            $image_full_name = time().'.'.$image_ext;
+            $upload_path = 'assets/images/';
+            $image_url = $upload_path.$image_full_name;
 
-                $success = $image->move($upload_path,$image_full_name);
-              }
-              else{
-                  $image_url = '';
-              }
+            $success = $image->move($upload_path,$image_full_name);
+        }
+        else{
+            $image_url = '';
+        }
 
         $product->product_img = $image_url;
         $product->title =  $request->name;

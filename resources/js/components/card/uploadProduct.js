@@ -45,14 +45,20 @@ const Add = () => {
         Data.append('coverType', coverType);
         Data.append('description', description);
 
-        await axios.post(`${api}/store`, Data
-        ).then((response) => {
-            alert(response.statusText)
-        }).catch((error) => {
-            alert(error)
-        }).then(() => {
-            console.log('always executed')
-        })
+        if(name && file && author && stock && price && bookType && coverType && description){
+            await axios.post(`${api}/store`, Data
+            ).then((response) => {
+                alert(response.statusText)
+            }).catch((error) => {
+                alert(error)
+            }).then(() => {
+                console.log('always executed')
+            })
+        }
+        else{
+            alert('Please Fill All The Fields')
+        }
+
     }
 
     return (

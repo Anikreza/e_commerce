@@ -34,12 +34,12 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $cart = New Cart;
+        $cart = new Cart;
         $cart->quantity = $request->quantity;
         $cart->product_id = $request->productID;
         $cart->category_book_type_id = $request->bookType;
@@ -52,10 +52,11 @@ class CartController extends Controller
         ];
         return response($response, 201);
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
     public function show($user_id)
@@ -66,23 +67,21 @@ class CartController extends Controller
             ->join('category_book_types', 'category_book_types.id', '=', 'carts.category_book_type_id')
             ->join('category_cover_types', 'category_cover_types.id', '=', 'carts.category_cover_type_id')
 //            ->join('users', 'users.id', '=', 'carts.user_id')
-            ->select('carts.*', 'products.title as title', 'products.price as price','products.product_img as product_img',
-                'products.products_in_stock as products_in_stock','products.order_number as order_number',
-                'products.description as description','category_cover_types.category_cover_types as category_cover_types',
+            ->select('carts.*', 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
+                'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
+                'products.description as description', 'category_cover_types.category_cover_types as category_cover_types',
                 'category_book_types.category_book_types as category_book_types')
             ->where('carts.user_id', $user_id)
             ->latest()
             ->get();
 
-        $response = [
-            'listCarts' => $listCarts
-        ];
-        return response($response, 201);
+        return $listCarts;
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
     public function edit(Cart $cart)
@@ -93,32 +92,49 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cart  $cart
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $cartID)
+    public function update(Request $request, $userID)
     {
         $updateCart = DB::table('carts')
-            ->where('carts.user_id', $cartID)
+            ->where('carts.user_id', $userID)
+            ->where('carts.product_id', $request->productID)
             ->update([
-                'quantity' => $request->quantity,
-                'product_id' => $request->product_id,
-                'category_book_type_id' => $request->category_book_type_id,
-                'category_cover_type_id' => $request->category_cover_type_id,
-                'user_id' => $request->user_id
+                'quantity' => $request->updatedQuantity,
             ]);
 
+
         $response = [
-            'updateCart' => $updateCart
+            'updateCart' => $updateCart,
         ];
         return response($response, 201);
+
+    }
+    public function updateStock(Request $request)
+    {
+        $Product = DB::table('products')
+            ->join('carts', 'products.id', '=', 'carts.product_id')
+            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
+            ->where('products.id', '=',$request->productID)
+            ->where('carts.user_id', '=',$request->userID)
+            ->increment('products_in_stock',1);
+    }
+    public function depleteStock(Request $request)
+    {
+        $Product = DB::table('products')
+            ->join('carts', 'products.id', '=', 'carts.product_id')
+            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
+            ->where('products.id', '=',$request->productID)
+            ->where('carts.user_id', '=',$request->userID)
+            ->decrement('products_in_stock',1);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
     public function destroy(Cart $cart,$id)

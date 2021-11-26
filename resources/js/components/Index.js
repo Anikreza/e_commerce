@@ -8,6 +8,7 @@ import Home from './base/home';
 import '../../sass/app.scss';
 import SingleProductCard from "./card/SingleProductCard";
 import DisplayProducts from "./base/DisplayProducts";
+import DisplayCart from "./base/DisplayCart";
 
 function Index() {
     return (
@@ -22,6 +23,7 @@ function Index() {
                     <Route path='/add' element={<UploadProduct/>}/>
                     <Route path='/singleBook/:id' element={<SingleProductCard/>}/>
                     <Route exact path='books/:id' element={<DisplayProducts/>}/>
+                    <Route path='/cart' element={<DisplayCart/>}/>
                 </Routes>
             </Router>
         </div>
