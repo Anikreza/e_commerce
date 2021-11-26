@@ -104,10 +104,17 @@ class CartController extends Controller
             ->update([
                 'quantity' => $request->updatedQuantity,
             ]);
+        $updateProductStock = DB::table('products')
+            ->where('products.stock', $userID)
+            ->update([
+//                $product->products_in_stock =  $request->stock;
+                'products_in_stock' => $request->stock,
+            ]);
 
 
         $response = [
             'updateCart' => $updateCart,
+            'updateProductStock' => $updateProductStock
         ];
         return response($response, 201);
 
@@ -130,6 +137,28 @@ class CartController extends Controller
             ->where('carts.user_id', '=',$request->userID)
             ->decrement('products_in_stock',1);
     }
+
+
+//    public function updateStock(Request $request)
+//    {
+//        $Product = $Product = DB::table('products')
+//            ->join('carts', 'carts.id', '=', 'products.cart_id')
+//            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
+//            ->where('products.id', '=','carts.user_id')
+//            ->increment('products_in_stock',1);
+////        $Product::where('id','=',$request->productID)->increment('products_in_stock',1);
+//        return $Product;
+//    }
+//    public function depleteStock(Request $request)
+//    {
+//        $Product = DB::table('products')
+//            ->join('carts', 'carts.id', '=', 'products.cart_id')
+//            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
+//            ->where('products.id', '=','carts.user_id')
+//            ->decrement('products_in_stock',1);
+////        $Product::where('id','=',$request->productID)->decrement('products_in_stock',1);
+//        return $Product;
+//    }
 
     /**
      * Remove the specified resource from storage.
