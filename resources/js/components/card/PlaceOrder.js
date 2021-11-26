@@ -1,7 +1,7 @@
 import React, {useState, useEffect,useCallback} from "react";
 import '../../../sass/PlaceOrder.scss'
 
-const PlaceOrder = ({sum,userID}) => {
+const PlaceOrder = ({sum,userID,cartID}) => {
 
     const api = process.env.MIX_API;
     const [name, setName] = useState('');
@@ -12,7 +12,7 @@ const PlaceOrder = ({sum,userID}) => {
     const SendOrder = useCallback(
         async (e) => {
             e.preventDefault()
-            const Data = {userID,sum,mobile,name,address}
+            const Data = {userID,cartID,sum,mobile,name,address}
             let result = fetch(`${api}/productOrder/add`, {
                 method: 'POST',
                 body: JSON.stringify(Data),
