@@ -20,7 +20,7 @@ class CreateCartsTable extends Migration
 //            $table->unsignedBigInteger('user_id');
 //            $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('product_id')->unique();
+            $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('category_book_type_id')->nullable();
             $table->foreign('category_book_type_id')->references('id')->on('category_book_types');

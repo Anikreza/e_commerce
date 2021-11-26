@@ -71,7 +71,6 @@ const SingleProductCard = () => {
                 }
             }
         )
-
     }
 
 

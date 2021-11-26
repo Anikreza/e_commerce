@@ -35,20 +35,26 @@ class CartController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $cart = new Cart;
-        $cart->quantity = $request->quantity;
-        $cart->product_id = $request->productID;
-        $cart->category_book_type_id = $request->bookType;
-        $cart->category_cover_type_id = $request->coverType;
-        $cart->user_id = $request->userID;
-        $cart->save();
+        $check = Cart::where('product_id',$request->productID)->where('user_id',$request->userID)->first();
+        if($check){
+
+        }
+        else{
+            $cart = new Cart;
+            $cart->quantity = $request->quantity;
+            $cart->product_id = $request->productID;
+            $cart->category_book_type_id = $request->bookType;
+            $cart->category_cover_type_id = $request->coverType;
+            $cart->user_id = $request->userID;
+            $cart->save();
+        }
 
         $response = [
-            'cart' => $cart
+            'cart' => $cart,
         ];
         return response($response, 201);
     }

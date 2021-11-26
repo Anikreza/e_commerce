@@ -1,0 +1,66 @@
+.PlaceOrder {
+    background-color: #e7e7e7;
+    max-width: 20vw;
+    float: right;
+    margin-right: 4%;
+    margin-top: 16%;
+    padding: 100px 20px 60px 20px;
+    font-weight: lighter;
+    border-radius: 5px;
+    border-style: ridge;
+    border-width: thin;
+    border-color: #989898;
+    .givenInfo {
+        max-width: 15vw;
+        margin-left: 2vw;
+
+        span {
+            float: right;
+        }
+
+        h2 {
+            font-size: 14px;
+            color: #1c231c;
+            margin-top: -5px;
+        }
+
+        h4 {
+            font-size: 12px;
+            color: #252d25;
+            margin-top: -5px;
+        }
+
+        h5 {
+            font-size: 15px;
+            color: #361c16;
+            margin-top: -5px;
+        }
+        hr{
+            height: 1px;
+            color: #d5d2d2;
+        }
+    }
+
+    form {
+
+        input {
+            width:92%;
+            height: 29px;
+            margin-top: 5px;
+            border-style: ridge;
+            border-width: thin;
+            border-radius: 5px;
+            color: #000000;
+            background-color: #d5d5d5;
+            padding-left: 15px;
+        }
+        button{
+            height: 29px;
+            width: 50%;
+            margin-top: 4%;
+            margin-left: 27%;
+            background-color: #346235;
+            color: white;
+        }
+    }
+}
