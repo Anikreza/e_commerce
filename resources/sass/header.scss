@@ -4,10 +4,12 @@
     position: fixed;
     min-height: 40px;
     min-width: 100vw;
-    background: linear-gradient(to right, #d3decf, rgb(215, 209, 191), rgb(255, 255, 255));
+    padding-bottom: 5px;
+    background:whitesmoke;
     z-index: 200;
     .nav-ul {
         ul {
+            padding-top: .5%;
             display: flex;
             font-size: 18px;
             input{
@@ -44,7 +46,7 @@
 .user-name-nav {
     position: fixed;
     right: 4.5%;
-    top: 2%;
+    top: 1%;
     z-index: 200;
 
     a{
@@ -92,7 +94,7 @@
 
 .logo {
     position: absolute;
-    top: 4%;
+    top: 5%;
     width: 200px;
     height: 55px;
 }

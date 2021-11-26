@@ -38,30 +38,57 @@ const SingleProductCard = () => {
         let coverType=data.category_cover_type_id;
         let bookType=data.category_book_type_id;
         let Data={quantity,productID,userID,bookType,coverType}
-        let result= fetch(`${api}/cart/store`,{
-            method:'POST',
-            body:JSON.stringify(Data),
-            headers:{
-                'Content-Type':'application/json',
-                'Accept':'application/json'
+        if(quantity>0){
+            let result= fetch(`${api}/cart/store`,{
+                method:'POST',
+                body:JSON.stringify(Data),
+                headers:{
+                    'Content-Type':'application/json',
+                    'Accept':'application/json'
+                }
+            })
+        }
+        else{
+            alert('please add at least one book')
+        }
+    }
+    async function depleteStock() {
+        const Data = {productID}
+        let result = fetch(`${api}/cart/depleteStock`, {
+            method: 'POST',
+            body: JSON.stringify(Data),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         })
-
+    }    async function updateStock() {
+        const Data = {productID}
+        let result = fetch(`${api}/cart/updateStock`, {
+            method: 'POST',
+            body: JSON.stringify(Data),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
     }
 
     function Increase() {
-        if (data.products_in_stock > quantity) {
+        if (data.products_in_stock >= quantity) {
             setQuantity(quantity + 1)
         }
         else {
             alert('Out Of Stock!!!')
         }
+        depleteStock().then(r=>r)
     }
 
     function Decrease() {
-        if (data.products_in_stock > 0 && quantity > 0) {
+        if (data.products_in_stock > 0 && quantity >= 1) {
             setQuantity(quantity - 1)
         }
+        updateStock().then(r=>r)
     }
 
     return (

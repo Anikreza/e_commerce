@@ -1,11 +1,16 @@
-import React, {useState, useEffect,useCallback} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import axios from "axios";
+import '../../../sass/cartPage.scss';
+import {RiDeleteBin6Line} from 'react-icons/ri';
+import CartCard from "../card/CartCard";
+import Checkout from "../card/Checkout";
 
 const DisplayCart = () => {
 
-    let user=JSON.parse(window.localStorage.getItem('user'));
-    const userID=user.user.id;
+    let user = JSON.parse(window.localStorage.getItem('user'));
+    const userID = user.user.id;
     const [data, setData] = useState([])
+    const [sum, setSum] = useState(0)
     const api = process.env.MIX_API;
 
     const getCart = useCallback(
@@ -26,21 +31,38 @@ const DisplayCart = () => {
         getCart().then(r => r)
     }, [getCart]);
 
+
+    useEffect(() => {
+        const sum = data.reduce((amount, books) => (books.price * books.quantity) + amount, 0);
+        setSum(sum)
+        console.log('price', sum);
+    }, [data]);
+
+
     return (
-        <div>
-            {
-                data.map(Data=>(
-                    <div key={data.id}>
-                        <p>{Data.id}</p>
-                        <p>{Data.id}</p>
-                        <p>{Data.id}</p>
-                        <p>{Data.id}</p>
-                        <p>{Data.id}</p>
-                        <p>{Data.id}</p>
-                        <p>{Data.id}</p>
-                    </div>
-                ))
-            }
+        <div className='cartPage'>
+            <div className='cartBox'>
+                <div className='PayOut'>
+                    <h1>Your Cart ({data.length})</h1>
+                    <h2>Total Payable: <span>${sum}</span></h2>
+                </div>
+                <hr/>
+                {
+                    data.map(Data => (
+                        <CartCard
+                            key={Data.id}
+                            image={Data.product_img}
+                            title={Data.title}
+                            author={Data.author}
+                            price={Data.price}
+                            quantity={Data.quantity}
+                            stock={Data.products_in_stock}
+                            productID={Data.product_id}
+                            sum={sum}
+                        />
+                    ))
+                }
+            </div>
         </div>
     )
 }

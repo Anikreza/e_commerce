@@ -67,7 +67,7 @@ class CartController extends Controller
             ->join('category_book_types', 'category_book_types.id', '=', 'carts.category_book_type_id')
             ->join('category_cover_types', 'category_cover_types.id', '=', 'carts.category_cover_type_id')
 //            ->join('users', 'users.id', '=', 'carts.user_id')
-            ->select('carts.*', 'products.title as title', 'products.price as price', 'products.product_img as product_img',
+            ->select('carts.*', 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
                 'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
                 'products.description as description', 'category_cover_types.category_cover_types as category_cover_types',
                 'category_book_types.category_book_types as category_book_types')
@@ -96,22 +96,33 @@ class CartController extends Controller
      * @param \App\Models\Cart $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $cartID)
+    public function update(Request $request, $userID)
     {
         $updateCart = DB::table('carts')
-            ->where('carts.user_id', $cartID)
+            ->where('carts.user_id', $userID)
+            ->where('carts.product_id', $request->productID)
             ->update([
-                'quantity' => $request->quantity,
-                'product_id' => $request->product_id,
-                'category_book_type_id' => $request->category_book_type_id,
-                'category_cover_type_id' => $request->category_cover_type_id,
-                'user_id' => $request->user_id
+                'quantity' => $request->updatedQuantity,
             ]);
 
         $response = [
-            'updateCart' => $updateCart
+            'updateCart' => $updateCart,
         ];
         return response($response, 201);
+
+    }
+    public function updateStock(Request $request)
+    {
+        $Product= new Product;
+        $Product::where('id', $request->productID)->increment('products_in_stock',1);
+        $Product->save();
+    }
+
+    public function depleteStock(Request $request)
+    {
+        $Product= new Product;
+        $Product::where('id', $request->productID)->decrement('products_in_stock',1);
+        $Product->save();
     }
 
     /**
