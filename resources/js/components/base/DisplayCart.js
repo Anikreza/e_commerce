@@ -3,7 +3,7 @@ import axios from "axios";
 import '../../../sass/cartPage.scss';
 import {RiDeleteBin6Line} from 'react-icons/ri';
 import CartCard from "../card/CartCard";
-import Checkout from "../card/Checkout";
+import PlaceOrder from "../card/PlaceOrder";
 
 const DisplayCart = () => {
 
@@ -36,7 +36,6 @@ const DisplayCart = () => {
         async () => {
             const sum = data.reduce((amount, books) => (books.price * books.quantity) + amount, 0);
             setSum(sum)
-            console.log('price', sum);
         },
         [data, quantity,getCart],
     );
@@ -45,21 +44,20 @@ const DisplayCart = () => {
         getSum().then(r => r)
     }, [getSum, data, getCart, quantity]);
 
-    function clicked() {
-        console.log('clicked')
-        setQuantity(data.quantity)
-        console.log(quantity)
-    }
-
     return (
         <div className='cartPage'>
+            <PlaceOrder
+                sum={sum}
+                userID={userID}
+            />
             <div className='cartBox'>
                 <div className='PayOut'>
                     <h1>Your Cart ({data.length})</h1>
-                    <h2>Total Payable: <span>${sum}</span></h2>
+                    <h2>Total Payable: <span>${sum.toFixed(2)}</span></h2>
                 </div>
+
                 <hr/>
-                <div onClick={clicked}>
+                <div>
                     {
                         data.map(Data => (
                             <CartCard

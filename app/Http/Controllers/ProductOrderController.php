@@ -41,7 +41,7 @@ class ProductOrderController extends Controller
     {
         $productOrder = new ProductOrder();
         $productOrder->name =  $request->name;
-        $productOrder->phone =  $request->phone;
+        $productOrder->phone =  $request->mobile;
         $productOrder->address =  $request->address;
         $productOrder->total =  $request->sum;
         $productOrder->user_id =  $request->userID;

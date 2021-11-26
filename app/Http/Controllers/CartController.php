@@ -39,9 +39,9 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-      $check = Cart::where('product_id',$request->productID)->where('user_id',$request->userID)->first();
+        $check = Cart::where('product_id',$request->productID)->where('user_id',$request->userID)->first();
         if($check){
-            return response()->json(["message"=>"User not found"]);
+
         }
         else{
             $cart = new Cart;
@@ -63,7 +63,7 @@ class CartController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Cart $cart
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Support\Collection
      */
     public function show($user_id)
     {

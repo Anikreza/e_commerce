@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback} from "react";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import axios from "axios";
-import Checkout from "./Checkout";
+import PlaceOrder from "./PlaceOrder";
 
 const CartCard = ({image, title, author, quantity, price, sum, stock, productID}) => {
 

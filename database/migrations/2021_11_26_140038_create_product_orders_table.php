@@ -18,7 +18,7 @@ class CreateProductOrdersTable extends Migration
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->bigInteger('total')->nullable();
+            $table->float('total')->nullable();
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
