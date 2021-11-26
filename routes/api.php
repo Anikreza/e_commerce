@@ -30,6 +30,7 @@ Route::get('/cart/show/{user_id}',[CartController::class, 'show']);
 Route::post('/cart/update/{cart_id}',[CartController::class, 'update']);
 Route::post('/cart/updateStock',[CartController::class, 'updateStock']);
 Route::post('/cart/depleteStock',[CartController::class, 'depleteStock']);
+Route::get('/cart/delete/{id}',[CartController::class, 'destroy']);
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
