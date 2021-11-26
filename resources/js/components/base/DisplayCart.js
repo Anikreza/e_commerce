@@ -11,6 +11,7 @@ const DisplayCart = () => {
     const userID = user.user.id;
     const [data, setData] = useState([])
     const [sum, setSum] = useState(0)
+    const [quantity, setQuantity] = useState('')
     const api = process.env.MIX_API;
 
     const getCart = useCallback(
@@ -29,15 +30,26 @@ const DisplayCart = () => {
 
     useEffect(async () => {
         getCart().then(r => r)
-    }, [getCart]);
+    }, [getCart,data]);
 
+    const getSum = useCallback(
+        async () => {
+            const sum = data.reduce((amount, books) => (books.price * books.quantity) + amount, 0);
+            setSum(sum)
+            console.log('price', sum);
+        },
+        [data, quantity,getCart],
+    );
 
     useEffect(() => {
-        const sum = data.reduce((amount, books) => (books.price * books.quantity) + amount, 0);
-        setSum(sum)
-        console.log('price', sum);
-    }, [data]);
+        getSum().then(r => r)
+    }, [getSum, data, getCart, quantity]);
 
+    function clicked() {
+        console.log('clicked')
+        setQuantity(data.quantity)
+        console.log(quantity)
+    }
 
     return (
         <div className='cartPage'>
@@ -47,21 +59,24 @@ const DisplayCart = () => {
                     <h2>Total Payable: <span>${sum}</span></h2>
                 </div>
                 <hr/>
-                {
-                    data.map(Data => (
-                        <CartCard
-                            key={Data.id}
-                            image={Data.product_img}
-                            title={Data.title}
-                            author={Data.author}
-                            price={Data.price}
-                            quantity={Data.quantity}
-                            stock={Data.products_in_stock}
-                            productID={Data.product_id}
-                            sum={sum}
-                        />
-                    ))
-                }
+                <div onClick={clicked}>
+                    {
+                        data.map(Data => (
+                            <CartCard
+                                data={data}
+                                key={Data.id}
+                                image={Data.product_img}
+                                title={Data.title}
+                                author={Data.author}
+                                price={Data.price}
+                                quantity={Data.quantity}
+                                stock={Data.products_in_stock}
+                                productID={Data.product_id}
+                                sum={sum}
+                            />
+                        ))
+                    }
+                </div>
             </div>
         </div>
     )

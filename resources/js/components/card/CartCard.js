@@ -28,7 +28,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
         })
     }
     async function updateStock() {
-        const Data = {productID}
+        const Data = {userID,productID}
         let result = fetch(`${api}/cart/updateStock`, {
             method: 'POST',
             body: JSON.stringify(Data),
@@ -39,7 +39,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
         })
     }
     async function depleteStock() {
-        const Data = {productID}
+        const Data = {userID,productID}
         let result = fetch(`${api}/cart/depleteStock`, {
             method: 'POST',
             body: JSON.stringify(Data),
@@ -51,21 +51,19 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     }
 
     function Increase() {
-
         update().then(r => r)
-        if (stock>0 && stock >= updatedQuantity) {
-            setUpdatedQuantity(updatedQuantity + 1)
-            depleteStock().then(r=>r)
-        }
-        else {
-            alert('Out Of Stock!!!')
-        }
+            if ( stock >= updatedQuantity) {
+                setUpdatedQuantity(updatedQuantity + 1)
+                depleteStock().then(r=>r)
+            }
+            else {
+                alert('Out Of Stock!!!')
+            }
     }
 
     function Decrease() {
-
         update().then(r => r)
-        if (stock >= updatedQuantity && updatedQuantity > 0) {
+        if (stock>0 && updatedQuantity>=1) {
             setUpdatedQuantity(updatedQuantity - 1)
             updateStock().then(r=>r)
         }
