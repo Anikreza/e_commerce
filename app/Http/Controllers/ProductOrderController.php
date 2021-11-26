@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Cart;
+use Illuminate\Support\Facades\DB;
 use App\Models\ProductOrder;
 use Illuminate\Http\Request;
 
@@ -35,7 +39,20 @@ class ProductOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $productOrder = new ProductOrder();
+        $productOrder->name =  $request->name;
+        $productOrder->phone =  $request->phone;
+        $productOrder->address =  $request->address;
+        $productOrder->total =  $request->sum;
+        $productOrder->user_id =  $request->userID;
+        $productOrder->product_id =  $request->productId;
+        $productOrder->cart_id =  $request->cartId;
+        $productOrder->save();
+
+        $response = [
+            'productOrder' => $productOrder,
+        ];
+        return response($response, 201);
     }
 
     /**

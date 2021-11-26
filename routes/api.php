@@ -32,6 +32,9 @@ Route::post('/cart/updateStock',[CartController::class, 'updateStock']);
 Route::post('/cart/depleteStock',[CartController::class, 'depleteStock']);
 Route::delete('/cart/delete',[CartController::class, 'destroy']);
 
+Route::get('/productOrder/add',[ProductOrderController::class, 'add']);
+Route::post('/productOrder/store',[ProductOrderController::class, 'store']);
+
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});

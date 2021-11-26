@@ -35,20 +35,26 @@ class CartController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $cart = new Cart;
-        $cart->quantity = $request->quantity;
-        $cart->product_id = $request->productID;
-        $cart->category_book_type_id = $request->bookType;
-        $cart->category_cover_type_id = $request->coverType;
-        $cart->user_id = $request->userID;
-        $cart->save();
+      $check = Cart::where('product_id',$request->productID)->where('user_id',$request->userID)->first();
+        if($check){
+            return response()->json(["message"=>"User not found"]);
+        }
+        else{
+            $cart = new Cart;
+            $cart->quantity = $request->quantity;
+            $cart->product_id = $request->productID;
+            $cart->category_book_type_id = $request->bookType;
+            $cart->category_cover_type_id = $request->coverType;
+            $cart->user_id = $request->userID;
+            $cart->save();
+        }
 
         $response = [
-            'cart' => $cart
+            'cart' => $cart,
         ];
         return response($response, 201);
     }
@@ -104,17 +110,10 @@ class CartController extends Controller
             ->update([
                 'quantity' => $request->updatedQuantity,
             ]);
-        $updateProductStock = DB::table('products')
-            ->where('products.stock', $userID)
-            ->update([
-//                $product->products_in_stock =  $request->stock;
-                'products_in_stock' => $request->stock,
-            ]);
 
 
         $response = [
             'updateCart' => $updateCart,
-            'updateProductStock' => $updateProductStock
         ];
         return response($response, 201);
 
@@ -138,28 +137,6 @@ class CartController extends Controller
             ->decrement('products_in_stock',1);
     }
 
-
-//    public function updateStock(Request $request)
-//    {
-//        $Product = $Product = DB::table('products')
-//            ->join('carts', 'carts.id', '=', 'products.cart_id')
-//            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-//            ->where('products.id', '=','carts.user_id')
-//            ->increment('products_in_stock',1);
-////        $Product::where('id','=',$request->productID)->increment('products_in_stock',1);
-//        return $Product;
-//    }
-//    public function depleteStock(Request $request)
-//    {
-//        $Product = DB::table('products')
-//            ->join('carts', 'carts.id', '=', 'products.cart_id')
-//            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-//            ->where('products.id', '=','carts.user_id')
-//            ->decrement('products_in_stock',1);
-////        $Product::where('id','=',$request->productID)->decrement('products_in_stock',1);
-//        return $Product;
-//    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -169,11 +146,11 @@ class CartController extends Controller
     public function destroy(Request $req)
     {
         $Product = DB::table('products')
-        ->join('carts', 'products.id', '=', 'carts.product_id')
-        ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-        ->where('products.id', '=',$req->productID)
-        ->where('carts.user_id', '=',$req->userID)
-        ->increment('products_in_stock',$req->updatedQuantity);
+            ->join('carts', 'products.id', '=', 'carts.product_id')
+            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
+            ->where('products.id', '=',$req->productID)
+            ->where('carts.user_id', '=',$req->userID)
+            ->increment('products_in_stock',$req->updatedQuantity);
 
         $result= Cart::where([['product_id',$req->productID],['user_id',$req->userID]])->delete();
 
