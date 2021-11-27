@@ -21,8 +21,6 @@ const SingleProductCard = () => {
             await axios.get(`${api}/products/` + productID)
                 .then(async (res) => {
                     setData(res.data.showProduct);
-                    console.log('singleData', res.data.showProduct);
-                    console.log('bookId', findBook);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -51,7 +49,6 @@ const SingleProductCard = () => {
     );
 
     async function addToCart() {
-        console.log(data);
         let coverType = data.category_cover_type_id;
         let bookType = data.category_book_type_id;
         let Data = {quantity, productID, userID, bookType, coverType}

@@ -10,14 +10,26 @@ const comp = () => {
     const url = process.env.MIX_URL;
 
     async function search(searchKey) {
-        await axios.get(`${api}/products/search/` + searchKey)
-            .then(async (res) => {
-                console.log(res.data.result)
-                setData(res.data.result)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        let key = '`'
+        if (searchKey)
+        {
+            key = searchKey
+        }
+        else
+        {
+            key = '`'
+        }
+        if (key !== null && key.match(/^ *$/) === null)
+        {
+            await axios.get(`${api}/products/search/` + key)
+                .then(async (res) => {
+                    setData(res.data.result)
+                })
+                .catch((error) => {
+                    alert(error)
+                })
+        }
+
     }
 
     return (
@@ -33,7 +45,7 @@ const comp = () => {
             <div>
                 {
                     data.map((Data) => (
-                        <div className={Data?.title ? 'resultTab' : 'hide'}>
+                        <div className={(Data?.length !== 0) ? 'resultTab' : 'hide'}>
                             <div
                                 className='SearchShow'
                                 onClick={() => window.location.replace(`/singleBook/${Data.id}`)}
@@ -44,14 +56,14 @@ const comp = () => {
                                     <h4>{Data.author}</h4>
                                 </div>
                                 <div className='rightSideInfo'>
-                                        {
-                                            Data.products_in_stock>0?
-                                                <h5> Product In Stock</h5>
-                                                :
-                                                <h6> Out Of Stock</h6>
-                                        }
+                                    {
+                                        Data.products_in_stock > 0 ?
+                                            <h5> Product In Stock</h5>
+                                            :
+                                            <h6> Out Of Stock</h6>
+                                    }
                                 </div>
-                                <h7> ${Data.price}</h7>
+                                <h3> ${Data.price}</h3>
                             </div>
                             <hr/>
                         </div>
