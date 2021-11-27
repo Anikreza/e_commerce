@@ -55,27 +55,25 @@ class ProductOrderController extends Controller
         return response($response, 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProductOrder  $productOrder
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Database\Query\Builder|\Illuminate\Http\Response
-     */
 
-    public function show(ProductOrder $productOrder,$user_id)
+    public function orders($user_id)
     {
+
+        $orders=ProductOrder::where('user_id',$user_id)->first();
+
         $productOrder = DB::table('product_orders')
-            ->join('products', 'products.id', '=', 'product_orders.product_id')
-            ->join('carts', 'carts.id', '=', 'product_orders.cart_id')
             ->join('users', 'users.id', '=', 'product_orders.user_id')
+            ->join('carts', 'carts.user_id', '=', 'users.id')
+            ->join('products', 'products.id', '=', 'carts.product_id')
             ->select('product_orders.*','carts.user_id','carts.quantity', 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
                 'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
                 'products.description as description')
+            ->where('carts.user_id', $user_id)
+            ->get();
 
-            ->where('carts.user_id',1)
-            ->first();
         $response = [
-            'productOrder' => $productOrder
+            'orders' => $productOrder,
+            'customer'=>$orders
         ];
         return response($response, 201);
     }

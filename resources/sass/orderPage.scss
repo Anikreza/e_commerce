@@ -1,0 +1,105 @@
+.orderPage {
+    display: flex;
+    padding: 9%;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: lighter;
+
+    .customerInfo {
+        padding:2.9%;
+        border-right-style: ridge;
+        border-width: 1px;
+        border-right-color: #d7d7d7;
+        min-width: 29vw;
+        max-width: 29vw;
+        background-color: whitesmoke;
+        .receipt{
+            h4{
+                font-family: "Felix Titling";
+                color: #2d2626;
+                font-size: 15px;
+            }
+            hr{
+                height: .5px;
+                color: #f6f6f6;
+            }
+            p {
+                font-family: fantasy;
+                color: #174426;
+                font-size: 12.9px;
+            }
+            span{
+                color: #1f0b09;
+                font-size: 9px;
+            }
+
+        }
+        h2 {
+            font-family: "Book Antiqua", serif;
+            color: #601a11;
+        }
+        button{
+            cursor: pointer;
+            padding: 10px;
+            color: whitesmoke;
+            background-color: #475e42;
+        }
+
+    }
+
+    .orderInfo {
+        margin-left: 20px;
+        margin-top: 2%;
+        min-width: 50vw;
+        min-height: 40vh;
+        .main {
+            img {
+                width: 140px;
+                height: 200px;
+                float: right;
+                margin-bottom: 8px;
+            }
+            .content {
+                background: transparent;
+                padding: 8px;
+                border-style: hidden;
+                min-height: 250px;
+
+                .Price {
+                    margin-top: -5px;
+                    text-align: center;
+                    font-weight: 100;
+                    font-size: 17px;
+                    font-family: fantasy;
+                    color: #592828;
+                }
+                .quantity{
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: 100;
+                    font-family: "Book Antiqua";
+                    color: #071507;
+                }
+            }
+            .column {
+                float: right;
+                text-align: left;
+                width: 25%;
+                hr{
+                    height: .5px;
+                    color: #f6f6f6;
+                }
+            }
+            .row {
+                margin: 5px 5px;
+            }
+
+            .row,
+            .row > .column {
+                padding: 0px;
+            }
+        }
+    }
+}
+
+

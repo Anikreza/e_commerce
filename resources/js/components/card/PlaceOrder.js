@@ -23,6 +23,7 @@ const PlaceOrder = ({sum, userID}) => {
                      'Accept': 'application/json'
                  }
              })
+             window.location.replace('/orders')
          }
          else{
              alert('Please Provide All The Information')
