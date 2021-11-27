@@ -4,8 +4,9 @@ import '../../../sass/header.scss'
 import {IoIosArrowDropdown} from 'react-icons/io';
 import a from '../../assets/logo.png'
 import SearchCard from "../card/SearchCard";
-import Cartbox from "../card/CartBox";
-
+import CartBox from "../card/CartBox";
+import {BiAddToQueue} from 'react-icons/bi';
+import {FaRegEdit} from 'react-icons/fa';
 
 const Header = () => {
 
@@ -20,29 +21,32 @@ const Header = () => {
         <div>
             <div className='navbar'>
                 {
+                    (user?.user)?
+                        <div>
+                        <CartBox/>
+                        </div>
+                        :
+                        <div>
+                        </div>
+                }
+                {
                     (user?.user.email === admin) ?
                         <>
-                            <Cartbox/>
                             <div className='nav-ul'>
                                 <ul>
-                                    <li className='home-logo'>
-                                        <NavLink to='/home'
-                                                 activeStyle={{
-                                                     fontWeight: "bold",
-                                                     color: 'rgb(29, 99, 27)'
-                                                 }}>
+                                    <li className='home-logo-admin'>
+                                        <NavLink to='/home'>
                                             <img className='logo' src={a}/>
                                         </NavLink>
                                     </li>
 
-                                    <li><NavLink to='/add' activeStyle={{
-                                        fontWeight: "300",
-                                        color: 'rgb(29, 99, 27)'
-                                    }}> Add Product </NavLink></li>
+                                    <li><NavLink to='/add'>
+                                        <BiAddToQueue size='29px' color='#363636'/>
+                                    </NavLink></li>
 
-                                    <li><NavLink to='/list' activeStyle={{
-                                        fontWeight: "300", color: 'rgb(29, 99, 27)'
-                                    }}>Product List </NavLink></li>
+                                    <li><NavLink to='/edit'>
+                                        <FaRegEdit size='27px' color='#363636'/>
+                                    </NavLink></li>
                                 </ul>
                             </div>
                         </>
@@ -50,10 +54,11 @@ const Header = () => {
                         <>
                             <div className='nav-ul'>
                                 <ul>
-                                    <li className='home-logo'><NavLink to='/home' activeStyle={{
-                                        fontWeight: "bold",
-                                        color: 'rgb(29, 99, 27)'
-                                    }}><img className='logo' src={a}/></NavLink></li>
+                                    <li className='home-logo'>
+                                        <NavLink to='/home'>
+                                        <img className='logo' src={a} alt=''/>
+                                        </NavLink>
+                                    </li>
                                     <SearchCard/>
                                 </ul>
                             </div>
@@ -75,7 +80,7 @@ const Header = () => {
                     </span>
                 </div>
                 :
-                <div className='user-name-nav'>
+                <div className='user-name-nav-withoutUser'>
                     <NavLink to='/login'> Log In</NavLink>
                 </div>
             }

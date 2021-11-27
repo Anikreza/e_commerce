@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect, useCallback, useRef} from 'react'
 import '../../../sass/home.scss'
 import Footer from "./footer";
 import CategoryCard from '../card/categoryCard'
@@ -15,7 +15,7 @@ const Home = () => {
     const [fantasyBookData, setFantasyBookData] = useState([]);
     const [adventureBookData, setAdventureBookData] = useState([]);
     const [romanceBookData, setRomanceBookData] = useState([]);
-    const [data, setData]=useState([])
+    const [data, setData] = useState([])
 
     const getBooks = useCallback(
         async () => {
@@ -45,24 +45,38 @@ const Home = () => {
         }
     }
     window.addEventListener('scroll', ScrollHeight);
+    const AdventureRef = useRef(null)
+    const FantasyRef = useRef(null)
+    const RomaneRef = useRef(null)
     return (
         <div>
             <div className={!height ? 'home' : 'home2'}>
-                <NavBar/>
+                <NavBar
+                    Adventure={AdventureRef}
+                    Romance={RomaneRef}
+                    Fantasy={FantasyRef}
+                />
                 <div className='bg'>
                 </div>
-                <CategoryCard
-                    title={'Adventure Novels: Fascinate Your Destinies...'}
-                    bookData={adventureBookData}
-                />
-                <CategoryCard
-                    title={'Fantasy Novels: Fascinate Your Thoughts...'}
-                    bookData={fantasyBookData}
-                />
-                <CategoryCard
-                    title={'Romance Novels: Fascinate Your Nerves...'}
-                    bookData={romanceBookData}
-                />
+                <div ref={AdventureRef}>
+                    <CategoryCard
+                        title={'Adventure Novels: Fascinate Your Destinies...'}
+                        bookData={adventureBookData}
+                    />
+                </div>
+                <div ref={FantasyRef}>
+                    <CategoryCard
+                        title={'Fantasy Novels: Fascinate Your Thoughts...'}
+                        bookData={fantasyBookData}
+                    />
+                </div>
+                <div ref={RomaneRef}>
+                    <CategoryCard
+                        title={'Romance Novels: Fascinate Your Nerves...'}
+                        bookData={romanceBookData}
+                    />
+                </div>
+
             </div>
             <Footer/>
         </div>
