@@ -59,9 +59,10 @@ class ProductOrderController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\ProductOrder  $productOrder
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Database\Query\Builder|\Illuminate\Http\Response
      */
-    public function show($user_id)
+
+    public function show(ProductOrder $productOrder,$user_id)
     {
         $productOrder = DB::table('product_orders')
             ->join('products', 'products.id', '=', 'product_orders.product_id')
@@ -70,7 +71,8 @@ class ProductOrderController extends Controller
             ->select('product_orders.*','carts.user_id','carts.quantity', 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
                 'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
                 'products.description as description')
-            ->where('carts.quantity',1)
+
+            ->where('carts.user_id',1)
             ->first();
         $response = [
             'productOrder' => $productOrder

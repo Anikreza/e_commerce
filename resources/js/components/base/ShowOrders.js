@@ -38,13 +38,7 @@ const ShowOrders = () => {
             <br/>
             <br/>
            <h2>Order page</h2>
-            {
-                data.map(Data=>(
-                    <div>
-                        <p>{Data.id}</p>
-                    </div>
-                ))
-            }
+
         </div>
     )
 }
