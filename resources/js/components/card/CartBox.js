@@ -29,7 +29,7 @@ const Cartbox = () => {
     return (
 
         <div className='cartbox'>
-            <AiOutlineShoppingCart  onClick={()=>window.location.pathname='/cart'} size='28px' color='rgb(1, 46, 1)'
+            <AiOutlineShoppingCart  onClick={()=>window.location.pathname='/cart'} size='28px' color='black'
             /><span> {data.length}</span>
         </div>
     )

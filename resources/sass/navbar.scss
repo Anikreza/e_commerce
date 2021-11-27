@@ -1,17 +1,20 @@
 .Ul{
-    padding-top: 6%;
-    padding-bottom: 1%;
+    padding-top: 2.9%;
+    padding-bottom: 0%;
     display: flex;
     justify-items: center;
     justify-content: space-between;;
     max-width: 29%;
-    background: linear-gradient(to right, #d3decf, rgb(232, 232, 224), rgb(255, 255, 255));
+    background: linear-gradient(to right, #ffffff, rgb(255, 255, 255), rgb(255, 255, 255));
     mask-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
     padding-left: 10%;
     padding-right: 70%;
-    a{
+    p{
         text-decoration: none;
-        font-size: 20px;
-        color: #223817;
+        font-size: 18px;
+        font-weight: lighter;
+        letter-spacing: 1px;
+        color: #000000;
+        cursor: pointer;
     }
 }
