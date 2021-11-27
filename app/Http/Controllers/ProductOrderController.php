@@ -34,21 +34,26 @@ class ProductOrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $productOrder = new ProductOrder();
-        $productOrder->name =  $request->name;
-        $productOrder->phone =  $request->mobile;
-        $productOrder->address =  $request->address;
-        $productOrder->total =  $request->sum;
-        $productOrder->user_id =  $request->userID;
-        $productOrder->product_id =  $request->productId;
-        $productOrder->cart_id =  $request->cartId;
-        $productOrder->save();
+        $check = ProductOrder::where('user_id', $request->userID)->first();
+        if ($check)
+        {
 
+        } else {
+            $productOrder = new ProductOrder();
+            $productOrder->name = $request->name;
+            $productOrder->phone = $request->mobile;
+            $productOrder->address = $request->address;
+            $productOrder->total = $request->sum;
+            $productOrder->user_id = $request->userID;
+            $productOrder->product_id = $request->productId;
+            $productOrder->cart_id = $request->cartId;
+            $productOrder->save();
+        }
         $response = [
             'productOrder' => $productOrder,
         ];
@@ -59,13 +64,13 @@ class ProductOrderController extends Controller
     public function orders($user_id)
     {
 
-        $orders=ProductOrder::where('user_id',$user_id)->first();
+        $orders = ProductOrder::where('user_id', $user_id)->first();
 
         $productOrder = DB::table('product_orders')
             ->join('users', 'users.id', '=', 'product_orders.user_id')
             ->join('carts', 'carts.user_id', '=', 'users.id')
             ->join('products', 'products.id', '=', 'carts.product_id')
-            ->select('product_orders.*','carts.user_id','carts.quantity', 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
+            ->select('product_orders.*', 'carts.user_id', 'carts.quantity', 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
                 'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
                 'products.description as description')
             ->where('carts.user_id', $user_id)
@@ -73,14 +78,15 @@ class ProductOrderController extends Controller
 
         $response = [
             'orders' => $productOrder,
-            'customer'=>$orders
+            'customer' => $orders
         ];
         return response($response, 201);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProductOrder  $productOrder
+     * @param \App\Models\ProductOrder $productOrder
      * @return \Illuminate\Http\Response
      */
     public function edit(ProductOrder $productOrder)
@@ -91,8 +97,8 @@ class ProductOrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductOrder  $productOrder
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ProductOrder $productOrder
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ProductOrder $productOrder)
@@ -103,11 +109,13 @@ class ProductOrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProductOrder  $productOrder
+     * @param \App\Models\ProductOrder $productOrder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductOrder $productOrder)
+    public function destroy(Request $req)
     {
-        //
+        $productOrderDelete= ProductOrder::where('user_id',$req->userID)->delete();
+        $cartDelete= Cart::where('user_id',$req->userID)->delete();
+        return response( ['message' => 'Order Placed'], 201);
     }
 }

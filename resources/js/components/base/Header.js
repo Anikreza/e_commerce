@@ -7,6 +7,7 @@ import SearchCard from "../card/SearchCard";
 import CartBox from "../card/CartBox";
 import {BiAddToQueue} from 'react-icons/bi';
 import {FaRegEdit} from 'react-icons/fa';
+import {BsList} from 'react-icons/bs';
 
 const Header = () => {
 
@@ -43,10 +44,17 @@ const Header = () => {
 
                                     <li><NavLink to='/add'>
                                         <BiAddToQueue size='29px' color='#363636'/>
+                                        Add
                                     </NavLink></li>
 
                                     <li><NavLink to='/edit'>
                                         <FaRegEdit size='27px' color='#363636'/>
+                                        Edit
+                                    </NavLink></li>
+
+                                    <li><NavLink to='/orders'>
+                                        <BsList size='27px' color='#363636'/>
+                                        Orders
                                     </NavLink></li>
                                 </ul>
                             </div>

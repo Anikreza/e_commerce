@@ -7,29 +7,32 @@ const PlaceOrder = ({sum, userID}) => {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [mobile, setMobile] = useState('');
+    const [status, setStatus] = useState(0)
 
+    const SendOrder = async (e) => {
+        e.preventDefault()
+        console.log(userID, sum, mobile, name, address)
+        const Data = {userID, sum, mobile, name, address}
+        if (userID && sum && mobile && name && address) {
+            let result = await fetch(`${api}/productOrder/store`, {
+                method: 'POST',
+                body: JSON.stringify(Data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                setStatus(response.status)
+                if (response.status === 500) {
+                    alert('You Already Added This to Your List')
+                }
+            })
+            window.location.replace('/orders')
+        } else {
+            alert('Please Provide All The Information')
+        }
 
-     const SendOrder=async (e) => {
-         e.preventDefault()
-         console.log(userID, sum, mobile, name, address)
-         const Data = {userID, sum, mobile, name, address}
-         if(userID && sum && mobile && name && address)
-         {
-             let result = await fetch(`${api}/productOrder/store`, {
-                 method: 'POST',
-                 body: JSON.stringify(Data),
-                 headers: {
-                     'Content-Type': 'application/json',
-                     'Accept': 'application/json'
-                 }
-             })
-             window.location.replace('/orders')
-         }
-         else{
-             alert('Please Provide All The Information')
-         }
-
-     }
+    }
 
     return (
         <div className='PlaceOrder'>
@@ -38,7 +41,7 @@ const PlaceOrder = ({sum, userID}) => {
                 <hr/>
                 <h4>Delivery Charge: <span>$7</span></h4>
                 <hr/>
-                <h5>Payable Total: <span>${(sum+7).toFixed(2)}</span></h5>
+                <h5>Payable Total: <span>${(sum + 7).toFixed(2)}</span></h5>
             </div>
 
             <form onSubmit={SendOrder}>
