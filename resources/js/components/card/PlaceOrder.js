@@ -13,14 +13,21 @@ const PlaceOrder = ({sum, userID}) => {
          e.preventDefault()
          console.log(userID, sum, mobile, name, address)
          const Data = {userID, sum, mobile, name, address}
-         let result = await fetch(`${api}/productOrder/store`, {
-             method: 'POST',
-             body: JSON.stringify(Data),
-             headers: {
-                 'Content-Type': 'application/json',
-                 'Accept': 'application/json'
-             }
-         })
+         if(userID && sum && mobile && name && address)
+         {
+             let result = await fetch(`${api}/productOrder/store`, {
+                 method: 'POST',
+                 body: JSON.stringify(Data),
+                 headers: {
+                     'Content-Type': 'application/json',
+                     'Accept': 'application/json'
+                 }
+             })
+         }
+         else{
+             alert('Please Provide All The Information')
+         }
+
      }
 
     return (

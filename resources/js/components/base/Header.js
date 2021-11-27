@@ -13,6 +13,7 @@ const Header = () => {
     let admin = process.env.MIX_ADMIN;
     let user = JSON.parse(window.localStorage.getItem('user'));
     const [modal, setModal] = useState(false);
+
     const logout = (e) => {
         window.localStorage.clear();
     }

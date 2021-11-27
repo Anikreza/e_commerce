@@ -14,7 +14,6 @@ const Cartbox = () => {
             await axios.get(`${api}/cart/show/` + userID)
                 .then(async (res) => {
                     setData(res.data);
-                    console.log('cartData', res.data);
                 })
                 .catch((error) => {
                     console.log(error);

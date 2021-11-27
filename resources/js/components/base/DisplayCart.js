@@ -19,7 +19,6 @@ const DisplayCart = () => {
             await axios.get(`${api}/cart/show/` + userID)
                 .then(async (res) => {
                     setData(res.data);
-                    console.log('cartData', res.data);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -53,7 +52,7 @@ const DisplayCart = () => {
             <div className='cartBox'>
                 <div className='PayOut'>
                     <h1>Your Cart ({data.length})</h1>
-                    <h2>Total Payable: <span>${sum.toFixed(2)}</span></h2>
+                    <h2>Sub Total: <span>${sum.toFixed(2)}</span></h2>
                 </div>
 
                 <hr/>

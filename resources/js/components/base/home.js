@@ -24,7 +24,6 @@ const Home = () => {
                     setFantasyBookData(res.data.fantasyBooks)
                     setAdventureBookData(res.data.adventureBooks)
                     setRomanceBookData(res.data.romanceBooks)
-                    console.log('bookData', res.data);
                 })
                 .catch((error) => {
                     console.log(error);
