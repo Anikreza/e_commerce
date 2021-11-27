@@ -84,7 +84,6 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
                 'Accept':'application/json'
             }
         })
-
     }
 
     return (

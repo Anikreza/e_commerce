@@ -36,7 +36,9 @@ Route::delete('/cart/delete',[CartController::class, 'destroy']);
 
 Route::get('/productOrder/add',[ProductOrderController::class, 'add']);
 Route::post('/productOrder/store',[ProductOrderController::class, 'store']);
-Route::get('/productOrder/show/{user_id}',[ProductOrderController::class, 'show']);
+Route::get('/productOrder/orders/{user_id}',[ProductOrderController::class, 'orders']);
+Route::delete('/productOrder/delete',[ProductOrderController::class, 'destroy']);
+
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
