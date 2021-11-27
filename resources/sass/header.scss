@@ -89,6 +89,15 @@
         }
     }
 }
+.user-name-nav-withoutUser{
+    position: fixed;
+    right: 4.5%;
+    top: 2.9%;
+    z-index: 200;
+    min-width: 130px;
+    max-width: fit-content;
+    text-align: right;
+}
 .home-logo {
     margin-right: 40%;
 }

@@ -5,8 +5,8 @@ import {IoIosArrowDropdown} from 'react-icons/io';
 import a from '../../assets/logo.png'
 import SearchCard from "../card/SearchCard";
 import CartBox from "../card/CartBox";
-import { BiAddToQueue } from 'react-icons/bi';
-import { FaRegEdit } from 'react-icons/fa';
+import {BiAddToQueue} from 'react-icons/bi';
+import {FaRegEdit} from 'react-icons/fa';
 
 const Header = () => {
 
@@ -21,9 +21,17 @@ const Header = () => {
         <div>
             <div className='navbar'>
                 {
+                    (user?.user)?
+                        <div>
+                        <CartBox/>
+                        </div>
+                        :
+                        <div>
+                        </div>
+                }
+                {
                     (user?.user.email === admin) ?
                         <>
-                            <CartBox/>
                             <div className='nav-ul'>
                                 <ul>
                                     <li className='home-logo-admin'>
@@ -44,13 +52,13 @@ const Header = () => {
                         </>
                         :
                         <>
-                            <CartBox/>
                             <div className='nav-ul'>
                                 <ul>
-                                    <li className='home-logo'><NavLink to='/home' activeStyle={{
-                                        fontWeight: "bold",
-                                        color: 'rgb(29, 99, 27)'
-                                    }}><img className='logo' src={a}/></NavLink></li>
+                                    <li className='home-logo'>
+                                        <NavLink to='/home'>
+                                        <img className='logo' src={a} alt=''/>
+                                        </NavLink>
+                                    </li>
                                     <SearchCard/>
                                 </ul>
                             </div>
@@ -72,7 +80,7 @@ const Header = () => {
                     </span>
                 </div>
                 :
-                <div className='user-name-nav'>
+                <div className='user-name-nav-withoutUser'>
                     <NavLink to='/login'> Log In</NavLink>
                 </div>
             }

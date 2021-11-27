@@ -6,7 +6,7 @@ const Cartbox = () => {
 
     const [data,setData]=useState([])
     let user = JSON.parse(window.localStorage.getItem('user'));
-    const userID = user.user.id;
+    const userID = user?.user.id;
     const api = process.env.MIX_API;
 
     const getCart = useCallback(
