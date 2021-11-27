@@ -24,6 +24,7 @@ Route::get('/addCategoryType', [ProductController::class, 'index']);
 Route::post('/store',[ProductController::class, 'store']);
 Route::get('/products/byCategory',[ProductController::class, 'showProductsByCategory']);
 Route::get('products/list',[ProductController::class, 'list']);
+Route::get('products/search/{key}',[ProductController::class, 'search']);
 Route::get('/products/{id}',[ProductController::class, 'show']);
 
 Route::post('/cart/store',[CartController::class, 'store']);

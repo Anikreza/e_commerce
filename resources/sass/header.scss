@@ -14,27 +14,7 @@
             display: flex;
             font-size: 15px;
             font-weight: lighter;
-            .home-search{
-                margin-left: -36%;
-                margin-top: -2.9%;
-            }
-            input{
-                width: 29vw;
-                height: 47px;
-                border-radius: 5px;
-                border-style: ridge;
-                color: #230d0a;
-                background-color: #f5f5f5;
-            }
-            button{
-                margin-left: -5%;
-                border-style: hidden;
-                color: #0f1a0d;
-                background-color: inherit;
-                cursor: pointer;
-            }
         }
-
         li {
             list-style: none;
             margin-left: 20px;
@@ -43,8 +23,6 @@
         }
     }
 }
-
-
 .user-name-nav {
     position: fixed;
     right: 4.5%;

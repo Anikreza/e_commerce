@@ -39,7 +39,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        $listProducts = Product::with(['categoryBookType','categoryCoverType'])->get();
+        $listProducts = Product::with(['categoryBookType', 'categoryCoverType'])->get();
 
         $response = [
             'allBooks' => $listProducts
@@ -72,7 +72,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -80,26 +80,25 @@ class ProductController extends Controller
 
         $product = new Product();
         $image = $request->file;
-        if($image){
+        if ($image) {
             $image_ext = $image->getClientOriginalExtension();
-            $image_full_name = time().'.'.$image_ext;
+            $image_full_name = time() . '.' . $image_ext;
             $upload_path = 'assets/images/';
-            $image_url = $upload_path.$image_full_name;
+            $image_url = $upload_path . $image_full_name;
 
-            $success = $image->move($upload_path,$image_full_name);
-        }
-        else{
+            $success = $image->move($upload_path, $image_full_name);
+        } else {
             $image_url = '';
         }
 
         $product->product_img = $image_url;
-        $product->title =  $request->name;
-        $product->author =  $request->author;
-        $product->products_in_stock =  $request->stock;
-        $product->price =  $request->price;
-        $product->description =  $request->description;
-        $product->category_book_type_id =  $request->bookType;
-        $product->category_cover_type_id =  $request->coverType;
+        $product->title = $request->name;
+        $product->author = $request->author;
+        $product->products_in_stock = $request->stock;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->category_book_type_id = $request->bookType;
+        $product->category_cover_type_id = $request->coverType;
         $product->save();
 
         $response = [
@@ -111,12 +110,12 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $showProduct = Product::with('categoryBookType','categoryCoverType')->find($id);
+        $showProduct = Product::with('categoryBookType', 'categoryCoverType')->find($id);
 
         $response = [
             'showProduct' => $showProduct
@@ -127,7 +126,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
@@ -135,11 +134,21 @@ class ProductController extends Controller
         //
     }
 
+    function search($key)
+    {
+        $Product=new Product;
+        $Result=$Product::where('title', 'like', "%$key%")->get();
+        $response = [
+            'result' => $Result
+        ];
+        return response($response, 201);
+    }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product)
@@ -150,7 +159,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
