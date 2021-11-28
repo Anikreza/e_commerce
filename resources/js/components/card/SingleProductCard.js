@@ -6,7 +6,7 @@ import '../../../sass/productDetail.scss';
 const SingleProductCard = () => {
 
     let user = JSON.parse(window.localStorage.getItem('user'));
-    const userID = user.user.id;
+    const userID = user?.user.id;
     const [{findBook}, dispatch] = useStateValue();
     const [data, setData] = useState([])
     const [quantity, setQuantity] = useState(1)
@@ -52,22 +52,29 @@ const SingleProductCard = () => {
         let coverType = data.category_cover_type_id;
         let bookType = data.category_book_type_id;
         let Data = {quantity, productID, userID, bookType, coverType}
-        let result = fetch(`${api}/cart/store`, {
-            method: 'POST',
-            body: JSON.stringify(Data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(response => {
-                setStatus(response.status)
-                if (response.status !== 500) {
-                    depleteStock().then(r => r)
-                } else {
-                    alert('You Already Added This to Your List')
+        if(userID){
+            let result = fetch(`${api}/cart/store`, {
+                method: 'POST',
+                body: JSON.stringify(Data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 }
-            }
-        )
+            }).then(response => {
+                    setStatus(response.status)
+                    if (response.status !== 500) {
+                        depleteStock().then(r => r)
+                    } else {
+                        alert('You Already Added This to Your List')
+                    }
+                }
+            )
+        }
+        else{
+            alert('Please Log In First')
+            window.location.replace('/login')
+        }
+
     }
 
 

@@ -13,26 +13,27 @@
     .givenInfo {
         max-width: 15vw;
         margin-left: 2vw;
-
+        font-family: "Agency FB";
+        font-weight: lighter;
         span {
             float: right;
         }
 
         h2 {
-            font-size: 14px;
-            color: #1c231c;
+            font-size: 15px;
+            color: #3d623d;
             margin-top: -5px;
         }
 
         h4 {
-            font-size: 12px;
-            color: #252d25;
+            font-size: 12.9px;
+            color: #345b34;
             margin-top: -5px;
         }
 
         h5 {
             font-size: 15px;
-            color: #361c16;
+            color: #9d5e5e;
             margin-top: -5px;
         }
         hr{
@@ -44,17 +45,21 @@
     form {
 
         input {
-            width:92%;
+            font-size: 17px;
+            font-family: "Agency FB";
+            width:80%;
+            margin-left: 7%;
             height: 29px;
             margin-top: 5px;
             border-style: ridge;
             border-width: thin;
             border-radius: 5px;
-            color: #000000;
-            background-color: #d5d5d5;
+            color: #6c0016;
+            background-color: #c2c2c2;
             padding-left: 15px;
         }
         button{
+            font-family: "Agency FB";
             height: 29px;
             width: 50%;
             margin-top: 4%;
@@ -62,6 +67,20 @@
             background-color: #346235;
             color: white;
             cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
         }
+    }
+    .goButton{
+        font-family: "Agency FB";
+        height: 29px;
+        font-size: 16px;
+        width: 50%;
+        margin-top: 4%;
+        margin-left: 27%;
+        background-color: #9a5d5d;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
     }
 }

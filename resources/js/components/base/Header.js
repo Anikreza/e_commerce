@@ -17,6 +17,7 @@ const Header = () => {
 
     const logout = (e) => {
         window.localStorage.clear();
+        window.location.replace('/home')
     }
     return (
 

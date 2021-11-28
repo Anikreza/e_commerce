@@ -61,6 +61,7 @@ const PlaceOrder = ({sum, userID}) => {
                     placeholder='Address'/>
                 <button> Place Order</button>
             </form>
+            <button className='goButton' onClick={()=>window.location.replace('/orders')}> Checkout Page</button>
         </div>
     )
 }
