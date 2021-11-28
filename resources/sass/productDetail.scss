@@ -1,4 +1,5 @@
 .detailed{
+    font-family: "Agency FB";
     padding-top: 5%;
     padding-bottom: 5%;
     padding-left: 15%;
@@ -22,44 +23,21 @@
         }
         button{
             padding: 10px;
-            color: #efdede;
+            color: #ff6d6d;
             border-style: none;
             background-color: #305b2a;
             cursor: pointer;
-            font-size: 17px;
+            font-size: 20px;
+            font-family: "Agency FB";
         }
         .stockButton{
             padding: 7px;
-            color: #e5d7d7;
-            background-color: #81784c;
+            color: #87ff63;
+            background-color: #814242;
             border-style: none;
             cursor: default;
-            font-size: 17px;
-        }
-        .quantityButton{
-            border-style: none;
-            background-color: #608060;
-            cursor:default;
-            font-size: 24px;
-            padding: 0px;
-
-            p1{
-                color: #ff1d00;
-                cursor: pointer;
-                padding-right: 4px;
-            }
-            p2{
-                color: #4eff57;
-                cursor: pointer;
-                padding-left: 2px;
-            }
-            span{
-                color: #000000;
-                border-right-style: ridge;
-                border-left-style: ridge;
-                border-color: #b9ceba;
-                border-width: thin;
-            }
+            font-size: 20px;
+            font-family: "Agency FB";
         }
     }
 
@@ -88,6 +66,7 @@
         color: rgb(169, 52, 52);
     }
     .description-d{
+        font-family: Arial;
         letter-spacing: 1px;
         font-size: 17px;
         color: rgb(14, 23, 14);

@@ -15,7 +15,7 @@
         background-color: whitesmoke;
         .receipt{
             h4{
-                font-family: "Felix Titling";
+                font-family: "Agency FB";
                 color: #2d2626;
                 font-size: 15px;
             }
@@ -34,14 +34,17 @@
             }
         }
         h2 {
-            font-family: "Book Antiqua", serif;
+            font-family: "Agency FB";
             color: #601a11;
         }
         button{
+            font-family: "Agency FB";
+            font-size: 17px;
+            letter-spacing: 1px;
             cursor: pointer;
             padding: 10px;
             color: whitesmoke;
-            background-color: #e15e5e;
+            background-color: #c54949;
         }
     }
     .orderInfo {

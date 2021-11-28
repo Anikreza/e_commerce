@@ -1,5 +1,6 @@
 @import "../sass/variables";
 .navbar {
+    font-family: "Agency FB";
     margin:-8px;
     position: fixed;
     max-height:55px;
@@ -12,7 +13,7 @@
     .nav-ul {
         ul {
             display: flex;
-            font-size: 15px;
+            font-size: 18px;
             font-weight: lighter;
         }
         li {
@@ -24,6 +25,7 @@
     }
 }
 .user-name-nav {
+    font-family: "Agency FB";
     position: fixed;
     right: 4.5%;
     z-index: 200;
@@ -36,6 +38,7 @@
 
     p {
         color: $userinfo;
+        font-size: 19px;
     }
 
     .hide {
@@ -44,9 +47,10 @@
 
     .modal-logout {
         button {
+            font-family: "Agency FB";
             border-style: none;
             background-color: $userinfo2;
-            font-size: 14px;
+            font-size: 16px;
             float: right;
             width: 100%;
             padding: 8px;
@@ -55,6 +59,7 @@
             cursor: pointer;
         }
         .modal-cart{
+            font-family: "Agency FB";
             background-color: $service-bg;
             padding: 8px;
             color: rgb(228, 224, 224);
@@ -63,11 +68,12 @@
             cursor: pointer;
             text-align: center;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 16px;
         }
     }
 }
 .user-name-nav-withoutUser{
+    font-family: "Agency FB";
     position: fixed;
     right: 4.5%;
     top: 2.9%;
