@@ -1,35 +1,26 @@
 import React, {useEffect,useState, useCallback} from 'react'
+import {Link, NavLink} from 'react-router-dom'
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import axios from "axios";
 import '../../../sass/cartPage.scss'
+import {useStateValue} from "../../helpers/StateProvider";
 const Cartbox = () => {
 
-    const [data,setData]=useState([])
-    let user = JSON.parse(window.localStorage.getItem('user'));
-    const userID = user?.user.id;
-    const api = process.env.MIX_API;
+    const [data, setData] = useState([])
+    const [{ user,basket }, dispatch] = useStateValue();
 
-    const getCart = useCallback(
-        async () => {
-            await axios.get(`${api}/cart/show/` + userID)
-                .then(async (res) => {
-                    setData(res.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        },
-        [],
-    );
+    useEffect(() => {
+        const unique = [];
+        basket.map(x => unique.filter(a => a.id === x.id).length > 0 ? null : unique.push(x));
+        setData(unique)
+    }, [basket]);
 
-    useEffect(async () => {
-        getCart().then(r => r)
-    }, [getCart,data]);
     return (
 
         <div className='cartbox'>
-            <AiOutlineShoppingCart  onClick={()=>window.location.pathname='/cart'} size='28px' color='black'
-            /><span> {data.length}</span>
+           <Link to='/cart'>
+               <AiOutlineShoppingCart size='28px' color='black'/>
+               <span> {data.length}</span>
+           </Link>
         </div>
     )
 }

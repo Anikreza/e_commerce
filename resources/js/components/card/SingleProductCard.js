@@ -5,15 +5,23 @@ import '../../../sass/productDetail.scss';
 
 const SingleProductCard = () => {
 
-    let user = JSON.parse(window.localStorage.getItem('user'));
-    const userID = user?.user.id;
-    const [{findBook}, dispatch] = useStateValue();
+    const [{user, basket}, dispatch] = useStateValue();
+
+    const userID = user?.id
+    const name = user.name
+    const email = user.email
+
     const [data, setData] = useState([])
     const [quantity, setQuantity] = useState(1)
-    const [status, setStatus] = useState(0)
+    const [updatedQuantity, setUpdatedQuantity] = useState(quantity)
+    const [status, setStatus] = useState(false)
     const api = process.env.MIX_API;
     const url = process.env.MIX_URL;
     const productID = window.location.href.split('/')[4]
+
+    useEffect(() => {
+
+    }, [basket]);
 
 
     const getBooks = useCallback(
@@ -37,13 +45,14 @@ const SingleProductCard = () => {
         async () => {
             const Data = {userID, productID}
             let result = fetch(`${api}/cart/depleteStock`, {
-                method: 'POST',
-                body: JSON.stringify(Data),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    method: 'POST',
+                    body: JSON.stringify(Data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
                 }
-            })
+            )
         },
         [quantity],
     );
@@ -52,7 +61,7 @@ const SingleProductCard = () => {
         let coverType = data.category_cover_type_id;
         let bookType = data.category_book_type_id;
         let Data = {quantity, productID, userID, bookType, coverType}
-        if(userID){
+        if (userID) {
             let result = fetch(`${api}/cart/store`, {
                 method: 'POST',
                 body: JSON.stringify(Data),
@@ -69,14 +78,33 @@ const SingleProductCard = () => {
                     }
                 }
             )
-        }
-        else{
+        } else {
             alert('Please Log In First')
             window.location.replace('/login')
         }
 
     }
 
+    async function addToBasket() {
+        setQuantity(quantity + 1)
+        dispatch({
+            type: "ADD_TO_BASKET",
+            id: data.id,
+            item: {
+                id: data.id,
+                title: data.title,
+                author: data.author,
+                quantity: quantity,
+                name: name,
+                email: email,
+                price: data.price,
+                userID: userID,
+                image: data.product_img,
+                status: 'Added To Cart',
+            },
+        });
+        window.localStorage.setItem('basket', basket);
+    }
 
     return (
         <div className='detail'>
@@ -84,15 +112,12 @@ const SingleProductCard = () => {
                 <div className='detailed-left'>
                     <img src={`${url}/` + data.product_img}/>
                     <button className='stockButton'>Only {data.products_in_stock} Copies left</button>
-                    {
-                        (status !== 500) ?
-                            <button onClick={() => addToCart()}>Add to Cart</button>
-                            :
-                            <button onClick={() =>window.location.replace('/cart') }>Go to Cart</button>
-                    }
-
+                    <button onClick={() => addToBasket()}>Add to Cart</button>
                 </div>
                 <div className='product-info'>
+                    <p>{basket.length}</p>
+                    <p>{basket.id}</p>
+                    <p>{basket.title}</p>
                     <p className='title-d'>{data.title}</p>
                     <p className='price-d'>${data.price}</p>
                     <p className='description-d'>{data.description}</p>

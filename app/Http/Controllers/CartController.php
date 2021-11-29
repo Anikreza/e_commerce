@@ -110,13 +110,10 @@ class CartController extends Controller
             ->update([
                 'quantity' => $request->updatedQuantity,
             ]);
-
-
         $response = [
             'updateCart' => $updateCart,
         ];
         return response($response, 201);
-
     }
     public function updateStock(Request $request)
     {

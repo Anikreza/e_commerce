@@ -1,8 +1,9 @@
-import React, {useState, useEffect,useCallback} from "react"
+import React, {useState, useEffect, useCallback} from "react"
 import axios from "axios"
 import '../../../sass/orderPage.scss'
 import CheckOut from "../card/CheckOut";
 import Receipt from "../card/Receipt";
+import OrderHistory from "../../helpers/OrderHistory";
 
 const ShowOrders = () => {
 
@@ -15,11 +16,10 @@ const ShowOrders = () => {
 
     const getOrders = useCallback(
         async () => {
-            await axios.get(`${api}/productOrder/orders/`+userID)
+            await axios.get(`${api}/productOrder/orders/` + userID)
                 .then(async (res) => {
                     setCustomer(res.data?.customer)
                     setOrders(res.data?.orders)
-                    console.log('orderResult:',res.data.orders);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -30,7 +30,7 @@ const ShowOrders = () => {
 
     useEffect(async () => {
         getOrders().then(r => r)
-    }, [getOrders,orders]);
+    }, [getOrders, orders]);
 
     useEffect(() => {
         const sum = customer?.reduce((amount, books) => (books.total * orders.length) + amount, 0);
@@ -57,8 +57,9 @@ const ShowOrders = () => {
             <div className='orderInfo'>
                 <div className='main'>
                     <div className='row'>
-                        {orders?.map(data=>(
+                        {orders?.map(data => (
                             <CheckOut
+                                key={data.title}
                                 title={data.title}
                                 author={data.author}
                                 quantity={data.quantity}
@@ -66,11 +67,25 @@ const ShowOrders = () => {
                                 image={data.product_img}
                             />
                         ))}
-
                     </div>
                 </div>
             </div>
-
+            {
+                orders?.map(data => (
+                    <OrderHistory
+                        key={data.title}
+                        title={data.title}
+                        author={data.author}
+                        quantity={data.quantity}
+                        price={data.price}
+                        userID={userID}
+                        name={data.name}
+                        phone={data.phone}
+                        address={data.address}
+                        api={api}
+                />
+                ))
+            }
         </div>
     )
 }

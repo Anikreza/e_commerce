@@ -10,6 +10,7 @@ import SingleProductCard from "./card/SingleProductCard";
 import DisplayProducts from "./base/DisplayProducts";
 import DisplayCart from "./base/DisplayCart";
 import ShowOrders from "./base/ShowOrders";
+import AdminOrderPage from "./base/AdminOrderPage";
 
 function Index() {
     return (
@@ -22,10 +23,11 @@ function Index() {
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/add' element={<UploadProduct/>}/>
-                    <Route path='/singleBook/:id' element={<SingleProductCard/>}/>
+                    <Route path='/book/:id/:title' element={<SingleProductCard/>}/>
                     <Route exact path='books/:id' element={<DisplayProducts/>}/>
                     <Route path='/cart' element={<DisplayCart/>}/>
                     <Route path='/orders' element={<ShowOrders/>}/>
+                    <Route path='/adminOrders' element={<AdminOrderPage/>}/>
                 </Routes>
             </Router>
         </div>

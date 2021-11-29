@@ -8,6 +8,7 @@ const PlaceOrder = ({sum, userID}) => {
     const [address, setAddress] = useState('');
     const [mobile, setMobile] = useState('');
     const [status, setStatus] = useState(0)
+    const disabled='';
 
     const SendOrder = async (e) => {
         e.preventDefault()
@@ -59,7 +60,7 @@ const PlaceOrder = ({sum, userID}) => {
                     type='text'
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder='Address'/>
-                <button> Place Order</button>
+                <button disabled={name || mobile || address? disabled:!disabled}> Place Order</button>
             </form>
             <button className='goButton' onClick={()=>window.location.replace('/orders')}> Checkout Page</button>
         </div>

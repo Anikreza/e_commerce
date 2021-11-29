@@ -53,7 +53,7 @@ const Header = () => {
                                         Edit
                                     </NavLink></li>
 
-                                    <li><NavLink to='/orders'>
+                                    <li><NavLink to='/adminOrders'>
                                         <BsList size='27px' color='#363636'/>
                                         Orders
                                     </NavLink></li>

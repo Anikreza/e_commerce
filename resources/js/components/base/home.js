@@ -5,11 +5,12 @@ import CategoryCard from '../card/categoryCard'
 import NavBar from "../card/NavBar";
 import axios from "axios";
 import {useStateValue} from "../../helpers/StateProvider";
-import Cartbox from "../card/CartBox";
 
 
 const Home = () => {
 
+    let User = JSON.parse(window.localStorage.getItem('user'));
+    const [{user,basket}, dispatch] = useStateValue();
     const [height, setHeight] = useState(false);
     const api = process.env.MIX_API;
     const [fantasyBookData, setFantasyBookData] = useState([]);
@@ -28,12 +29,25 @@ const Home = () => {
                 .catch((error) => {
                     console.log(error);
                 })
+            dispatch({
+                type:"SET_USER",
+                item: {
+                    name: User.user.name,
+                    email: User.user.email,
+                    id:User.user.id,
+                    token:User.token,
+                },
+            })
         },
         [],
     );
     useEffect(async () => {
         getBooks().then(r => r)
     }, [getBooks]);
+
+    useEffect(() => {
+       console.log('Basket:',basket)
+    }, [user,basket]);
 
 
     const ScrollHeight = () => {
@@ -75,7 +89,6 @@ const Home = () => {
                         bookData={romanceBookData}
                     />
                 </div>
-
             </div>
             <Footer/>
         </div>

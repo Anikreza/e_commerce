@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import axios from "axios";
+import {Link, NavLink} from 'react-router-dom'
 import DivCarousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import SliderData from "../../helpers/sliderData";
@@ -9,13 +10,10 @@ import b from '../../assets/ny.jpg'
 import c from '../../assets/aqotwf.jpg'
 import d from '../../assets/wap.jpg'
 import e from '../../assets/ww.jpg'
-import { actionTypes } from '../../helpers/reducer';
-import {useStateValue} from "../../helpers/StateProvider";
 
 
 const comp = ({title, bookData}) => {
 
-    const [{},dispatch] = useStateValue();
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -62,17 +60,16 @@ const comp = ({title, bookData}) => {
                 {
                     bookData.map((data) =>
                         (
-                            <div key={data.id} onClick={()=>dispatch({
-                                type: actionTypes.SET_BOOK_ID,
-                                user: data.id,
-                            })}>
+                            <div>
+                                <Link to={`/book/${data.id}/${data.title}`}>
                                 <SliderData
+                                    key={data.id}
                                     id={data.id}
-                                    link={`/singleBook/${data.id}`}
                                     image={data.product_img}
                                     title={data.title}
                                     author={data.author}
                                 />
+                            </Link>
                             </div>
                         ))
                 }
