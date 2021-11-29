@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useCallback} from "react";
 import '../../../sass/PlaceOrder.scss'
+import {Link} from "react-router-dom";
 
 const PlaceOrder = ({sum, userID}) => {
 
@@ -28,7 +29,7 @@ const PlaceOrder = ({sum, userID}) => {
                     alert('You Already Added This to Your List')
                 }
             })
-            window.location.replace('/orders')
+            //window.location.href('/orders')
         } else {
             alert('Please Provide All The Information')
         }
@@ -62,7 +63,7 @@ const PlaceOrder = ({sum, userID}) => {
                     placeholder='Address'/>
                 <button disabled={name || mobile || address? disabled:!disabled}> Place Order</button>
             </form>
-            <button className='goButton' onClick={()=>window.location.replace('/orders')}> Checkout Page</button>
+           <Link to='/orders'> <button className='goButton' > Checkout Page</button></Link>
         </div>
     )
 }

@@ -17,17 +17,9 @@ const reducer = (state, action) => {
             };
 
         case "INCREMENT_QUANTITY":
-
-            const i = state.basket?.findIndex(
-                (basketItem) => basketItem?.id === action?.id
-            );
-            let NewBasket = [...state.basket];
-            if(i){
-                NewBasket[i].quantity=action?.item
-            }
             return {
                 ...state,
-                basket: NewBasket
+                basket: state.basket.map(item=>item.id===action.id? {...item,quantity:action.value}:item)
             };
 
         case 'EMPTY_BASKET':

@@ -89,7 +89,7 @@ const SingleProductCard = () => {
         setQuantity(quantity + 1)
         dispatch({
             type: "ADD_TO_BASKET",
-            id: data.id,
+            id: productID,
             item: {
                 id: data.id,
                 title: data.title,

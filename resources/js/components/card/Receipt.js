@@ -31,7 +31,6 @@ const comp = ({name,phone, address,data,userID}) => {
         <div>
             <h4>{name}</h4>
             <h4>{phone}</h4>
-            <h4>{address}</h4>
             {
                 data.map(Data=>(
                     <div key={Data.title}>

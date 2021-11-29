@@ -4,15 +4,17 @@ import '../../../sass/orderPage.scss'
 import CheckOut from "../card/CheckOut";
 import Receipt from "../card/Receipt";
 import OrderHistory from "../../helpers/OrderHistory";
+import {useStateValue} from "../../helpers/StateProvider";
 
 const ShowOrders = () => {
 
-    let user = JSON.parse(window.localStorage.getItem('user'));
-    const userID = user.user.id;
+    const [{ user,basket }, dispatch] = useStateValue();
+    const userID = user.id;
     const api = process.env.MIX_API;
     const [customer, setCustomer] = useState([])
     const [orders, setOrders] = useState([])
     const [sum, setSum] = useState([])
+    const [data, setData] = useState([])
 
     const getOrders = useCallback(
         async () => {
@@ -35,6 +37,9 @@ const ShowOrders = () => {
     useEffect(() => {
         const sum = customer?.reduce((amount, books) => (books.total * orders.length) + amount, 0);
         setSum(sum)
+        const unique = [];
+        basket.map(x => unique.filter(a => a.id === x.id).length > 0 ? null : unique.push(x));
+        setData(unique)
     }, []);
 
 
@@ -46,46 +51,28 @@ const ShowOrders = () => {
                     <hr/>
                     <Receipt
                         userID={userID}
-                        name={customer?.name}
-                        phone={customer?.phone}
-                        address={customer?.address}
-                        total={customer?.total}
-                        data={orders}
+                        name={user?.name}
+                        phone={user?.email}
+                        data={basket}
                     />
                 </div>
             </div>
             <div className='orderInfo'>
                 <div className='main'>
                     <div className='row'>
-                        {orders?.map(data => (
+                        {data?.map(data => (
                             <CheckOut
                                 key={data.title}
                                 title={data.title}
                                 author={data.author}
                                 quantity={data.quantity}
                                 price={data.price}
-                                image={data.product_img}
+                                image={data.image}
                             />
                         ))}
                     </div>
                 </div>
             </div>
-            {
-                orders?.map(data => (
-                    <OrderHistory
-                        key={data.title}
-                        title={data.title}
-                        author={data.author}
-                        quantity={data.quantity}
-                        price={data.price}
-                        userID={userID}
-                        name={data.name}
-                        phone={data.phone}
-                        address={data.address}
-                        api={api}
-                />
-                ))
-            }
         </div>
     )
 }

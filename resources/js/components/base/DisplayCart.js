@@ -23,12 +23,12 @@ const DisplayCart = () => {
             const sum = data.reduce((amount, books) => (books.price * books.quantity) + amount, 0);
             setSum(sum)
         },
-        [basket,data],
+        [data],
     );
 
     useEffect(() => {
         getSum().then(r => r)
-    }, [getSum, basket]);
+    }, [getSum]);
 
     return (
         <div className='cartPage'>
