@@ -77,9 +77,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'title' => 'required|string|max:50',
+            'author' => 'required|string|max:40',
+            'products_in_stock' => 'required|numeric|max:20',
+            'price' => 'required|numeric|regex:/^\d*(\.\d{2})?$/',
+            'description' => 'required|max:255',
+            'product_img' => 'mimes:jpeg,jpg,png|required|max:10000',
+        ]);
 
         $product = new Product();
-        $image = $request->file;
+        $image = $validated->file;
         if ($image) {
             $image_ext = $image->getClientOriginalExtension();
             $image_full_name = time() . '.' . $image_ext;
@@ -92,17 +100,18 @@ class ProductController extends Controller
         }
 
         $product->product_img = $image_url;
-        $product->title = $request->name;
-        $product->author = $request->author;
-        $product->products_in_stock = $request->stock;
-        $product->price = $request->price;
-        $product->description = $request->description;
-        $product->category_book_type_id = $request->bookType;
-        $product->category_cover_type_id = $request->coverType;
+        $product->title = $validated->name;
+        $product->author = $validated->author;
+        $product->products_in_stock = $validated->stock;
+        $product->price = $validated->price;
+        $product->description = $validated->description;
+        $product->category_book_type_id = $validated->bookType;
+        $product->category_cover_type_id = $validated->coverType;
         $product->save();
 
         $response = [
-            'product' => $product
+            'product' => $product,
+            'validated' => $validated
         ];
         return response($response, 201);
     }

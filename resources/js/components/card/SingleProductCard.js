@@ -2,11 +2,12 @@ import React, {useState, useEffect, useCallback} from "react";
 import axios from "axios";
 import {useStateValue} from "../../helpers/StateProvider";
 import '../../../sass/productDetail.scss';
+import {useNavigate} from "react-router";
 
 const SingleProductCard = () => {
 
     const [{user, basket}, dispatch] = useStateValue();
-
+    const navigate=useNavigate()
     const userID = user?.id
     const name = user.name
     const email = user.email
@@ -19,11 +20,6 @@ const SingleProductCard = () => {
     const url = process.env.MIX_URL;
     const productID = window.location.href.split('/')[4]
 
-    useEffect(() => {
-
-    }, [basket]);
-
-
     const getBooks = useCallback(
         async () => {
             await axios.get(`${api}/products/` + productID)
@@ -34,12 +30,12 @@ const SingleProductCard = () => {
                     console.log(error);
                 })
         },
-        [],
+        [data.products_in_stock],
     );
 
     useEffect(async () => {
         getBooks().then(r => r)
-    }, [getBooks]);
+    }, [getBooks,data.products_in_stock]);
 
     const depleteStock = useCallback(
         async () => {
@@ -80,29 +76,48 @@ const SingleProductCard = () => {
             )
         } else {
             alert('Please Log In First')
-            window.location.replace('/login')
+            navigate('/login')
         }
 
     }
 
     async function addToBasket() {
         setQuantity(quantity + 1)
-        dispatch({
-            type: "ADD_TO_BASKET",
-            id: productID,
-            item: {
-                id: data.id,
-                title: data.title,
-                author: data.author,
-                quantity: quantity,
-                name: name,
-                email: email,
-                price: data.price,
-                userID: userID,
-                image: data.product_img,
-                status: 'Added To Cart',
-            },
-        });
+
+        if(quantity<=data.products_in_stock){
+            dispatch({
+                type: "ADD_TO_BASKET",
+                id: productID,
+                item: {
+                    productID: data.id,
+                    title: data.title,
+                    author: data.author,
+                    quantity: quantity,
+                    name: name,
+                    email: email,
+                    price: data.price,
+                    userID: userID,
+                    image: data.product_img,
+                    stock:data.products_in_stock,
+                    status: 'Added To Cart',
+                },
+            });
+
+            dispatch({
+                type: "ADD_TO_CART",
+                id: productID,
+                item: {
+                    productID: data.id,
+                    quantity: quantity,
+                    userID: userID,
+                    status: 'Added To Cart',
+                },
+            });
+        }
+        else{
+            alert('Out Of Stock')
+        }
+
         window.localStorage.setItem('basket', basket);
     }
 
@@ -115,8 +130,6 @@ const SingleProductCard = () => {
                     <button onClick={() => addToBasket()}>Add to Cart</button>
                 </div>
                 <div className='product-info'>
-                    <p>{basket.length}</p>
-                    <p>{basket.id}</p>
                     <p>{basket.title}</p>
                     <p className='title-d'>{data.title}</p>
                     <p className='price-d'>${data.price}</p>

@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import {useNavigate} from 'react-router';
 import '../../sass/registration.scss'
+import {useStateValue} from "../helpers/StateProvider";
 
 const Login = () => {
 
@@ -8,7 +9,12 @@ const Login = () => {
     const [password, setPassword] = useState();
     const navigate = useNavigate();
     const api=process.env.MIX_API;
-    let user = JSON.parse(window.localStorage.getItem('user'));
+    const [{user,basket}, dispatch] = useStateValue();
+
+    useEffect(() => {
+        const url = location.pathname
+        console.log(url)
+    }, []);
 
     const login = async () => {
         let userdata = {email, password};
@@ -22,13 +28,12 @@ const Login = () => {
         })
         API = await (await API).json();
         window.localStorage.setItem('user', JSON.stringify(API));
-        let user = JSON.parse(window.localStorage.getItem('user'));
+        let user = JSON.parse(window.localStorage.getItem('user'))
         console.log('user is: ', user)
         if (user.message) {
-            alert(user.message)
+            alert(user?.message)
         } else {
-            window.location.replace('/')
-
+            navigate('/')
         }
     }
 

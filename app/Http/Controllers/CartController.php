@@ -15,7 +15,7 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request )
     {
 
     }
@@ -39,24 +39,12 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $check = Cart::where('product_id',$request->productID)->where('user_id',$request->userID)->first();
-        if($check){
-
+        $data = json_decode($request->getContent(), true);
+        foreach ($data as $ob) {
+            $arr = (array) $ob;
+            Cart::create($arr);
         }
-        else{
-            $cart = new Cart;
-            $cart->quantity = $request->quantity;
-            $cart->product_id = $request->productID;
-            $cart->category_book_type_id = $request->bookType;
-            $cart->category_cover_type_id = $request->coverType;
-            $cart->user_id = $request->userID;
-            $cart->save();
-        }
-
-        $response = [
-            'cart' => $cart,
-        ];
-        return response($response, 201);
+        return response($data , 201);
     }
 
     /**

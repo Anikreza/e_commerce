@@ -12,7 +12,6 @@ const comp = ({name,phone, address,data,userID}) => {
         setSum(sum)
     }, [basket]);
 
-
     async function makeOrder() {
         let Data = {userID};
         await fetch(`${api}/productOrder/delete`, {

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {BsSearch} from 'react-icons/bs';
 import '../../../sass/Search.scss'
 import axios from "axios";
+import {Link, NavLink} from 'react-router-dom'
 
 const comp = () => {
 
@@ -45,11 +46,9 @@ const comp = () => {
             <div>
                 {
                     data.map((Data) => (
-                        <div className={(Data?.length !== 0) ? 'resultTab' : 'hide'}>
-                            <div
-                                className='SearchShow'
-                                onClick={() => window.location.replace(`/singleBook/${Data.id}`)}
-                            >
+                        <div key={Data.id} className={(Data?.length !== 0) ? 'resultTab' : 'hide'}>
+                            <Link to={`/book/${Data.id}/${Data.title}`}>
+                            <div className='SearchShow'>
                                 <img src={`${url}/` + Data.product_img} alt=''/>
                                 <div className='flexThis-column'>
                                     <h2>{Data.title}</h2>
@@ -57,7 +56,7 @@ const comp = () => {
                                 </div>
                                 <div className='rightSideInfo'>
                                     {
-                                        Data.products_in_stock > 0 ?
+                                        Data.products_in_stock > 0?
                                             <h5> Product In Stock</h5>
                                             :
                                             <h6> Out Of Stock</h6>
@@ -65,6 +64,7 @@ const comp = () => {
                                 </div>
                                 <h3> ${Data.price}</h3>
                             </div>
+                            </Link>
                             <hr/>
                         </div>
                     ))

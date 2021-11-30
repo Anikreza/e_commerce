@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import {Link, NavLink} from 'react-router-dom'
+import {useLocation} from "react-router-dom";
 import '../../../sass/header.scss'
 import {IoIosArrowDropdown} from 'react-icons/io';
 import a from '../../assets/logo.png'
@@ -8,32 +9,39 @@ import CartBox from "../card/CartBox";
 import {BiAddToQueue} from 'react-icons/bi';
 import {FaRegEdit} from 'react-icons/fa';
 import {BsList} from 'react-icons/bs';
+import {useStateValue} from "../../helpers/StateProvider";
+import axios from "axios";
 
 const Header = () => {
 
+    const [{user, basket}, dispatch] = useStateValue();
     let admin = process.env.MIX_ADMIN;
-    let user = JSON.parse(window.localStorage.getItem('user'));
     const [modal, setModal] = useState(false);
+    const url = location.pathname
 
-    const logout = (e) => {
+
+    async function logout() {
+        console.log('url', url)
         window.localStorage.clear();
-        window.location.replace('/home')
+        window.location.replace('/home');
     }
+
     return (
 
         <div>
             <div className='navbar'>
+                <CartBox/>
+                {/*{*/}
+                {/*    (user?.user)?*/}
+                {/*        <div>*/}
+                {/*        <CartBox/>*/}
+                {/*        </div>*/}
+                {/*        :*/}
+                {/*        <div>*/}
+                {/*        </div>*/}
+                {/*}*/}
                 {
-                    (user?.user)?
-                        <div>
-                        <CartBox/>
-                        </div>
-                        :
-                        <div>
-                        </div>
-                }
-                {
-                    (user?.user.email === admin) ?
+                    (user?.email === admin) ?
                         <>
                             <div className='nav-ul'>
                                 <ul>
@@ -66,7 +74,7 @@ const Header = () => {
                                 <ul>
                                     <li className='home-logo'>
                                         <NavLink to='/home'>
-                                        <img className='logo' src={a} alt=''/>
+                                            <img className='logo' src={a} alt=''/>
                                         </NavLink>
                                     </li>
                                     <SearchCard/>
@@ -76,10 +84,10 @@ const Header = () => {
                 }
             </div>
 
-            {(user?.token) ?
+            {(user?.email) ?
                 <div className='user-name-nav' style={{cursor: 'pointer'}} onClick={() => setModal(!modal)}>
                     <p>
-                        {user?.user.name}
+                        {user?.name}
                         <span><IoIosArrowDropdown style={{cursor: 'pointer'}} color='black'/> </span>
                     </p>
                     <span className={modal ? 'modal-logout' : 'hide'}>

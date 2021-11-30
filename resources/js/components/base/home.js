@@ -10,13 +10,14 @@ import {useStateValue} from "../../helpers/StateProvider";
 const Home = () => {
 
     let User = JSON.parse(window.localStorage.getItem('user'));
-    const [{user,basket}, dispatch] = useStateValue();
+    const [{user,basket,cart}, dispatch] = useStateValue();
     const [height, setHeight] = useState(false);
     const api = process.env.MIX_API;
     const [fantasyBookData, setFantasyBookData] = useState([]);
     const [adventureBookData, setAdventureBookData] = useState([]);
     const [romanceBookData, setRomanceBookData] = useState([]);
     const [data, setData] = useState([])
+
 
     const getBooks = useCallback(
         async () => {
@@ -46,8 +47,8 @@ const Home = () => {
     }, [getBooks]);
 
     useEffect(() => {
-       console.log('Basket:',basket)
-    }, [user,basket]);
+       console.log('basket and cart:',basket,cart)
+    }, [cart,basket]);
 
 
     const ScrollHeight = () => {

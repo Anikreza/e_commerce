@@ -1,29 +1,36 @@
 import React, {useState, useEffect, useCallback} from "react";
 import '../../../sass/PlaceOrder.scss'
 import {Link} from "react-router-dom";
+import {useStateValue} from "../../helpers/StateProvider";
 
 const PlaceOrder = ({sum, userID}) => {
+
+    const [{user, basket}, dispatch] = useStateValue();
 
     const api = process.env.MIX_API;
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [mobile, setMobile] = useState('');
     const [status, setStatus] = useState(0)
-    const disabled='';
+    const disabled = '';
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        const unique = [];
+        basket.map(x => unique.filter(a => a.id === x.id).length > 0 ? null : unique.push(x));
+        setData(unique)
+    }, [basket]);
 
     const SendOrder = async (e) => {
         e.preventDefault()
-        console.log(userID, sum, mobile, name, address)
-        const Data = {userID, sum, mobile, name, address}
+        console.log('data', JSON.stringify(data))
         if (userID && sum && mobile && name && address) {
-            let result = await fetch(`${api}/productOrder/store`, {
-                method: 'POST',
-                body: JSON.stringify(Data),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
+           await fetch(`${api}/cart/store`,{
+                body: JSON.stringify(data),
+                method: 'POST'
+
             }).then(response => {
+                alert(response)
                 setStatus(response.status)
                 if (response.status === 500) {
                     alert('You Already Added This to Your List')
@@ -61,9 +68,16 @@ const PlaceOrder = ({sum, userID}) => {
                     type='text'
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder='Address'/>
-                <button disabled={name || mobile || address? disabled:!disabled}> Place Order</button>
+                <button
+                    disabled={name || mobile || address ? disabled : !disabled}
+                    className={name && mobile && address ? 'button-glow' : 'button-dim'}
+                >
+                    Place Order
+                </button>
             </form>
-           <Link to='/orders'> <button className='goButton' > Checkout Page</button></Link>
+            <Link to='/orders'>
+                <button className='goButton'> Checkout Page</button>
+            </Link>
         </div>
     )
 }

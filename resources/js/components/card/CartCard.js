@@ -10,7 +10,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     const url = process.env.MIX_URL;
     const api = process.env.MIX_API;
     const [updatedQuantity, setUpdatedQuantity] = useState(quantity)
-    const userID = user.id;
+    const userID = user?.id;
 
     useEffect(() => {
         update().then(r => r)
@@ -25,9 +25,8 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
         });
     }
 
-
     function Increase() {
-        if (stock >= updatedQuantity) {
+        if (stock > updatedQuantity) {
             setUpdatedQuantity(updatedQuantity + 1)
         } else {
             alert('Out Of Stock!!!')
@@ -35,7 +34,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     }
 
     function Decrease() {
-        if (stock > 0 && updatedQuantity >= 1) {
+        if (stock > 0 && updatedQuantity > 1) {
             setUpdatedQuantity(updatedQuantity - 1)
         }
     }
@@ -54,7 +53,6 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
 
     return (
         <div className='cart'>
-            <h6>${stock}</h6>
             <div className='cartProducts'>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <img src={`${url}/` + image} alt=''/>

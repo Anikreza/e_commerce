@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router,Routes, Route} from 'react-router-dom';
+import {useLocation} from "react-router-dom";
 import Header from './base/Header';
 import Register from '../Views/register';
 import Login from "../Views/login";
@@ -13,6 +14,7 @@ import ShowOrders from "./base/ShowOrders";
 import AdminOrderPage from "./base/AdminOrderPage";
 
 function Index() {
+
     return (
         <div className='index-app'>
             <Router>

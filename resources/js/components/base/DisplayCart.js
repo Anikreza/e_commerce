@@ -53,7 +53,7 @@ const DisplayCart = () => {
                                 author={Data.author}
                                 price={Data.price}
                                 quantity={Data.quantity}
-                                stock={10}
+                                stock={Data.stock}
                                 productID={Data.id}
                                 sum={sum}
                             />

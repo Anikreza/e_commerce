@@ -1,5 +1,6 @@
 export const initialState = {
     basket: [],
+    cart:[],
     user: {}
 };
 
@@ -14,6 +15,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 basket: [action.item,...state.basket],
+            };
+            case "ADD_TO_CART":
+            return {
+                ...state,
+                cart: [action.item,...state.cart],
             };
 
         case "INCREMENT_QUANTITY":
