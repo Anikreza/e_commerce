@@ -89,14 +89,14 @@ const SingleProductCard = () => {
                 type: "ADD_TO_BASKET",
                 id: productID,
                 item: {
-                    productID: data.id,
+                    product_id: data.id,
                     title: data.title,
                     author: data.author,
                     quantity: quantity,
                     name: name,
                     email: email,
                     price: data.price,
-                    userID: userID,
+                    user_id: userID,
                     image: data.product_img,
                     stock:data.products_in_stock,
                     status: 'Added To Cart',
@@ -107,9 +107,9 @@ const SingleProductCard = () => {
                 type: "ADD_TO_CART",
                 id: productID,
                 item: {
-                    productID: data.id,
+                    product_id: data.id,
                     quantity: quantity,
-                    userID: userID,
+                    user_id: userID,
                     status: 'Added To Cart',
                 },
             });

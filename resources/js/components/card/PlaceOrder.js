@@ -5,7 +5,7 @@ import {useStateValue} from "../../helpers/StateProvider";
 
 const PlaceOrder = ({sum, userID}) => {
 
-    const [{user, basket}, dispatch] = useStateValue();
+    const [{user, cart,basket}, dispatch] = useStateValue();
 
     const api = process.env.MIX_API;
     const [name, setName] = useState('');
@@ -17,9 +17,9 @@ const PlaceOrder = ({sum, userID}) => {
 
     useEffect(() => {
         const unique = [];
-        basket.map(x => unique.filter(a => a.id === x.id).length > 0 ? null : unique.push(x));
+        cart.map(x => unique.filter(a => a.id === x.id).length > 0 ? null : unique.push(x));
         setData(unique)
-    }, [basket]);
+    }, [cart]);
 
     const SendOrder = async (e) => {
         e.preventDefault()
