@@ -7,18 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    protected $fillable = [
-        'quantity',
-        'user_id',
-        'product_id',
-        'category_book_type_id',
-        'category_cover_type_id'
+    protected $guarded = [
+
     ];
 
+    public $timestamps=true;
 //    public function user()
 //    {
 //        return $this->belongsTo('App\Models\User', 'user_id');
 //    }
+    /**
+     * @var mixed
+     */
+    private $options;
+
     /**
      * @var mixed
      */

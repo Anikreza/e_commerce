@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BasketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
@@ -38,6 +39,9 @@ Route::get('/productOrder/add',[ProductOrderController::class, 'add']);
 Route::post('/productOrder/store',[ProductOrderController::class, 'store']);
 Route::get('/productOrder/orders/{user_id}',[ProductOrderController::class, 'orders']);
 Route::delete('/productOrder/delete',[ProductOrderController::class, 'destroy']);
+
+Route::post('/cart/testStore',[BasketController::class, 'store']);
+
 
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

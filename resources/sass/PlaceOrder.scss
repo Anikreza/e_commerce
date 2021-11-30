@@ -58,7 +58,7 @@
             background-color: #c2c2c2;
             padding-left: 15px;
         }
-        button{
+        .button-glow{
             font-family: "Agency FB";
             height: 29px;
             width: 50%;
@@ -70,6 +70,19 @@
             border-radius: 5px;
             font-size: 16px;
         }
+        .button-dim{
+            font-family: "Agency FB";
+            height: 29px;
+            width: 50%;
+            margin-top: 4%;
+            margin-left: 27%;
+            background-color: #a4aba7;
+            color: #000000;
+            cursor: crosshair;
+            border-radius: 5px;
+            font-size: 16px;
+
+        }
     }
     .goButton{
         font-family: "Agency FB";
@@ -78,8 +91,8 @@
         width: 50%;
         margin-top: 4%;
         margin-left: 27%;
-        background-color: #9a5d5d;
-        color: white;
+        background-color: #9a6969;
+        color: #dadada;
         cursor: pointer;
         border-radius: 5px;
     }

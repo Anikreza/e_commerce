@@ -2,14 +2,15 @@ import React, {useState, useEffect, useCallback} from "react";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import axios from "axios";
 import PlaceOrder from "./PlaceOrder";
+import {useStateValue} from "../../helpers/StateProvider";
 
 const CartCard = ({image, title, author, quantity, price, sum, stock, productID}) => {
 
+    const [{ user,basket }, dispatch] = useStateValue();
     const url = process.env.MIX_URL;
     const api = process.env.MIX_API;
     const [updatedQuantity, setUpdatedQuantity] = useState(quantity)
-    let user = JSON.parse(window.localStorage.getItem('user'));
-    const userID = user.user.id;
+    const userID = user?.id;
 
     useEffect(() => {
         update().then(r => r)
@@ -17,60 +18,24 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
 
 
     async function update() {
-        const Data = {updatedQuantity, productID}
-        let result = fetch(`${api}/cart/update/` + userID, {
-            method: 'POST',
-            body: JSON.stringify(Data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
+        dispatch({
+            type: "INCREMENT_QUANTITY",
+            id:productID ,
+            value: updatedQuantity
+        });
     }
 
-    const updateStock = useCallback(
-        async () => {
-            const Data = {userID, productID}
-            let result = fetch(`${api}/cart/updateStock`, {
-                method: 'POST',
-                body: JSON.stringify(Data),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-        },
-        [price, sum, quantity],
-    );
-
-    const depleteStock = useCallback(
-        async () => {
-            const Data = {userID, productID}
-            let result = fetch(`${api}/cart/depleteStock`, {
-                method: 'POST',
-                body: JSON.stringify(Data),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-        },
-        [price, sum, quantity],
-    );
-
     function Increase() {
-        if (stock >= updatedQuantity) {
+        if (stock > updatedQuantity) {
             setUpdatedQuantity(updatedQuantity + 1)
-            depleteStock().then(r => r)
         } else {
             alert('Out Of Stock!!!')
         }
     }
 
     function Decrease() {
-        if (stock > 0 && updatedQuantity >= 1) {
+        if (stock > 0 && updatedQuantity > 1) {
             setUpdatedQuantity(updatedQuantity - 1)
-            updateStock().then(r => r)
         }
     }
 
