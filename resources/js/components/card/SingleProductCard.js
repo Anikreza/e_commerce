@@ -89,6 +89,7 @@ const SingleProductCard = () => {
                 type: "ADD_TO_BASKET",
                 id: productID,
                 item: {
+                    iDD: data.id,
                     product_id: data.id,
                     title: data.title,
                     author: data.author,
@@ -107,6 +108,7 @@ const SingleProductCard = () => {
                 type: "ADD_TO_CART",
                 id: productID,
                 item: {
+                    iDD: data.id,
                     product_id: data.id,
                     quantity: quantity,
                     user_id: userID,

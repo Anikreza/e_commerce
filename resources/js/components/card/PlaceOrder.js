@@ -17,7 +17,7 @@ const PlaceOrder = ({sum, userID}) => {
 
     useEffect(() => {
         const unique = [];
-        cart.map(x => unique.filter(a => a.id === x.id).length > 0 ? null : unique.push(x));
+        cart.map(x => unique.filter(a => a.iDD === x.iDD).length > 0 ? null : unique.push(x));
         setData(unique)
     }, [cart]);
 

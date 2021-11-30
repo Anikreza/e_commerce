@@ -17,7 +17,7 @@ const DisplayCart = () => {
     const getSum = useCallback(
         async () => {
             const unique = [];
-            basket.map(x => unique.filter(a => a.id === x.id).length > 0 ? null : unique.push(x));
+            basket.map(x => unique.filter(a =>a.iDD === x.iDD).length > 0 ? null : unique.push(x));
             setData(unique)
 
             const sum = data.reduce((amount, books) => (books.price * books.quantity) + amount, 0);
