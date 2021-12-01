@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from "react";
 import '../../../sass/PlaceOrder.scss'
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {useStateValue} from "../../helpers/StateProvider";
 
 const PlaceOrder = ({sum, userID}) => {
@@ -14,10 +15,11 @@ const PlaceOrder = ({sum, userID}) => {
     const [status, setStatus] = useState(0)
     const disabled = '';
     const [data, setData] = useState([])
+    const navigate=useNavigate()
 
     useEffect(() => {
         const unique = [];
-        cart.map(x => unique.filter(a => a.iDD === x.iDD).length > 0 ? null : unique.push(x));
+        cart.map(x => unique.filter(a => a.product_id === x.product_id).length > 0 ? null : unique.push(x));
         setData(unique)
     }, [cart]);
 
@@ -30,13 +32,12 @@ const PlaceOrder = ({sum, userID}) => {
                 method: 'POST'
 
             }).then(response => {
-                alert(response)
                 setStatus(response.status)
                 if (response.status === 500) {
                     alert('You Already Added This to Your List')
                 }
             })
-            //window.location.href('/orders')
+            navigate('/orders')
         } else {
             alert('Please Provide All The Information')
         }

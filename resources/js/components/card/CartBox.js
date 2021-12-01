@@ -10,7 +10,7 @@ const Cartbox = () => {
 
     useEffect(() => {
         const unique = [];
-        basket.map(x => unique.filter(a => a.iDD === x.iDD).length > 0 ? null : unique.push(x));
+        basket.map(x => unique.filter(a => a.product_id === x.product_id).length > 0 ? null : unique.push(x));
         setData(unique)
     }, [basket]);
 

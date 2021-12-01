@@ -8,9 +8,9 @@ const comp = ({name,phone, address,data,userID}) => {
     const [sum,setSum]=useState(0)
 
     useEffect(() => {
-        const sum = basket.reduce((amount, books) => (books.price * books.quantity) + amount, 7);
+        const sum = data.reduce((amount, books) => (books.price * books.quantity) + amount, 7);
         setSum(sum)
-    }, [basket]);
+    }, [data]);
 
     async function makeOrder() {
         let Data = {userID};

@@ -9,7 +9,7 @@ import {useStateValue} from "../../helpers/StateProvider";
 const ShowOrders = () => {
 
     const [{ user,basket }, dispatch] = useStateValue();
-    const userID = user.id;
+    const userID = user?.id;
     const api = process.env.MIX_API;
     const [customer, setCustomer] = useState([])
     const [orders, setOrders] = useState([])
@@ -18,10 +18,11 @@ const ShowOrders = () => {
 
     const getOrders = useCallback(
         async () => {
-            await axios.get(`${api}/productOrder/orders/` + userID)
+            await axios.get(`${api}/cart/show/` + userID)
                 .then(async (res) => {
-                    setCustomer(res.data?.customer)
-                    setOrders(res.data?.orders)
+                    setOrders(res.data)
+                    console.log(res.data);
+
                 })
                 .catch((error) => {
                     console.log(error);
@@ -32,15 +33,15 @@ const ShowOrders = () => {
 
     useEffect(async () => {
         getOrders().then(r => r)
-    }, [getOrders, orders]);
+    }, [getOrders]);
 
     useEffect(() => {
         const sum = customer?.reduce((amount, books) => (books.total * orders.length) + amount, 0);
         setSum(sum)
         const unique = [];
-        basket.map(x => unique.filter(a => a.id === x.id).length > 0 ? null : unique.push(x));
+        orders.map(x => unique.filter(a => a.product_id === x.product_id).length > 0 ? null : unique.push(x));
         setData(unique)
-    }, []);
+    }, [orders]);
 
 
     return (
@@ -53,7 +54,7 @@ const ShowOrders = () => {
                         userID={userID}
                         name={user?.name}
                         phone={user?.email}
-                        data={basket}
+                        data={data}
                     />
                 </div>
             </div>
@@ -67,7 +68,7 @@ const ShowOrders = () => {
                                 author={data.author}
                                 quantity={data.quantity}
                                 price={data.price}
-                                image={data.image}
+                                image={data.product_img}
                             />
                         ))}
                     </div>
