@@ -54,7 +54,6 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
 
     return (
         <div className='cart'>
-            <h6>${stock}</h6>
             <div className='cartProducts'>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <img src={`${url}/` + image} alt=''/>
@@ -71,7 +70,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
                             <span> {updatedQuantity} </span>
                             <p2 onClick={Increase}>+</p2>
                         </button>
-                        <h6>${price * quantity}</h6>
+                        <h6>${price * updatedQuantity}</h6>
                     </div>
                 </div>
             </div>

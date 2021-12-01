@@ -8,7 +8,7 @@ import {useStateValue} from "../../helpers/StateProvider";
 
 const ShowOrders = () => {
 
-    const [{ user,basket }, dispatch] = useStateValue();
+    const [{ user,basket,userDetail}, dispatch] = useStateValue();
     const userID = user?.id;
     const api = process.env.MIX_API;
     const [customer, setCustomer] = useState([])
@@ -39,9 +39,9 @@ const ShowOrders = () => {
         const sum = customer?.reduce((amount, books) => (books.total * orders.length) + amount, 0);
         setSum(sum)
         const unique = [];
-        orders.map(x => unique.filter(a => a.product_id === x.product_id).length > 0 ? null : unique.push(x));
+        basket.map(x => unique.filter(a => a.product_id === x.product_id).length > 0 ? null : unique.push(x));
         setData(unique)
-    }, [orders]);
+    }, [basket]);
 
 
     return (
@@ -53,8 +53,8 @@ const ShowOrders = () => {
                     <Receipt
                         userID={userID}
                         name={user?.name}
-                        phone={user?.email}
-                        data={data}
+                        email={user?.email}
+                        basketData={data}
                     />
                 </div>
             </div>
@@ -68,7 +68,7 @@ const ShowOrders = () => {
                                 author={data.author}
                                 quantity={data.quantity}
                                 price={data.price}
-                                image={data.product_img}
+                                image={data.image}
                             />
                         ))}
                     </div>

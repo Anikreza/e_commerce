@@ -6,7 +6,7 @@ import {useStateValue} from "../../helpers/StateProvider";
 
 const PlaceOrder = ({sum, userID}) => {
 
-    const [{user, cart,basket}, dispatch] = useStateValue();
+    const [{}, dispatch] = useStateValue();
 
     const api = process.env.MIX_API;
     const [name, setName] = useState('');
@@ -17,32 +17,19 @@ const PlaceOrder = ({sum, userID}) => {
     const [data, setData] = useState([])
     const navigate=useNavigate()
 
-    useEffect(() => {
-        const unique = [];
-        cart.map(x => unique.filter(a => a.product_id === x.product_id).length > 0 ? null : unique.push(x));
-        setData(unique)
-    }, [cart]);
-
-    const SendOrder = async (e) => {
+    const toOrder= async (e)=>{
         e.preventDefault()
-        console.log('data', JSON.stringify(data))
-        if (userID && sum && mobile && name && address) {
-           await fetch(`${api}/cart/store`,{
-                body: JSON.stringify(data),
-                method: 'POST'
-
-            }).then(response => {
-                setStatus(response.status)
-                if (response.status === 500) {
-                    alert('You Already Added This to Your List')
-                }
-            })
-            navigate('/orders')
-        } else {
-            alert('Please Provide All The Information')
-        }
-
+        dispatch({
+            type: "SET_USER_DETAIL",
+            item: {
+                address: address,
+                mobile: mobile,
+                name: name,
+            },
+        });
+        navigate('/orders')
     }
+
 
     return (
         <div className='PlaceOrder'>
@@ -54,7 +41,7 @@ const PlaceOrder = ({sum, userID}) => {
                 <h5>Payable Total: <span>${(sum + 7).toFixed(2)}</span></h5>
             </div>
 
-            <form onSubmit={SendOrder}>
+            <form onSubmit={toOrder}>
                 <input
                     name='name'
                     onChange={(e) => setName(e.target.value)}
@@ -73,12 +60,9 @@ const PlaceOrder = ({sum, userID}) => {
                     disabled={name || mobile || address ? disabled : !disabled}
                     className={name && mobile && address ? 'button-glow' : 'button-dim'}
                 >
-                    Place Order
+                    Checkout Page
                 </button>
             </form>
-            <Link to='/orders'>
-                <button className='goButton'> Checkout Page</button>
-            </Link>
         </div>
     )
 }

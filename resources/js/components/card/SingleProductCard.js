@@ -83,7 +83,6 @@ const SingleProductCard = () => {
 
     async function addToBasket() {
         setQuantity(quantity + 1)
-
         if(quantity<=data.products_in_stock){
             dispatch({
                 type: "ADD_TO_BASKET",

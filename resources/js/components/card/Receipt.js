@@ -1,16 +1,24 @@
 import React, {useState, useEffect} from "react";
 import {useStateValue} from "../../helpers/StateProvider";
+import {useNavigate} from "react-router";
 
-const comp = ({name,phone, address,data,userID}) => {
+const comp = ({name,email,userID,basketData}) => {
 
-    const [{user,basket}, dispatch] = useStateValue();
     const api = process.env.MIX_API;
+
     const [sum,setSum]=useState(0)
+    const [{user, cart,basket,userDetail}, dispatch] = useStateValue();
+    const [data, setData] = useState([])
+    const navigate=useNavigate();
 
     useEffect(() => {
-        const sum = data.reduce((amount, books) => (books.price * books.quantity) + amount, 7);
+        const unique = [];
+        cart.map(x => unique.filter(a => a.product_id === x.product_id).length > 0 ? null : unique.push(x));
+        setData(unique)
+        const sum = basketData.reduce((amount, books) => (books.price * books.quantity) + amount, 7);
         setSum(sum)
-    }, [data]);
+    }, [basketData,cart]);
+
 
     async function makeOrder() {
         let Data = {userID};
@@ -23,15 +31,43 @@ const comp = ({name,phone, address,data,userID}) => {
             }
         }).then(res=>{
             alert('Order Placed')
-            window.location.replace('/home')
+            navigate('/home')
         })
     }
+
+
+    const SendOrder = async (e) => {
+        e.preventDefault()
+        if(user){
+                await fetch(   `${api}/cart/store`,{
+                    body: JSON.stringify(data),
+                    method: 'POST'
+                }).then(response => {
+                    if (response.status === 500) {
+                        alert('You Already Added This to Your List')
+                    }
+                    else{
+                        alert('Order Placed')
+                    }
+                })
+                dispatch({
+                    type: "EMPTY_BASKET",
+                });
+                navigate('/home')
+        }
+        else{
+            alert('Please Log In First')
+            navigate('/login')
+        }
+    }
+
     return (
         <div>
-            <h4>{name}</h4>
-            <h4>{phone}</h4>
+            <h4>{userDetail.name}</h4>
+            <h4>{userDetail.mobile}</h4>
+            <h4>{userDetail.address}</h4>
             {
-                data.map(Data=>(
+                basketData.map(Data=>(
                     <div key={Data.title}>
                         <p><span></span>{Data.title}<span> ({Data.quantity})  ${(Data.quantity*Data.price)}</span></p>
                     </div>
@@ -39,7 +75,7 @@ const comp = ({name,phone, address,data,userID}) => {
             }
             <h4>Total Payable: ${sum}</h4>
             <br/>
-            <button onClick={makeOrder}>Checkout</button>
+            <button onClick={SendOrder}>Checkout</button>
         </div>
     )
 }

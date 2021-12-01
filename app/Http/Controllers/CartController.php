@@ -37,14 +37,28 @@ class CartController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        $data = json_decode($request->getContent(), true);
-        foreach ($data as $ob) {
-            $arr = (array) $ob;
-            Cart::create($arr);
+        $payload = json_decode($req->getContent(), true);
+        $accepted = [];
+        $bounced = [];
+
+        foreach ($payload as $element) {
+
+            if(DB::table('carts')
+                ->where('user_id', $element["user_id"])
+                ->where('product_id', $element["product_id"])
+                ->doesntExist()){
+                $arr = (array) $element;
+                Cart::create($arr);
+
+                array_push($accepted, $element["product_id"]);
+            }else{
+                array_push($bounced, $element["product_id"]);
+            }
         }
-        return response($data , 201);
+        return response(["Accepted" => ["Product ID" => json_encode($accepted)], "Bounced" => ["Product ID" => json_encode($bounced)]] , 200);
+
     }
 
     /**

@@ -1,7 +1,8 @@
 export const initialState = {
     basket: [],
     cart:[],
-    user: {}
+    user: {},
+    userDetail: {},
 };
 
 // Selector
@@ -34,6 +35,7 @@ const reducer = (state, action) => {
                 basket: []
             }
 
+
         case "REMOVE_FROM_BASKET":
             const index = state.basket.findIndex(
                 (basketItem) => basketItem.id === action.id
@@ -57,6 +59,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 user: action.item
+            }
+            case "SET_USER_DETAIL":
+            return {
+                ...state,
+                userDetail: action.item
             }
 
         default:
