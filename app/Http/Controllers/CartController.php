@@ -37,14 +37,28 @@ class CartController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        $data = json_decode($request->getContent(), true);
-        foreach ($data as $ob) {
-            $arr = (array) $ob;
-            Cart::create($arr);
+        $payload = json_decode($req->getContent(), true);
+        $accepted = [];
+        $bounced = [];
+
+        foreach ($payload as $element) {
+
+            if(DB::table('carts')
+                ->where('user_id', $element["user_id"])
+                ->where('product_id', $element["product_id"])
+                ->doesntExist()){
+                $arr = (array) $element;
+                Cart::create($arr);
+
+                array_push($accepted, $element["product_id"]);
+            }else{
+                array_push($bounced, $element["product_id"]);
+            }
         }
-        return response($data , 201);
+        return response(["Accepted" => ["Product ID" => json_encode($accepted)], "Bounced" => ["Product ID" => json_encode($bounced)]] , 200);
+
     }
 
     /**
@@ -58,15 +72,11 @@ class CartController extends Controller
 //        $listCarts = Cart::where('user_id','users.id')->latest()->get();
         $listCarts = DB::table('carts')
             ->join('products', 'products.id', '=', 'carts.product_id')
-            ->join('category_book_types', 'category_book_types.id', '=', 'carts.category_book_type_id')
-            ->join('category_cover_types', 'category_cover_types.id', '=', 'carts.category_cover_type_id')
-//            ->join('users', 'users.id', '=', 'carts.user_id')
             ->select('carts.*', 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
                 'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
-                'products.description as description', 'category_cover_types.category_cover_types as category_cover_types',
-                'category_book_types.category_book_types as category_book_types')
+                'products.description as description',
+            )
             ->where('carts.user_id', $user_id)
-            ->latest()
             ->get();
 
         return $listCarts;

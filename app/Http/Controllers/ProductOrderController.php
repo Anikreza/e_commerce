@@ -39,25 +39,23 @@ class ProductOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $check = ProductOrder::where('user_id', $request->userID)->first();
-        if ($check)
-        {
+        $payload = json_decode($request->getContent(), true);
+        $accepted = [];
+        $bounced = [];
 
-        } else {
-            $productOrder = new ProductOrder();
-            $productOrder->name = $request->name;
-            $productOrder->phone = $request->mobile;
-            $productOrder->address = $request->address;
-            $productOrder->total = $request->sum;
-            $productOrder->user_id = $request->userID;
-            $productOrder->product_id = $request->productId;
-            $productOrder->cart_id = $request->cartId;
-            $productOrder->save();
+        foreach ($payload as $element) {
+
+            if(DB::table('carts')->where('user_id', $element["user_id"])->where('product_id', $element["product_id"])->doesntExist()){
+                $arr = (array) $element;
+                productOrder::create($arr);
+
+                array_push($accepted, $element["product_id"]);
+            }else{
+                array_push($bounced, $element["product_id"]);
+            }
         }
-        $response = [
-            'productOrder' => $productOrder,
-        ];
-        return response($response, 201);
+        return response(["Accepted" => ["Product ID" => json_encode($accepted)], "Bounced" => ["Product ID" => json_encode($bounced)]] , 200);
+
     }
 
 
