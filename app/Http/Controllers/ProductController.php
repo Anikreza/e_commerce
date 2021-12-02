@@ -138,6 +138,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->category_book_type_id = $request->bookType;
         $product->category_cover_type_id = $request->coverType;
+        $product->status = $request->status;
         $product->save();
 
         $addBookType = new CategoryBookType();

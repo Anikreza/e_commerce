@@ -48,16 +48,20 @@ class CartController extends Controller
             if (DB::table('carts')
                 ->where('user_id', $element["user_id"])
                 ->where('product_id', $element["product_id"])
+                ->where('status','!=','Delivered')
                 ->doesntExist()) {
                 $arr = (array)$element;
                 Cart::create($arr);
                 array_push($accepted, $element["product_id"]);
+                DB::table('products')
+                    ->join('carts', 'carts.product_id', '=', 'products.id')
+                    ->select('products.*', 'carts.quantity')
+                    ->where('user_id', $element["user_id"])
+                    ->where('product_id', $element["product_id"])
+                    ->decrement('products_in_stock', $element["quantity"]);
             } else {
                 array_push($bounced, $element["product_id"]);
             }
-
-
-            //JOIN TO DEPLETE STOK
         }
 
         $response = [
@@ -65,8 +69,6 @@ class CartController extends Controller
             'bounced' => $bounced
         ];
         return response($response, 201);
-
-
     }
 
     public function orderInfoForAdmin(): \Illuminate\Support\Collection

@@ -9,8 +9,9 @@ import CartBox from "../card/CartBox";
 import {BiAddToQueue} from 'react-icons/bi';
 import {FaRegEdit} from 'react-icons/fa';
 import {BsList} from 'react-icons/bs';
+import {useNavigate} from "react-router";
 import {useStateValue} from "../../helpers/StateProvider";
-import axios from "axios";
+
 
 const Header = () => {
 
@@ -18,12 +19,15 @@ const Header = () => {
     let admin = process.env.MIX_ADMIN;
     const [modal, setModal] = useState(false);
     const url = location.pathname
+    const navigate=useNavigate()
 
 
     async function logout() {
         console.log('url', url)
         window.localStorage.clear();
-        window.location.replace('/home');
+        navigate('/home')
+        //window.location.replace('/home')
+
     }
 
     return (

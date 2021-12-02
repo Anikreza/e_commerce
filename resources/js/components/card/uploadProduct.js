@@ -9,6 +9,7 @@ const Add = () => {
     const [author, setAuthor] = useState('');
     const [stock, setStock] = useState('');
     const [price, setPrice] = useState('');
+    const [status, setStatus] = useState('unPublished');
     const [bookType, setBookType] = useState('');
     const [newBookType, setNewBookType] = useState('');
     const [coverType, setCoverType] = useState('');
@@ -48,6 +49,7 @@ const Add = () => {
         Data.append('coverType', coverType);
         Data.append('description', description);
         Data.append('newBookType', newBookType);
+        Data.append('status', status);
 
             await axios.post(`${api}/store`, Data
             ).then((response) => {

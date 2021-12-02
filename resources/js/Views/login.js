@@ -33,7 +33,8 @@ const Login = () => {
         if (user.message) {
             alert(user?.message)
         } else {
-            navigate('/')
+            //navigate('/home')
+            window.location.replace('/home')
         }
     }
 

@@ -5,7 +5,7 @@ import {useNavigate} from "react-router";
 const comp = ({name, email, userID, basketData}) => {
 
     const api = process.env.MIX_API;
-
+    let User = JSON.parse(window.localStorage.getItem('user'));
     const [sum, setSum] = useState(0)
     const [{user, cart, basket, userDetail}, dispatch] = useStateValue();
     const [data, setData] = useState([])
@@ -19,20 +19,7 @@ const comp = ({name, email, userID, basketData}) => {
         setSum(sum)
     }, [basketData, cart]);
 
-    const updateStock = useCallback(
-        async () => {
-            const Data = {userID, productID}
-            let result = fetch(`${api}/cart/updateStock`, {
-                method: 'POST',
-                body: JSON.stringify(Data),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-        },
-        [],
-    );
+
     async function updateUser() {
         await fetch(`${api}/updateUser/` + userID, {
             method: 'POST',
@@ -48,7 +35,7 @@ const comp = ({name, email, userID, basketData}) => {
 
     const SendOrder = async (e) => {
         e.preventDefault()
-        if (user) {
+        if (User?.token) {
             await fetch(`${api}/cart/store`, {
                 body: JSON.stringify(data),
                 method: 'POST'

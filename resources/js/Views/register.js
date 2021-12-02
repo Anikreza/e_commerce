@@ -25,7 +25,7 @@ const Register = () => {
         })
         API = await (await API).json();
         window.localStorage.setItem('user', JSON.stringify(API));
-        window.location.replace('/')
+        window.location.replace('/home')
     }
 
     return (

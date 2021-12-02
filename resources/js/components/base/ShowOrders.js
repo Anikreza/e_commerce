@@ -8,8 +8,9 @@ import {useStateValue} from "../../helpers/StateProvider";
 
 const ShowOrders = () => {
 
+    let User = JSON.parse(window.localStorage.getItem('user'));
     const [{ user,basket,userDetail}, dispatch] = useStateValue();
-    const userID = user?.id;
+    const userID = User?.user.id;
     const api = process.env.MIX_API;
     const [customer, setCustomer] = useState([])
     const [orders, setOrders] = useState([])
