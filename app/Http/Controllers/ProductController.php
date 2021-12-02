@@ -77,17 +77,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:50',
+        $validator = $request->validate([
+            'name' => 'required|string|max:50',
             'author' => 'required|string|max:40',
-            'products_in_stock' => 'required|numeric|max:20',
+            'stock' => 'required|numeric|max:20',
             'price' => 'required|numeric|regex:/^\d*(\.\d{2})?$/',
             'description' => 'required|max:255',
-            'product_img' => 'mimes:jpeg,jpg,png|required|max:10000',
-        ]);
+            'file' => 'image|mimes:jpeg,jpg,png|required|max:10000',
+            'bookType' => 'required|string|max:50',
+        ],
+            [
+                'name.required' => ':attribute can not be blank',
+                'author.required' => ':attribute can not be blank Or Numeric',
+                'stock.required' => ':attribute can not be blank Or non integer',
+                'price.required' => ':attribute can not be blank and has to be a float of point 2 degree',
+                'file.required' => 'product must have a :attribute',
+                'bookType.required' => 'please select a :attribute',
+            ]);
 
         $product = new Product();
-        $image = $validated->file;
+        $image = $request->file;
         if ($image) {
             $image_ext = $image->getClientOriginalExtension();
             $image_full_name = time() . '.' . $image_ext;
@@ -100,18 +109,18 @@ class ProductController extends Controller
         }
 
         $product->product_img = $image_url;
-        $product->title = $validated->name;
-        $product->author = $validated->author;
-        $product->products_in_stock = $validated->stock;
-        $product->price = $validated->price;
-        $product->description = $validated->description;
-        $product->category_book_type_id = $validated->bookType;
-        $product->category_cover_type_id = $validated->coverType;
+        $product->title = $request->name;
+        $product->author = $request->author;
+        $product->products_in_stock = $request->stock;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->category_book_type_id = $request->bookType;
+        $product->category_cover_type_id = $request->coverType;
         $product->save();
 
         $response = [
             'product' => $product,
-            'validated' => $validated
+            'validator' => $validator
         ];
         return response($response, 201);
     }
@@ -145,8 +154,8 @@ class ProductController extends Controller
 
     function search($key)
     {
-        $Product=new Product;
-        $Result=$Product::where('title', 'like', "%$key%")->get();
+        $Product = new Product;
+        $Result = $Product::where('title', 'like', "%$key%")->get();
         $response = [
             'result' => $Result
         ];
@@ -163,6 +172,41 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+    }
+
+    public function newType(Request $request)
+    {
+        $addBookType = new CategoryBookType();
+        $addBookType->category_book_types = $request->newBookType;
+        $addBookType->save();
+    }
+
+    /**
+     * List of Ordered Products for Admin Panel.
+     *
+     * @param \App\Models\Cart $cart
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|\Illuminate\Support\Collection
+     */
+
+
+    /**
+     * Update the Status of Ordered Product.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Product $product
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|int
+     */
+    public function updateStatus(Request $request)
+    {
+        $updateUser = DB::table('carts')
+            ->where('user_id',$request->userID)
+            ->update([
+            'status' => $request->updatedStatus
+        ]);
+        $response = [
+            'result' => $updateUser
+        ];
+        return response($response, 201);
     }
 
     /**

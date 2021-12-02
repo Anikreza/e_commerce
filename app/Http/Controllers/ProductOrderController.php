@@ -55,7 +55,6 @@ class ProductOrderController extends Controller
             }
         }
         return response(["Accepted" => ["Product ID" => json_encode($accepted)], "Bounced" => ["Product ID" => json_encode($bounced)]] , 200);
-
     }
 
 

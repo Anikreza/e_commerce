@@ -1,24 +1,53 @@
-import React, {useState, useEffect} from "react";
-import {useStateValue} from "../../helpers/StateProvider";
+import React, {useState, useEffect, useCallback} from "react";
+import axios from "axios";
+import '../../../sass/orderInfo.scss';
+import OrderHistory from "../../helpers/OrderHistory";
+import OrdersCard from "../card/OrdersCard";
 
 const AdminOrderPage = () => {
 
-    const [{user, basket }, dispatch] = useStateValue();
-    return (
-        <div>
-            {
-                basket?.map(data=>(
-                    <div>
-                        <p>{data.title}</p>
-                        <p>{data.author}</p>
-                        <p>{data.price}</p>
-                        <p>{data.quantity}</p>
-                        <p>{data.status}</p>
-                        <p>{data.name}</p>
-                        <p>{data.phone}</p>
-                        <hr/>
-                    </div>
+    const [orders, setOrders] = useState([])
+    const [data, setData] = useState([])
+    const api = process.env.MIX_API;
 
+    const getOrderDetail = useCallback(
+        async () => {
+            await axios.get(`${api}/admin/orderInfo`)
+                .then(async (res) => {
+                    setOrders(res.data)
+                    console.log('damned result',res.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        },
+        [],
+    );
+
+    useEffect(async () => {
+        getOrderDetail().then(r => r)
+    }, [getOrderDetail]);
+
+    useEffect(() => {
+        const unique = [];
+        orders.map(x => unique.filter(a => a.user_id === x.user_id).length > 0 ? null : unique.push(x));
+        setData(unique)
+    }, [orders]);
+
+
+    return (
+        <div className='orderInfo'>
+            <h2> Admin Dashboard</h2>
+            {
+                data?.map(data=>(
+                        <OrdersCard
+                            key={data.id}
+                            name={data.name}
+                            mobile={data.mobile}
+                            email={data.email}
+                            userID={data.user_id}
+                            status={data.status}
+                        />
                 ))
             }
         </div>
