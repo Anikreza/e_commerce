@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect,useCallback} from "react";
 import {useStateValue} from "../../helpers/StateProvider";
 import {useNavigate} from "react-router";
 
@@ -19,7 +19,20 @@ const comp = ({name, email, userID, basketData}) => {
         setSum(sum)
     }, [basketData, cart]);
 
-
+    const updateStock = useCallback(
+        async () => {
+            const Data = {userID, productID}
+            let result = fetch(`${api}/cart/updateStock`, {
+                method: 'POST',
+                body: JSON.stringify(Data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+        },
+        [],
+    );
     async function updateUser() {
         await fetch(`${api}/updateUser/` + userID, {
             method: 'POST',

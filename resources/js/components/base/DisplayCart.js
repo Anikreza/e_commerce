@@ -6,6 +6,7 @@ import CartCard from "../card/CartCard";
 import PlaceOrder from "../card/PlaceOrder";
 import {useStateValue} from "../../helpers/StateProvider";
 
+
 const DisplayCart = () => {
 
     const [{ user,basket }, dispatch] = useStateValue();
@@ -39,6 +40,11 @@ const DisplayCart = () => {
             <div className='cartBox'>
                 <div className='PayOut'>
                     <h1>Your Cart ({data.length})</h1>
+                        <RiDeleteBin6Line
+                            size='29px'
+                            color='#7e1414'
+                            style={{marginTop:'12px', marginLeft:'10px', cursor:'pointer'}}
+                        />
                     <h2>Sub Total: <span>${sum.toFixed(2)}</span></h2>
                 </div>
 
@@ -54,7 +60,7 @@ const DisplayCart = () => {
                                 price={Data.price}
                                 quantity={Data.quantity}
                                 stock={Data.stock}
-                                productID={Data.id}
+                                productID={Data.product_id}
                                 sum={sum}
                             />
                         ))

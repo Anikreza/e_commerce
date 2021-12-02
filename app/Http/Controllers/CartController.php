@@ -51,11 +51,13 @@ class CartController extends Controller
                 ->doesntExist()) {
                 $arr = (array)$element;
                 Cart::create($arr);
-
                 array_push($accepted, $element["product_id"]);
             } else {
                 array_push($bounced, $element["product_id"]);
             }
+
+
+            //JOIN TO DEPLETE STOK
         }
 
         $response = [

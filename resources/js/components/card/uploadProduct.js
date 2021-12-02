@@ -18,6 +18,7 @@ const Add = () => {
     const [file, setFile] = useState('');
     const [errors, setErrors] = useState([]);
     const [newType, setNewType] = useState(false);
+    const [modal, setModal] = useState(true);
     const api = process.env.MIX_API;
 
     const getBookType = useCallback(async () => {
@@ -34,7 +35,7 @@ const Add = () => {
 
     useEffect(async () => {
         getBookType().then(r => r)
-    }, [getBookType])
+    }, [getBookType,newBookType])
 
     async function upload() {
         const Data = new FormData();
@@ -55,6 +56,11 @@ const Add = () => {
                 setErrors(e.response.data.errors)
                 console.log('errors:', e.response.data.errors)
             })
+    }
+
+    const setNewBook=(e)=>{
+        setNewType(!newType)
+        setModal(false)
     }
 
     return (
@@ -97,14 +103,16 @@ const Add = () => {
                                     </option>
                                 ))
                             }
-                        <option onClick={()=>setNewType(!newType)} value={newBookType}> Create New</option>
                     </select>
+                    <button className={(modal)?'selButton':'hide'} onClick={setNewBook}>
+                            Create New Book Genre
+                    </button>
                     {
                         (newType)?
                             <input
                                 placeholder='Create a new book genre'
                                 type='text'
-                                onChange={(e) => setNewBookType(e.target.value)}
+                                onChange={(e)=>setNewBookType(e.target.value)}
                                 id='newBookType'
                                 name="newBookType"
                             />

@@ -31,6 +31,8 @@ Route::get('products/list',[ProductController::class, 'list']);
 Route::get('products/search/{key}',[ProductController::class, 'search']);
 Route::get('/products/{id}',[ProductController::class, 'show']);
 Route::post('/products/updateStatus',[ProductController::class, 'updateStatus']);
+Route::post('/products/updateProductInfo',[ProductController::class, 'updateProductInfo']);
+Route::post('/newType/add/{type}',[ProductController::class, 'addNewType']);
 
 Route::post('/cart/store',[CartController::class, 'store']);
 Route::get('/cart/show/{user_id}',[CartController::class, 'show']);
@@ -41,7 +43,7 @@ Route::delete('/cart/delete',[CartController::class, 'destroy']);
 Route::get('/admin/orderInfo',[CartController::class, 'orderInfoForAdmin']);
 
 
-Route::get('/productOrder/add',[ProductOrderController::class, 'add']);
+
 Route::post('/productOrder/store',[ProductOrderController::class, 'store']);
 Route::get('/productOrder/orders/{user_id}',[ProductOrderController::class, 'orders']);
 Route::delete('/productOrder/delete',[ProductOrderController::class, 'destroy']);

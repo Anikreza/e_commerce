@@ -12,6 +12,7 @@ import DisplayProducts from "./base/DisplayProducts";
 import DisplayCart from "./base/DisplayCart";
 import ShowOrders from "./base/ShowOrders";
 import AdminOrderPage from "./base/AdminOrderPage";
+import AdminEdit from "./base/AdminEdit";
 
 function Index() {
 
@@ -30,6 +31,7 @@ function Index() {
                     <Route path='/cart' element={<DisplayCart/>}/>
                     <Route path='/orders' element={<ShowOrders/>}/>
                     <Route path='/adminOrders' element={<AdminOrderPage/>}/>
+                    <Route path='/edit' element={<AdminEdit/>}/>
                 </Routes>
             </Router>
         </div>

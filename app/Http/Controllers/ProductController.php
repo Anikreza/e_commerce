@@ -39,7 +39,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        $listProducts = Product::with(['categoryBookType', 'categoryCoverType'])->get();
+        $listProducts = Product::all();
 
         $response = [
             'allBooks' => $listProducts
@@ -77,23 +77,45 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
-            'name' => 'required|string|max:50',
-            'author' => 'required|string|max:40',
-            'stock' => 'required|numeric|max:20',
-            'price' => 'required|numeric|regex:/^\d*(\.\d{2})?$/',
-            'description' => 'required|max:255',
-            'file' => 'image|mimes:jpeg,jpg,png|required|max:10000',
-            'bookType' => 'required|string|max:50',
-        ],
-            [
-                'name.required' => ':attribute can not be blank',
-                'author.required' => ':attribute can not be blank Or Numeric',
-                'stock.required' => ':attribute can not be blank Or non integer',
-                'price.required' => ':attribute can not be blank and has to be a float of point 2 degree',
-                'file.required' => 'product must have a :attribute',
-                'bookType.required' => 'please select a :attribute',
-            ]);
+        if($request->newBookType){
+            $validator = $request->validate([
+                'name' => 'required|string|max:50',
+                'author' => 'required|string|max:40',
+                'stock' => 'required|numeric',
+                'price' => 'required|numeric|regex:/^\d*(\.\d{2})?$/',
+                'description' => 'required|max:255',
+                'file' => 'image|mimes:jpeg,jpg,png|required|max:10000',
+                'newBookType' => 'required|string|max:50',
+            ],
+                [
+                    'name.required' => ':attribute can not be blank',
+                    'author.required' => ':attribute can not be blank Or Numeric',
+                    'stock.required' => ':attribute can not be blank Or non integer',
+                    'price.required' => ':attribute can not be blank and has to be a float of point 2 degree',
+                    'file.required' => 'product must have a :attribute',
+                    'newBookType.required' => 'please select a :attribute',
+                ]);
+        }
+        else{
+            $validator = $request->validate([
+                'name' => 'required|string|max:50',
+                'author' => 'required|string|max:40',
+                'stock' => 'required|numeric',
+                'price' => 'required|numeric|regex:/^\d*(\.\d{2})?$/',
+                'description' => 'required|max:255',
+                'file' => 'image|mimes:jpeg,jpg,png|required|max:10000',
+                'bookType' => 'required|string|max:50',
+            ],
+                [
+                    'name.required' => ':attribute can not be blank',
+                    'author.required' => ':attribute can not be blank Or Numeric',
+                    'stock.required' => ':attribute can not be blank Or non integer',
+                    'price.required' => ':attribute can not be blank and has to be a float of point 2 degree',
+                    'file.required' => 'product must have a :attribute',
+                    'bookType.required' => 'please select a :attribute',
+                ]);
+        }
+
 
         $product = new Product();
         $image = $request->file;
@@ -117,6 +139,10 @@ class ProductController extends Controller
         $product->category_book_type_id = $request->bookType;
         $product->category_cover_type_id = $request->coverType;
         $product->save();
+
+        $addBookType = new CategoryBookType();
+        $addBookType->category_book_types = $request->newBookType;
+        $addBookType->save();
 
         $response = [
             'product' => $product,
@@ -203,6 +229,20 @@ class ProductController extends Controller
             ->update([
             'status' => $request->updatedStatus
         ]);
+        $response = [
+            'result' => $updateUser
+        ];
+        return response($response, 201);
+    }
+
+    public function updateProductInfo(Request $request)
+    {
+        $updateUser = DB::table('products')
+            ->where('id',$request->productID)
+            ->update([
+                'status' => $request->updatedStatus,
+                'products_in_stock'=>$request->updatedStock
+            ]);
         $response = [
             'result' => $updateUser
         ];
