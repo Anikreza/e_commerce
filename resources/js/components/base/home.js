@@ -26,6 +26,7 @@ const Home = () => {
                     setFantasyBookData(res.data.fantasyBooks)
                     setAdventureBookData(res.data.adventureBooks)
                     setRomanceBookData(res.data.romanceBooks)
+                    console.log('new Book Data:', res.data)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -72,24 +73,24 @@ const Home = () => {
                 />
                 <div className='bg'>
                 </div>
-                <div ref={AdventureRef}>
-                    <CategoryCard
-                        title={'Adventure Novels: Fascinate Your Destinies...'}
-                        bookData={adventureBookData}
-                    />
-                </div>
-                <div ref={FantasyRef}>
-                    <CategoryCard
-                        title={'Fantasy Novels: Fascinate Your Thoughts...'}
-                        bookData={fantasyBookData}
-                    />
-                </div>
-                <div ref={RomaneRef}>
-                    <CategoryCard
-                        title={'Romance Novels: Fascinate Your Nerves...'}
-                        bookData={romanceBookData}
-                    />
-                </div>
+                {/*<div ref={AdventureRef}>*/}
+                {/*    <CategoryCard*/}
+                {/*        title={'Adventure Novels: Fascinate Your Destinies...'}*/}
+                {/*        bookData={adventureBookData}*/}
+                {/*    />*/}
+                {/*</div>*/}
+                {/*<div ref={FantasyRef}>*/}
+                {/*    <CategoryCard*/}
+                {/*        title={'Fantasy Novels: Fascinate Your Thoughts...'}*/}
+                {/*        bookData={fantasyBookData}*/}
+                {/*    />*/}
+                {/*</div>*/}
+                {/*<div ref={RomaneRef}>*/}
+                {/*    <CategoryCard*/}
+                {/*        title={'Romance Novels: Fascinate Your Nerves...'}*/}
+                {/*        bookData={romanceBookData}*/}
+                {/*    />*/}
+                {/*</div>*/}
             </div>
             <Footer/>
         </div>

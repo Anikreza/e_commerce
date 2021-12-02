@@ -26,7 +26,8 @@ const reducer = (state, action) => {
         case "INCREMENT_QUANTITY":
             return {
                 ...state,
-                basket: state.basket.map(item=>item.id===action.id? {...item,quantity:action.value}:item)
+                basket: state.basket.map(item=>item.product_id===action.id? {...item,quantity:action.value}:item),
+                cart: state.cart.map(item=>item.product_id===action.id? {...item,quantity:action.value}:item)
             };
 
         case 'EMPTY_BASKET':

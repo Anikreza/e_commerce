@@ -65,7 +65,7 @@ const comp = ({name, email, userID, basketData}) => {
             {
                 basketData.map(Data => (
                     <div key={Data.title}>
-                        <p><span></span>{Data.title}<span> ({Data.quantity})  ${(Data.quantity * Data.price)}</span></p>
+                        <p>{Data.title}<span> ({Data.quantity})  ${(Data.quantity * Data.price)}</span></p>
                     </div>
                 ))
             }

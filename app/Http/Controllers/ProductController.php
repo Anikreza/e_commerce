@@ -49,22 +49,30 @@ class ProductController extends Controller
 
     public function showProductsByCategory()
     {
-        $HardCover = Product::where('category_cover_type_id', 1)->get();
-        $SoftCover = Product::where('category_cover_type_id', 2)->get();
-        $AudioBook = Product::where('category_cover_type_id', 3)->get();
-
-        $FantasyBooks = Product::where('category_book_type_id', 1)->get();
-        $AdventureBooks = Product::where('category_book_type_id', 2)->get();
-        $RomanceBooks = Product::where('category_book_type_id', 3)->get();
+        $showProduct = DB::table('products')
+            ->join('category_book_types', 'category_book_types.id', '=', 'products.category_book_type_id')
+            ->join('category_cover_types', 'category_cover_types.id', '=', 'products.category_cover_type_id')
+            ->select('products.*','category_book_types.category_book_types','category_cover_types.category_cover_types')
+            ->where('status', '=', 'Published')
+            ->get();
+//
+//        $HardCover = Product::where('category_cover_type_id', 1)->get();
+//        $SoftCover = Product::where('category_cover_type_id', 2)->get();
+//        $AudioBook = Product::where('category_cover_type_id', 3)->get();
+//
+//        $FantasyBooks = Product::where('category_book_type_id', 1)->get();
+//        $AdventureBooks = Product::where('category_book_type_id', 2)->get();
+//        $RomanceBooks = Product::where('category_book_type_id', 3)->get();
 
         $response = [
-            'hardCover' => $HardCover,
-            'softCover' => $SoftCover,
-            'audioBook' => $AudioBook,
-
-            'fantasyBooks' => $FantasyBooks,
-            'adventureBooks' => $AdventureBooks,
-            'romanceBooks' => $RomanceBooks,
+//            'hardCover' => $HardCover,
+//            'softCover' => $SoftCover,
+//            'audioBook' => $AudioBook,
+//
+//            'fantasyBooks' => $FantasyBooks,
+//            'adventureBooks' => $AdventureBooks,
+//            'romanceBooks' => $RomanceBooks,
+            'showProduct '=> $showProduct
         ];
         return response($response, 201);
     }
@@ -77,7 +85,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->newBookType){
+        if ($request->newBookType) {
             $validator = $request->validate([
                 'name' => 'required|string|max:50',
                 'author' => 'required|string|max:40',
@@ -95,8 +103,7 @@ class ProductController extends Controller
                     'file.required' => 'product must have a :attribute',
                     'newBookType.required' => 'please select a :attribute',
                 ]);
-        }
-        else{
+        } else {
             $validator = $request->validate([
                 'name' => 'required|string|max:50',
                 'author' => 'required|string|max:40',
@@ -116,34 +123,58 @@ class ProductController extends Controller
                 ]);
         }
 
+        if ($request->category_book_type_id) {
+            $product = new Product();
+            $image = $request->file;
+            if ($image) {
+                $image_ext = $image->getClientOriginalExtension();
+                $image_full_name = time() . '.' . $image_ext;
+                $upload_path = 'assets/images/';
+                $image_url = $upload_path . $image_full_name;
 
-        $product = new Product();
-        $image = $request->file;
-        if ($image) {
-            $image_ext = $image->getClientOriginalExtension();
-            $image_full_name = time() . '.' . $image_ext;
-            $upload_path = 'assets/images/';
-            $image_url = $upload_path . $image_full_name;
+                $success = $image->move($upload_path, $image_full_name);
+            } else {
+                $image_url = '';
+            }
 
-            $success = $image->move($upload_path, $image_full_name);
+            $product->product_img = $image_url;
+            $product->title = $request->name;
+            $product->author = $request->author;
+            $product->products_in_stock = $request->stock;
+            $product->price = $request->price;
+            $product->description = $request->description;
+            $product->category_book_type_id = $request->bookType;
+
+
         } else {
-            $image_url = '';
+            $addBookType = new CategoryBookType();
+            $addBookType->category_book_types = $request->newBookType;
+            $addBookType->save();
+
+            $product = new Product();
+            $image = $request->file;
+            if ($image) {
+                $image_ext = $image->getClientOriginalExtension();
+                $image_full_name = time() . '.' . $image_ext;
+                $upload_path = 'assets/images/';
+                $image_url = $upload_path . $image_full_name;
+
+                $success = $image->move($upload_path, $image_full_name);
+            } else {
+                $image_url = '';
+            }
+
+            $product->product_img = $image_url;
+            $product->title = $request->name;
+            $product->status = $request->status;
+            $product->author = $request->author;
+            $product->products_in_stock = $request->stock;
+            $product->price = $request->price;
+            $product->description = $request->description;
+            $product->category_book_type_id = $addBookType->id;
         }
-
-        $product->product_img = $image_url;
-        $product->title = $request->name;
-        $product->author = $request->author;
-        $product->products_in_stock = $request->stock;
-        $product->price = $request->price;
-        $product->description = $request->description;
-        $product->category_book_type_id = $request->bookType;
         $product->category_cover_type_id = $request->coverType;
-        $product->status = $request->status;
         $product->save();
-
-        $addBookType = new CategoryBookType();
-        $addBookType->category_book_types = $request->newBookType;
-        $addBookType->save();
 
         $response = [
             'product' => $product,
@@ -226,10 +257,10 @@ class ProductController extends Controller
     public function updateStatus(Request $request)
     {
         $updateUser = DB::table('carts')
-            ->where('user_id',$request->userID)
+            ->where('user_id', $request->userID)
             ->update([
-            'status' => $request->updatedStatus
-        ]);
+                'status' => $request->updatedStatus
+            ]);
         $response = [
             'result' => $updateUser
         ];
@@ -239,10 +270,10 @@ class ProductController extends Controller
     public function updateProductInfo(Request $request)
     {
         $updateUser = DB::table('products')
-            ->where('id',$request->productID)
+            ->where('id', $request->productID)
             ->update([
                 'status' => $request->updatedStatus,
-                'products_in_stock'=>$request->updatedStock
+                'products_in_stock' => $request->updatedStock
             ]);
         $response = [
             'result' => $updateUser

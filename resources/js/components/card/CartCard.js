@@ -26,7 +26,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
 
 
     function Increase() {
-        if (stock >= updatedQuantity) {
+        if (stock > updatedQuantity) {
             setUpdatedQuantity(updatedQuantity + 1)
         } else {
             alert('Out Of Stock!!!')
