@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -65,13 +66,19 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return int
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $userID)
     {
-        //
-    }
+        $updateUser = DB::table('users')
+            ->where('id', $userID)
+            ->update([
+                'mobile' => $req->mobile,
+                'address' => $req->address,
+            ]);
 
+        return $updateUser;
+    }
     /**
      * Remove the specified resource from storage.
      *

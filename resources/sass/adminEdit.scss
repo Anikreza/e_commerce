@@ -1,0 +1,105 @@
+.editPage {
+    padding: 4% 10% 10% 10%;
+    margin-left: 20px;
+    min-width: 50vw;
+    min-height: 40vh;
+    font-family: "Agency FB";
+    text-align: center;
+    .main {
+        img {
+            width: 190px;
+            height: 270px;
+            margin-left: 15px;
+        }
+        select{
+            font-family: "Agency FB", serif;
+            text-align: center;
+            min-width: 80%;
+            font-size: 17px;
+            padding: 5px;
+            background-color: #dedede;
+            border-style: none;
+            border-color: #8f8f8f;
+            option{
+                background-color: white;
+                color: #20063f;
+                font-size: 18px;
+            }
+        }
+        .submitUpdate{
+            padding: 5px;
+            text-align: center;
+            margin-left: 15%;
+            background-color: #415945;
+            border-color: #ffffff;
+            color: #ffffff;
+            border-style: none;
+            opacity: .8;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: "Agency FB", serif;
+            min-width: 70%;
+        }
+        button{
+            padding: 5px;
+            cursor: pointer;
+            font-family: "Agency FB", serif;
+            background-color: #dedede;
+            border-style: none;
+            font-size: 17px;
+            min-width: 70%;
+        }
+        .content {
+            background-color: whitesmoke;
+            border-style: ridge;
+            border-width: 1px;
+            border-color: gainsboro;
+            padding: 18px;
+            min-height: 250px;
+            p{
+                text-align: center;
+                font-weight: 100;
+                font-size: 21px;
+                color: #341414;
+            }
+            h1{
+                text-align: center;
+                font-weight: 100;
+                font-size: 17px;
+                min-width: 100%;
+                color: #000000;
+            }
+        }
+    }
+
+    .column {
+        float: right;
+        text-align: left;
+        width: 25%;
+
+        hr {
+            height: .5px;
+            color: #f6f6f6;
+        }
+    }
+
+    .row {
+        margin: 5px 5px;
+    }
+
+    .row,
+    .row > .column {
+        padding: 0px;
+    }
+
+    .green{
+        font-weight: 600;
+        color: #1c5d1f;
+    }
+    .red{
+        font-weight: 600;
+        color: #974034;
+    }
+}
+
+

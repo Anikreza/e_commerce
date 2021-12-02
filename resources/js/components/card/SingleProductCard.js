@@ -7,15 +7,13 @@ import {useNavigate} from "react-router";
 const SingleProductCard = () => {
 
     const [{user, basket}, dispatch] = useStateValue();
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const userID = user?.id
     const name = user.name
     const email = user.email
 
     const [data, setData] = useState([])
     const [quantity, setQuantity] = useState(1)
-    const [updatedQuantity, setUpdatedQuantity] = useState(quantity)
-    const [status, setStatus] = useState(false)
     const api = process.env.MIX_API;
     const url = process.env.MIX_URL;
     const productID = window.location.href.split('/')[4]
@@ -35,55 +33,12 @@ const SingleProductCard = () => {
 
     useEffect(async () => {
         getBooks().then(r => r)
-    }, [getBooks,data.products_in_stock]);
+    }, [getBooks, data.products_in_stock]);
 
-    const depleteStock = useCallback(
-        async () => {
-            const Data = {userID, productID}
-            let result = fetch(`${api}/cart/depleteStock`, {
-                    method: 'POST',
-                    body: JSON.stringify(Data),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    }
-                }
-            )
-        },
-        [quantity],
-    );
-
-    async function addToCart() {
-        let coverType = data.category_cover_type_id;
-        let bookType = data.category_book_type_id;
-        let Data = {quantity, productID, userID, bookType, coverType}
-        if (userID) {
-            let result = fetch(`${api}/cart/store`, {
-                method: 'POST',
-                body: JSON.stringify(Data),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                    setStatus(response.status)
-                    if (response.status !== 500) {
-                        depleteStock().then(r => r)
-                    } else {
-                        alert('You Already Added This to Your List')
-                    }
-                }
-            )
-        } else {
-            alert('Please Log In First')
-            navigate('/login')
-        }
-
-    }
 
     async function addToBasket() {
         setQuantity(quantity + 1)
-        if(quantity<=data.products_in_stock){
+        if (quantity <= data.products_in_stock) {
             dispatch({
                 type: "ADD_TO_BASKET",
                 id: productID,
@@ -97,7 +52,7 @@ const SingleProductCard = () => {
                     price: data.price,
                     user_id: userID,
                     image: data.product_img,
-                    stock:data.products_in_stock,
+                    stock: data.products_in_stock,
                     status: 'Added To Cart',
                 },
             });
@@ -112,8 +67,7 @@ const SingleProductCard = () => {
                     status: 'Added To Cart',
                 },
             });
-        }
-        else{
+        } else {
             alert('Out Of Stock')
         }
 
@@ -126,7 +80,12 @@ const SingleProductCard = () => {
                 <div className='detailed-left'>
                     <img src={`${url}/` + data.product_img}/>
                     <button className='stockButton'>Only {data.products_in_stock} Copies left</button>
-                    <button onClick={() => addToBasket()}>Add to Cart</button>
+                    {
+                        (quantity > 1) ?
+                            <button onClick={() => addToBasket()}>Add More +{quantity - 1}</button>
+                            :
+                            <button onClick={() => addToBasket()}>Add to Cart</button>
+                    }
                 </div>
                 <div className='product-info'>
                     <p>{basket.title}</p>

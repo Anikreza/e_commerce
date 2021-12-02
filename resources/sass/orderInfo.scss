@@ -1,0 +1,70 @@
+.orderInfo {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 2.9% 10% 0% 10%;
+    padding-bottom: 50px;
+    font-family: "Agency FB", cursive;
+    border-style: ridge;
+    border-color: #e1e1e1;
+    border-radius: 20px;
+    border-width: 1px;
+
+    .userSide {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding-left: 1%;
+        background-color: whitesmoke;
+
+        p {
+            font-size: 18px;
+            color: #020202;
+            font-weight: 700;
+        }
+    }
+
+    .infoSide {
+        border-top-style: ridge;
+        border-color: gainsboro;
+        border-width: 1px;
+        display: flex;
+        justify-content: space-evenly;
+        padding: 20px;
+        p {
+            font-size: 17px;
+            color: #080c06;
+            font-weight: 700;
+        }
+    }
+
+    select {
+        text-align: center;
+        background-color: #724f4f;
+        color: #fafafa;
+        font-size: 20px;
+        font-family: "Agency FB", serif;
+        cursor: pointer;
+    }
+
+    button {
+        cursor: pointer;
+        padding: 5px;
+        background-color: #ffffff;
+        margin-left: 0%;
+    }
+
+    .infoSide-Done{
+        border-top-style: ridge;
+        border-color: gainsboro;
+        border-width: 1px;
+        display: flex;
+        justify-content: space-evenly;
+        padding: 20px;
+        p{
+            font-size: 17px;
+            font-weight: 700;
+            color: #9d1818;
+        }
+    }
+}

@@ -22,7 +22,6 @@ const ShowOrders = () => {
                 .then(async (res) => {
                     setOrders(res.data)
                     console.log(res.data);
-
                 })
                 .catch((error) => {
                     console.log(error);

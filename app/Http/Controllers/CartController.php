@@ -15,7 +15,7 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request )
+    public function index(Request $request)
     {
 
     }
@@ -45,20 +45,40 @@ class CartController extends Controller
 
         foreach ($payload as $element) {
 
-            if(DB::table('carts')
+            if (DB::table('carts')
                 ->where('user_id', $element["user_id"])
                 ->where('product_id', $element["product_id"])
-                ->doesntExist()){
-                $arr = (array) $element;
+                ->doesntExist()) {
+                $arr = (array)$element;
                 Cart::create($arr);
-
                 array_push($accepted, $element["product_id"]);
-            }else{
+            } else {
                 array_push($bounced, $element["product_id"]);
             }
-        }
-        return response(["Accepted" => ["Product ID" => json_encode($accepted)], "Bounced" => ["Product ID" => json_encode($bounced)]] , 200);
 
+
+            //JOIN TO DEPLETE STOK
+        }
+
+        $response = [
+            'accepted' => $accepted,
+            'bounced' => $bounced
+        ];
+        return response($response, 201);
+
+
+    }
+
+    public function orderInfoForAdmin(): \Illuminate\Support\Collection
+    {
+        return DB::table('carts')
+            ->join('products', 'products.id', '=', 'carts.product_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->select('carts.*', 'users.name', 'users.email', 'users.mobile', 'users.address',
+                'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
+                'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
+                'products.description as description')
+            ->get();
     }
 
     /**
@@ -113,23 +133,25 @@ class CartController extends Controller
         ];
         return response($response, 201);
     }
+
     public function updateStock(Request $request)
     {
         $Product = DB::table('products')
             ->join('carts', 'products.id', '=', 'carts.product_id')
             ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-            ->where('products.id', '=',$request->productID)
-            ->where('carts.user_id', '=',$request->userID)
-            ->increment('products_in_stock',1);
+            ->where('products.id', '=', $request->productID)
+            ->where('carts.user_id', '=', $request->userID)
+            ->increment('products_in_stock', 1);
     }
+
     public function depleteStock(Request $request)
     {
         $Product = DB::table('products')
             ->join('carts', 'products.id', '=', 'carts.product_id')
             ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-            ->where('products.id', '=',$request->productID)
-            ->where('carts.user_id', '=',$request->userID)
-            ->decrement('products_in_stock',1);
+            ->where('products.id', '=', $request->productID)
+            ->where('carts.user_id', '=', $request->userID)
+            ->decrement('products_in_stock', 1);
     }
 
     /**
@@ -143,11 +165,11 @@ class CartController extends Controller
         $Product = DB::table('products')
             ->join('carts', 'products.id', '=', 'carts.product_id')
             ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-            ->where('products.id', '=',$req->productID)
-            ->where('carts.user_id', '=',$req->userID)
-            ->increment('products_in_stock',$req->updatedQuantity);
+            ->where('products.id', '=', $req->productID)
+            ->where('carts.user_id', '=', $req->userID)
+            ->increment('products_in_stock', $req->updatedQuantity);
 
-        $result= Cart::where([['product_id',$req->productID],['user_id',$req->userID]])->delete();
+        $result = Cart::where([['product_id', $req->productID], ['user_id', $req->userID]])->delete();
 
     }
 }

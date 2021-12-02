@@ -41,15 +41,11 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     }
 
     async function Delete() {
-        let Data={userID,productID,updatedQuantity};
-        await fetch(`${api}/cart/delete`,{
-            method:'DELETE',
-            body:JSON.stringify(Data),
-            headers:{
-                'Content-Type':'application/json',
-                'Accept':'application/json'
-            }
-        })
+        dispatch({
+            type: "REMOVE_FROM_BASKET",
+            quantity:quantity,
+            id:productID
+        });
     }
 
     return (
@@ -70,7 +66,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
                             <span> {updatedQuantity} </span>
                             <p2 onClick={Increase}>+</p2>
                         </button>
-                        <h6>${price * updatedQuantity}</h6>
+                        <h6>${(price * updatedQuantity).toFixed(2)}</h6>
                     </div>
                 </div>
             </div>

@@ -21,12 +21,18 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/updateUser/{user_id}', [UserController::class, 'update']);
+
 Route::get('/addCategoryType', [ProductController::class, 'index']);
 Route::post('/store',[ProductController::class, 'store']);
 Route::get('/products/byCategory',[ProductController::class, 'showProductsByCategory']);
 Route::get('products/list',[ProductController::class, 'list']);
 Route::get('products/search/{key}',[ProductController::class, 'search']);
 Route::get('/products/{id}',[ProductController::class, 'show']);
+Route::post('/products/updateStatus',[ProductController::class, 'updateStatus']);
+Route::post('/products/updateProductInfo',[ProductController::class, 'updateProductInfo']);
+Route::post('/newType/add/{type}',[ProductController::class, 'addNewType']);
 
 Route::post('/cart/store',[CartController::class, 'store']);
 Route::get('/cart/show/{user_id}',[CartController::class, 'show']);
@@ -34,8 +40,10 @@ Route::post('/cart/update/{cart_id}',[CartController::class, 'update']);
 Route::post('/cart/updateStock',[CartController::class, 'updateStock']);
 Route::post('/cart/depleteStock',[CartController::class, 'depleteStock']);
 Route::delete('/cart/delete',[CartController::class, 'destroy']);
+Route::get('/admin/orderInfo',[CartController::class, 'orderInfoForAdmin']);
 
-Route::get('/productOrder/add',[ProductOrderController::class, 'add']);
+
+
 Route::post('/productOrder/store',[ProductOrderController::class, 'store']);
 Route::get('/productOrder/orders/{user_id}',[ProductOrderController::class, 'orders']);
 Route::delete('/productOrder/delete',[ProductOrderController::class, 'destroy']);
@@ -48,6 +56,4 @@ Route::delete('/productOrder/delete',[ProductOrderController::class, 'destroy'])
 Route::group(['middleware' => ['auth:sanctum']], function () {
 //    Route::get('/user', [UserController::class, 'index']);
     Route::post('/logout', [AuthController::class, 'logout']);
-
-
 });

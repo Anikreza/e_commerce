@@ -10,11 +10,15 @@ const Add = () => {
     const [stock, setStock] = useState('');
     const [price, setPrice] = useState('');
     const [bookType, setBookType] = useState('');
+    const [newBookType, setNewBookType] = useState('');
     const [coverType, setCoverType] = useState('');
     const [categoryType, setCategoryType] = useState([]);
     const [categoryCover, setCategoryCover] = useState([]);
     const [description, setDescription] = useState('');
     const [file, setFile] = useState('');
+    const [errors, setErrors] = useState([]);
+    const [newType, setNewType] = useState(false);
+    const [modal, setModal] = useState(true);
     const api = process.env.MIX_API;
 
     const getBookType = useCallback(async () => {
@@ -31,10 +35,9 @@ const Add = () => {
 
     useEffect(async () => {
         getBookType().then(r => r)
-    }, [getBookType])
+    }, [getBookType,newBookType])
 
     async function upload() {
-        console.log(name, price, description, bookType, coverType, stock, file.name)
         const Data = new FormData();
         Data.append('file', file);
         Data.append('name', name);
@@ -44,21 +47,20 @@ const Add = () => {
         Data.append('bookType', bookType);
         Data.append('coverType', coverType);
         Data.append('description', description);
+        Data.append('newBookType', newBookType);
 
-        if(name && file && author && stock && price && bookType && coverType && description){
             await axios.post(`${api}/store`, Data
             ).then((response) => {
-                alert(response.statusText)
-            }).catch((error) => {
-                alert(error)
-            }).then(() => {
-                console.log('always executed')
+                alert(response.data)
+            }).catch((e) => {
+                setErrors(e.response.data.errors)
+                console.log('errors:', e.response.data.errors)
             })
-        }
-        else{
-            alert('Please Fill All The Fields')
-        }
+    }
 
+    const setNewBook=(e)=>{
+        setNewType(!newType)
+        setModal(false)
     }
 
     return (
@@ -67,25 +69,33 @@ const Add = () => {
                 <form onSubmit={(e) => e.preventDefault()}>
                     <input
                         type='text'
-                        placeholder='Title Of The Book'
+                        placeholder='* Title Of The Book'
                         name='name'
                         onChange={(e) => setName(e.target.value)}/>
-                    <br/>
-                    <br/>
+                    {
+                        (errors?.name)?
+                            <p>{errors?.name}</p>
+                            :
+                            ''
+                    }
                     <input
                         type='text'
-                        placeholder='Author Of The Book'
+                        placeholder='* Author Of The Book'
                         name='author'
                         onChange={(e) => setAuthor(e.target.value)}/>
-                    <br/>
-                    <br/>
+                    {
+                        (errors?.author)?
+                            <p>{errors?.author}</p>
+                            :
+                            ''
+                    }
                     <select
                         id='book'
                         name="bookType"
                         onChange={(e) => setBookType(e.target.value)}
                         value={bookType}
                     >
-                        <option> Choose Book Genre</option>
+                        <option> * Choose Book Genre</option>
                             {
                                 categoryType.map((data) => (
                                     <option key={data.id} value={data.id}>
@@ -94,15 +104,34 @@ const Add = () => {
                                 ))
                             }
                     </select>
-                    <br/>
-                    <br/>
+                    <button className={(modal)?'selButton':'hide'} onClick={setNewBook}>
+                            Create New Book Genre
+                    </button>
+                    {
+                        (newType)?
+                            <input
+                                placeholder='Create a new book genre'
+                                type='text'
+                                onChange={(e)=>setNewBookType(e.target.value)}
+                                id='newBookType'
+                                name="newBookType"
+                            />
+                            :
+                            ''
+                    }
+                    {
+                        (errors?.bookType)?
+                            <p>{errors?.bookType}</p>
+                            :
+                            ''
+                    }
                     <select
                         id='cover'
                         name="coverType"
                         onChange={(e) => setCoverType(e.target.value)}
                         value={coverType}
                     >
-                        <option> Choose Cover type</option>
+                        <option>  Choose Cover type</option>
                             {
                                 categoryCover.map((Data) => (
                                     <option key={Data.id} value={Data.id}>
@@ -111,39 +140,54 @@ const Add = () => {
                                 ))
                             }
                     </select>
-                    <br/>
-                    <br/>
                     <input
                         type='text'
-                        placeholder='Reserved Stock Of The Book'
+                        placeholder='* Reserved Stock Of The Book'
                         name='stock'
                         onChange={(e) => setStock(e.target.value)}/>
-                    <br/>
-                    <br/>
+                    {
+                        (errors?.stock)?
+                            <p>{errors?.stock}</p>
+                            :
+                            ''
+                    }
                     <input
                         style={{color: 'grey'}}
                         type='file'
-                        placeholder='file'
+                        placeholder='* Product Image'
                         name='file'
                         onChange={(e) => setFile(e.target.files[0])}/>
-                    <br/>
-                    <br/>
+                    {
+                        (errors?.file)?
+                            <p>{errors?.file}</p>
+                            :
+                            ''
+                    }
                     <input
                         type='text'
-                        placeholder='price'
+                        placeholder='* Price'
                         name='price'
                         onChange={(e) => setPrice(e.target.value)}/>
-                    <br/>
-                    <br/>
+                    {
+                        (errors?.price)?
+                            <p>{errors?.price}</p>
+                            :
+                            ''
+                    }
                     <TextareaAutosize
                         className='auto_height'
                         name='description'
                         onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Description"
+                        placeholder="* Product Description"
                         minRows={3}
                         maxRows={20}
                     />
-                    <br/>
+                    {
+                        (errors?.description)?
+                            <p>{errors?.description}</p>
+                            :
+                            ''
+                    }
                     <br/>
                     <button onClick={upload}>
                         Add Product

@@ -57,7 +57,7 @@ const PlaceOrder = ({sum, userID}) => {
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder='Address'/>
                 <button
-                    disabled={name || mobile || address ? disabled : !disabled}
+                    disabled={name && mobile && address ? disabled : !disabled}
                     className={name && mobile && address ? 'button-glow' : 'button-dim'}
                 >
                     Checkout Page

@@ -14,7 +14,7 @@ import axios from "axios";
 
 const Header = () => {
 
-    const [{user, basket}, dispatch] = useStateValue();
+    let User = JSON.parse(window.localStorage.getItem('user'));
     let admin = process.env.MIX_ADMIN;
     const [modal, setModal] = useState(false);
     const url = location.pathname
@@ -41,7 +41,7 @@ const Header = () => {
                 {/*        </div>*/}
                 {/*}*/}
                 {
-                    (user?.email === admin) ?
+                    (User?.user?.email === admin) ?
                         <>
                             <div className='nav-ul'>
                                 <ul>
@@ -84,10 +84,10 @@ const Header = () => {
                 }
             </div>
 
-            {(user?.email) ?
+            {(User?.user?.email) ?
                 <div className='user-name-nav' style={{cursor: 'pointer'}} onClick={() => setModal(!modal)}>
                     <p>
-                        {user?.name}
+                        {User?.user?.name}
                         <span><IoIosArrowDropdown style={{cursor: 'pointer'}} color='black'/> </span>
                     </p>
                     <span className={modal ? 'modal-logout' : 'hide'}>

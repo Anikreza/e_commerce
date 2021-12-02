@@ -5,22 +5,39 @@
     background:url('../js/assets/bg.jpg');
     background-size: cover;
     filter:sepia(20%);
-
     form{
         border-radius: 20px;
-        opacity: 0.9;
+        opacity:1;
         width: 40%;
         padding: 2% 0% 1% 0%;
-        background: #252d25;
+        background: #1c211c;
         margin-left: 44%;
         max-height: fit-content;
+        p{
+            color: #cc2323;
+            max-width: 60%;
+            margin-left: 20%;
+            text-align: left;
+            font-size: 15px;
+            padding-bottom: -20px;
+        }
+        h1{
+            font-size: 16px;
+            color: white;
+        }
+        span{
+            color: white;
+            font-size: 22px;
+        }
         select{
+            margin-top: 10px;
             background: inherit;
             border-style: solid;
             border-color: #475e42;
             color: #cecdcd;
+            padding: 10px;
+            width: 65%;
             option{
-                width: 20vw;
                 padding: 20px;
                 border-radius: 10px;
                 color: #d3d3d3;
@@ -33,11 +50,13 @@
             border-style: solid;
             border-color: #475e42;
             color: #ffffff;
+            margin-top: 10px;
         }
         input:focus{
             outline: none;
         }
         textarea{
+            margin-top: 10px;
             resize: none;
             font-family:sans-serif;
             font-size: 17px;
@@ -47,13 +66,25 @@
             background-color: inherit;
         }
         button{
+            margin-top: 10px;
             width: fit-content;
             padding:10px;
             background-color: darkolivegreen;
             color: white;
             border-color: #475e42;
             border-radius: 5px;
-            border-color: #475e42;
+            cursor: pointer;
+        }
+        .selButton{
+            background-color: inherit;
+            padding: 4px 5px 5px 10px;
+            text-align: left;
+            width: 64%;
+            color: #b9b9b9;
+            border-style: ridge;
+        }
+        .hide{
+            display: none;
         }
     }
 }
