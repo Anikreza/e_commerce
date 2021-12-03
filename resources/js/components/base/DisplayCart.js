@@ -52,25 +52,32 @@ const DisplayCart = () => {
                         />
                     <h2>Sub Total: <span>${sum.toFixed(2)}</span></h2>
                 </div>
-
                 <hr/>
-                <div>
-                    {
-                        data.map(Data => (
-                            <CartCard
-                                key={Data.id}
-                                image={Data.image}
-                                title={Data.title}
-                                author={Data.author}
-                                price={Data.price}
-                                quantity={Data.quantity}
-                                stock={Data.stock}
-                                productID={Data.product_id}
-                                sum={sum}
-                            />
-                        ))
-                    }
-                </div>
+                {
+                    (data.length>0)?
+                        <div>
+                            {
+                                data.map(Data => (
+                                    <CartCard
+                                        key={Data.id}
+                                        image={Data.image}
+                                        title={Data.title}
+                                        author={Data.author}
+                                        price={Data.price}
+                                        quantity={Data.quantity}
+                                        stock={Data.stock}
+                                        productID={Data.product_id}
+                                        sum={sum}
+                                    />
+                                ))
+                            }
+                        </div>
+                        :
+                        <div>
+                            <h2>NOTHING IN THE LIST</h2>
+                        </div>
+                }
+
             </div>
         </div>
     )
