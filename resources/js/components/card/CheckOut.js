@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
+import axios from "axios";
 
 const GridCard = ({title, author, quantity, price, description, image}) => {
 
     const url = process.env.MIX_URL;
 
     return (
-
         <div className='column'>
             <hr/>
             <div className='content'>
@@ -19,3 +19,4 @@ const GridCard = ({title, author, quantity, price, description, image}) => {
 }
 
 export default GridCard
+

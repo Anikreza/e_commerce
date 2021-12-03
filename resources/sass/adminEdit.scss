@@ -29,7 +29,7 @@
         .submitUpdate{
             padding: 5px;
             text-align: center;
-            margin-left: 15%;
+            margin-left: 25%;
             background-color: #415945;
             border-color: #ffffff;
             color: #ffffff;
@@ -38,7 +38,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-family: "Agency FB", serif;
-            min-width: 70%;
+            min-width: 50%;
         }
         button{
             padding: 5px;
@@ -73,10 +73,15 @@
     }
 
     .column {
-        float: right;
+        float: left;
         text-align: left;
         width: 25%;
-
+        .delete{
+            float: right;
+            margin-top: 5px;
+            opacity: .7;
+            cursor: pointer;
+        }
         hr {
             height: .5px;
             color: #f6f6f6;

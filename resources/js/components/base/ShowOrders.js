@@ -3,13 +3,14 @@ import axios from "axios"
 import '../../../sass/orderPage.scss'
 import CheckOut from "../card/CheckOut";
 import Receipt from "../card/Receipt";
-import OrderHistory from "../../helpers/OrderHistory";
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
+import OrderStatus from "../card/OrderStatus";
 
 const ShowOrders = () => {
 
-    const [{ user,basket,userDetail}, dispatch] = useStateValue();
-    const userID = user?.id;
+    let User = JSON.parse(window.localStorage.getItem('user'));
+    const [{user, basket, userDetail}, dispatch] = useStateValue();
+    const userID = User?.user.id;
     const api = process.env.MIX_API;
     const [customer, setCustomer] = useState([])
     const [orders, setOrders] = useState([])
@@ -29,7 +30,6 @@ const ShowOrders = () => {
         },
         [],
     );
-
     useEffect(async () => {
         getOrders().then(r => r)
     }, [getOrders]);
@@ -41,7 +41,6 @@ const ShowOrders = () => {
         basket.map(x => unique.filter(a => a.product_id === x.product_id).length > 0 ? null : unique.push(x));
         setData(unique)
     }, [basket]);
-
 
     return (
         <div className='orderPage'>
@@ -58,20 +57,29 @@ const ShowOrders = () => {
                 </div>
             </div>
             <div className='orderInfo'>
-                <div className='main'>
-                    <div className='row'>
-                        {data?.map(data => (
-                            <CheckOut
-                                key={data.title}
-                                title={data.title}
-                                author={data.author}
-                                quantity={data.quantity}
-                                price={data.price}
-                                image={data.image}
+                {
+                    (data.length > 0) ?
+                        <div className='main'>
+                            <div className='row'>
+                                {data?.map(data => (
+                                    <CheckOut
+                                        key={data.title}
+                                        title={data.title}
+                                        author={data.author}
+                                        quantity={data.quantity}
+                                        price={data.price}
+                                        image={data.image}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        :
+                        <div>
+                            <OrderStatus
+                                userID={userID}
                             />
-                        ))}
-                    </div>
-                </div>
+                        </div>
+                }
             </div>
         </div>
     )

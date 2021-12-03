@@ -37,7 +37,7 @@ const comp = ({title, bookData}) => {
     return (
         <div className='category-box'>
             <div className='title-level'>
-                <h2>{title}</h2>
+                <h2>title here....</h2>
             </div>
                 <DivCarousel
                 className='carousel'

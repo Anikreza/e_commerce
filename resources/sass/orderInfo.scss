@@ -29,9 +29,12 @@
         border-color: gainsboro;
         border-width: 1px;
         display: flex;
+
         justify-content: space-evenly;
         padding: 20px;
         p {
+            text-align: center;
+            margin-left: 5%;
             font-size: 17px;
             color: #080c06;
             font-weight: 700;
@@ -65,6 +68,8 @@
             font-size: 17px;
             font-weight: 700;
             color: #9d1818;
+            margin-left: 5%;
+            text-align: center;
         }
     }
 }

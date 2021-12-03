@@ -13,7 +13,8 @@ class Product extends Model
         'price',
         'products_in_stock',
         'order_number',
-        'description'
+        'description',
+        'status'
     ];
 
 //    public function categoryCoverType(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

@@ -2,7 +2,7 @@ import React, {useEffect,useState, useCallback} from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import '../../../sass/cartPage.scss'
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
 const Cartbox = () => {
 
     const [data, setData] = useState([])

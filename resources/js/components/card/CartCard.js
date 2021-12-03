@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from "react";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import axios from "axios";
 import PlaceOrder from "./PlaceOrder";
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
 
 const CartCard = ({image, title, author, quantity, price, sum, stock, productID}) => {
 
@@ -10,7 +10,6 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     const url = process.env.MIX_URL;
     const api = process.env.MIX_API;
     const [updatedQuantity, setUpdatedQuantity] = useState(quantity)
-    const userID = user.id;
 
     useEffect(() => {
         update().then(r => r)
@@ -27,7 +26,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
 
 
     function Increase() {
-        if (stock >= updatedQuantity) {
+        if (stock > updatedQuantity) {
             setUpdatedQuantity(updatedQuantity + 1)
         } else {
             alert('Out Of Stock!!!')

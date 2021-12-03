@@ -2,43 +2,73 @@ import React, {useState, useEffect, useCallback} from "react";
 import '../../../sass/PlaceOrder.scss'
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
 
 const PlaceOrder = ({sum, userID}) => {
 
     const [{}, dispatch] = useStateValue();
+    let User = JSON.parse(window.localStorage.getItem('user'));
 
-    const api = process.env.MIX_API;
+    const admin = process.env.MIX_ADMIN;
     const [name, setName] = useState('');
+    const [error, setError] = useState('');
     const [address, setAddress] = useState('');
+    const [district, setDistrict] = useState('demo');
+    const [deliveryFee, setDeliveryFee] = useState(0);
     const [mobile, setMobile] = useState('');
-    const [status, setStatus] = useState(0)
     const disabled = '';
-    const [data, setData] = useState([])
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
-    const toOrder= async (e)=>{
+    const toOrder = async (e) => {
         e.preventDefault()
-        dispatch({
-            type: "SET_USER_DETAIL",
-            item: {
-                address: address,
-                mobile: mobile,
-                name: name,
-            },
-        });
-        navigate('/orders')
+        if (User?.user.email === admin) {
+            setError('You Cant do that')
+        } else if (name && mobile && address && district) {
+            dispatch({
+                type: "SET_USER_DETAIL",
+                item: {
+                    address: address+district,
+                    mobile: mobile,
+                    name: name,
+                },
+            });
+            navigate('/orders')
+        } else {
+            setError('Please Choose Your City')
+        }
     }
+
+    useEffect(() => {
+        if (district !== 'Dhaka') {
+            setDeliveryFee(10)
+        } else if (district === 'demo') {
+            setDeliveryFee(0)
+        } else {
+            setDeliveryFee(5)
+        }
+        setError('')
+    }, [district]);
 
 
     return (
         <div className='PlaceOrder'>
+            {
+                (error) ?
+                    <p>{error}</p>
+                    :
+                    ''
+            }
+            <select onChange={(e) => setDistrict(e.target.value)}>
+                <option value='demo'>Choose Your City</option>
+                <option value='Dhaka'> Dhaka</option>
+                <option value='Outside Dhaka'>Outside Dhaka</option>
+            </select>
             <div className='givenInfo'>
                 <h2>SubTotal: <span>${sum.toFixed(2)}</span></h2>
                 <hr/>
-                <h4>Delivery Charge: <span>$7</span></h4>
+                <h4>Delivery Charge: <span>${deliveryFee}</span></h4>
                 <hr/>
-                <h5>Payable Total: <span>${(sum + 7).toFixed(2)}</span></h5>
+                <h5>Payable Total: <span>${(sum + deliveryFee).toFixed(2)}</span></h5>
             </div>
 
             <form onSubmit={toOrder}>
@@ -48,7 +78,8 @@ const PlaceOrder = ({sum, userID}) => {
                     type='text'
                     placeholder='Name'/>
                 <input name='mobile'
-                       type='text'
+                       type='number'
+                       maxLength='11'
                        onChange={(e) => setMobile(e.target.value)}
                        placeholder='Mobile'/>
                 <input
@@ -60,7 +91,7 @@ const PlaceOrder = ({sum, userID}) => {
                     disabled={name && mobile && address ? disabled : !disabled}
                     className={name && mobile && address ? 'button-glow' : 'button-dim'}
                 >
-                    Checkout Page
+                    Proceed To Checkout
                 </button>
             </form>
         </div>

@@ -4,7 +4,7 @@ import '../../../sass/cartPage.scss';
 import {RiDeleteBin6Line} from 'react-icons/ri';
 import CartCard from "../card/CartCard";
 import PlaceOrder from "../card/PlaceOrder";
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
 
 
 const DisplayCart = () => {
@@ -31,6 +31,11 @@ const DisplayCart = () => {
         getSum().then(r => r)
     }, [getSum]);
 
+    async function DeleteCart(){
+        dispatch({
+            type: "EMPTY_BASKET",
+        });
+    }
     return (
         <div className='cartPage'>
             <PlaceOrder
@@ -42,8 +47,8 @@ const DisplayCart = () => {
                     <h1>Your Cart ({data.length})</h1>
                         <RiDeleteBin6Line
                             size='29px'
-                            color='#7e1414'
-                            style={{marginTop:'12px', marginLeft:'10px', cursor:'pointer'}}
+                            style={{marginTop:'15px', marginLeft:'10px', cursor:'pointer'}}
+                            onClick={DeleteCart}
                         />
                     <h2>Sub Total: <span>${sum.toFixed(2)}</span></h2>
                 </div>

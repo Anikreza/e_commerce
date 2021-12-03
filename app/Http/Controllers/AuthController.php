@@ -29,13 +29,27 @@ class AuthController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'password' => 'required|string'
-        ]);
+            'password' => ['required','confirmed','string','min:10','regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[a-z]/',
+                'regex:/[0-9]/'],
+            'password_confirmation' => ['required','string','min:10','regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[a-z]/',
+                'regex:/[0-9]/']
+        ],
+            [
+                'name.required' => ':attribute can not be blank',
+                'email.required' => ':attribute has to be unique',
+                'password.required' => ':attribute must have at least one upper case, one lower case letter and number',
+                'password_confirmation.required' => ':attribute didnt match the password',
+            ]);
 
         $user = User::create([
             'name' => $fields['name'],
             'email' => $fields['email'],
-            'password' => bcrypt($fields['password'])
+            'password' => bcrypt($fields['password']),
+            'password_confirmation' => bcrypt($fields['password_confirmation'])
         ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
@@ -57,7 +71,12 @@ class AuthController extends Controller
         $fields = $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
-        ]);
+        ],
+            [
+                'email.required' => ':attribute can not be blank',
+                'password.required' => ':attribute does not match to this email',
+            ]
+        );
 
         //  check email
         $user = User::where('email',$fields['email'])->first();
