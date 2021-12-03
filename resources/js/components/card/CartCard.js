@@ -50,6 +50,16 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     return (
         <div className='cart'>
             <div className='cartProducts'>
+                {
+                    (productID)?
+                        <div>
+
+                        </div>
+                        :
+                        <div>
+
+                        </div>
+                }
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <img src={`${url}/` + image} alt=''/>
                 </div>
