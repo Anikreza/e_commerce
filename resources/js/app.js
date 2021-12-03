@@ -2,8 +2,8 @@ import Index from "./components/Index";
 require('./components/Index');
 import ReactDOM from 'react-dom'
 import '../sass/app.scss'
-import reducer, {initialState} from './helpers/reducer';
-import {StateProvider} from './helpers/StateProvider';
+import reducer, {initialState} from './states/reducer';
+import {StateProvider} from './states/StateProvider';
 import React from 'react';
 
 if (document.getElementById('app')) {

@@ -1,5 +1,5 @@
 import React, {useState, useEffect,useCallback} from "react";
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
 import {useNavigate} from "react-router";
 
 const comp = ({name, email, userID, basketData}) => {
@@ -9,6 +9,10 @@ const comp = ({name, email, userID, basketData}) => {
     const [sum, setSum] = useState(0)
     const [{user, cart, basket, userDetail}, dispatch] = useStateValue();
     const [data, setData] = useState([])
+    const [alreadyAdded, setAlreadyAdded] = useState('')
+    const [orderPlaced, setOrderPlaced] = useState('')
+    const [logInFirst, setLogInFirst] = useState('')
+    const [addSomething, setAddSomething] = useState('')
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,29 +33,36 @@ const comp = ({name, email, userID, basketData}) => {
                 'Accept': 'application/json'
             }
         }).then(res => {
-            alert(res.statusText)
+            console.log(res.statusText)
         })
     }
 
     const SendOrder = async (e) => {
         e.preventDefault()
         if (User?.token) {
-            await fetch(`${api}/cart/store`, {
-                body: JSON.stringify(data),
-                method: 'POST'
-            }).then(response => {
-                if (response.status === 500) {
-                    alert('You Already Added This to Your List')
-                } else {
-                    alert('Order Placed')
-                }
-            })
-            dispatch({
-                type: "EMPTY_BASKET",
-            });
-           navigate('/home')
+            if(data.length>0){
+                await fetch(`${api}/cart/store`, {
+                    body: JSON.stringify(data),
+                    method: 'POST'
+                }).then(response => {
+                    console.log('response',response)
+                    if (response.status === 222) {
+                        setAlreadyAdded('You Already Added This to Your List')
+                    } else {
+                        setOrderPlaced('Order Placed')
+                    }
+                })
+                dispatch({
+                    type: "EMPTY_BASKET",
+                });
+            }
+            else{
+                setAddSomething('You Have nothing in your list')
+            }
+
+          //navigate('/home')
         } else {
-            alert('Please Log In First')
+            setLogInFirst('Please Log In First')
             navigate('/login')
         }
         updateUser().then(r => r)
@@ -72,6 +83,27 @@ const comp = ({name, email, userID, basketData}) => {
             <h4>Total Payable: ${sum}</h4>
             <br/>
             <button onClick={SendOrder}>Checkout</button>
+            {
+                (orderPlaced)?
+                    <p>{orderPlaced}</p>
+                    :
+                    ''
+            }            {
+                (alreadyAdded)?
+                    <p>{alreadyAdded}</p>
+                    :
+                    ''
+            }            {
+                (logInFirst)?
+                    <p>{logInFirst}</p>
+                    :
+                    ''
+            }          {
+                (addSomething)?
+                    <p>{addSomething}</p>
+                    :
+                    ''
+            }
         </div>
     )
 }

@@ -33,6 +33,8 @@ Route::get('/products/{id}',[ProductController::class, 'show']);
 Route::post('/products/updateStatus',[ProductController::class, 'updateStatus']);
 Route::post('/products/updateProductInfo',[ProductController::class, 'updateProductInfo']);
 Route::post('/newType/add/{type}',[ProductController::class, 'addNewType']);
+Route::delete('/products/delete/{id}',[ProductController::class, 'destroy']);
+
 
 Route::post('/cart/store',[CartController::class, 'store']);
 Route::get('/cart/show/{user_id}',[CartController::class, 'show']);
@@ -41,6 +43,7 @@ Route::post('/cart/updateStock',[CartController::class, 'updateStock']);
 Route::post('/cart/depleteStock',[CartController::class, 'depleteStock']);
 Route::delete('/cart/delete',[CartController::class, 'destroy']);
 Route::get('/admin/orderInfo',[CartController::class, 'orderInfoForAdmin']);
+Route::get('/cart/showStatus/{user_id}',[CartController::class, 'showStatus']);
 
 
 

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from "react";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import axios from "axios";
 import PlaceOrder from "./PlaceOrder";
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
 
 const CartCard = ({image, title, author, quantity, price, sum, stock, productID}) => {
 

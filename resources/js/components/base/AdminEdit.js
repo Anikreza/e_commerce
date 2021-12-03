@@ -13,7 +13,6 @@ const AdminEdit = () => {
             await axios.get(`${api}/products/list`)
                 .then(async (response) => {
                     setData(response.data.allBooks);
-                    console.log(response.data.allBooks);
                 })
                 .catch((error) => {
                     console.log(error);

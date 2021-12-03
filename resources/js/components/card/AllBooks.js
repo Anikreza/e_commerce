@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from "react";
+import {RiDeleteBin6Line} from "react-icons/ri";
+import axios from 'axios';
 
 const AllBooks = ({stock, title, author, status, price, image, productID, description}) => {
 
@@ -29,10 +31,23 @@ const AllBooks = ({stock, title, author, status, price, image, productID, descri
         setModal(true)
         setFlag(false)
     }
-
+   async function DeleteBook(){
+       let answer = window.confirm("Delete Data Entry?");
+       if(answer){
+           await axios.delete(`${api}/products/delete/`+productID
+           ).then(response=>{
+               console.log(response)
+           })
+       }
+   }
 
     return (
         <div className='column'>
+            <RiDeleteBin6Line
+                size='22px'
+                className='delete'
+                onClick={DeleteBook}
+            />
             <div className='content'>
                 <p> {title}</p>
                 <img src={`${url}/` + image} alt=''/>
@@ -47,7 +62,7 @@ const AllBooks = ({stock, title, author, status, price, image, productID, descri
                     {
                         (modal)?
                             <input
-                                type='text'
+                                type='number'
                                 onChange={(e)=>setUpdatedStock(e.target.value)}
                                 placeholder='Enter Updated Stock'
                             />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\CategoryCoverType;
 use App\Models\CategoryBookType;
 use App\Models\Product;
@@ -39,7 +40,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        $listProducts = Product::all();
+        $listProducts = Product::latest()->get();
 
         $response = [
             'allBooks' => $listProducts
@@ -49,13 +50,9 @@ class ProductController extends Controller
 
     public function showProductsByCategory()
     {
-        $showProduct = DB::table('products')
-            ->join('category_book_types', 'category_book_types.id', '=', 'products.category_book_type_id')
-            ->join('category_cover_types', 'category_cover_types.id', '=', 'products.category_cover_type_id')
-            ->select('products.*','category_book_types.category_book_types','category_cover_types.category_cover_types')
-            ->where('status', '=', 'Published')
-            ->get();
-//
+
+
+        //
 //        $HardCover = Product::where('category_cover_type_id', 1)->get();
 //        $SoftCover = Product::where('category_cover_type_id', 2)->get();
 //        $AudioBook = Product::where('category_cover_type_id', 3)->get();
@@ -64,17 +61,13 @@ class ProductController extends Controller
 //        $AdventureBooks = Product::where('category_book_type_id', 2)->get();
 //        $RomanceBooks = Product::where('category_book_type_id', 3)->get();
 
-        $response = [
-//            'hardCover' => $HardCover,
-//            'softCover' => $SoftCover,
-//            'audioBook' => $AudioBook,
-//
-//            'fantasyBooks' => $FantasyBooks,
-//            'adventureBooks' => $AdventureBooks,
-//            'romanceBooks' => $RomanceBooks,
-            'showProduct '=> $showProduct
-        ];
-        return response($response, 201);
+
+        return DB::table('products')
+            ->join('category_book_types', 'category_book_types.id', '=', 'products.category_book_type_id')
+            ->join('category_cover_types', 'category_cover_types.id', '=', 'products.category_cover_type_id')
+            ->select('products.*','category_book_types.id as book_type_id','category_book_types.category_book_types','category_cover_types.category_cover_types')
+            ->where('status', '=', 'Published')
+            ->get();
     }
 
     /**
@@ -109,7 +102,7 @@ class ProductController extends Controller
                 'author' => 'required|string|max:40',
                 'stock' => 'required|numeric',
                 'price' => 'required|numeric|regex:/^\d*(\.\d{2})?$/',
-                'description' => 'required|max:255',
+                'description' => 'required|max:1200',
                 'file' => 'image|mimes:jpeg,jpg,png|required|max:10000',
                 'bookType' => 'required|string|max:50',
             ],
@@ -287,8 +280,13 @@ class ProductController extends Controller
      * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        Cart::where('product_id', $id)->delete();
+        Product::where('id', $id)->delete();
+        $response = [
+            'result' => 'deleted'
+        ];
+        return response($response, 201);
     }
 }

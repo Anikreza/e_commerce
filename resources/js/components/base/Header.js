@@ -10,7 +10,7 @@ import {BiAddToQueue} from 'react-icons/bi';
 import {FaRegEdit} from 'react-icons/fa';
 import {BsList} from 'react-icons/bs';
 import {useNavigate} from "react-router";
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
 
 
 const Header = () => {

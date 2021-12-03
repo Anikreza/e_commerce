@@ -59,16 +59,22 @@ class CartController extends Controller
                     ->where('user_id', $element["user_id"])
                     ->where('product_id', $element["product_id"])
                     ->decrement('products_in_stock', $element["quantity"]);
+
+                $response = [
+                    'accepted' => $accepted,
+                ];
+                return response($response,201);
             } else {
                 array_push($bounced, $element["product_id"]);
+                $response = [
+                    'bounced' => $bounced
+                ];
+                return response($response,222);
             }
         }
 
-        $response = [
-            'accepted' => $accepted,
-            'bounced' => $bounced
-        ];
-        return response($response, 201);
+
+
     }
 
     public function orderInfoForAdmin(): \Illuminate\Support\Collection
@@ -103,7 +109,16 @@ class CartController extends Controller
 
         return $listCarts;
     }
-
+    /**
+     * Display the Status of Order.
+     *
+     * @param \App\Models\Cart $cart
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection|object
+     */
+    public function showStatus($user_id)
+    {
+        return Cart::select('status')->where('user_id', $user_id)->first();
+    }
     /**
      * Show the form for editing the specified resource.
      *

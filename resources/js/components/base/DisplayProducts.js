@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback} from "react";
 import axios from "axios";
 import SliderData from "../../helpers/sliderData";
-import {actionTypes} from "../../helpers/reducer";
+import {actionTypes} from "../../states/reducer";
 
 const DisplayProducts = () => {
 

@@ -4,7 +4,7 @@ import '../../../sass/cartPage.scss';
 import {RiDeleteBin6Line} from 'react-icons/ri';
 import CartCard from "../card/CartCard";
 import PlaceOrder from "../card/PlaceOrder";
-import {useStateValue} from "../../helpers/StateProvider";
+import {useStateValue} from "../../states/StateProvider";
 
 
 const DisplayCart = () => {

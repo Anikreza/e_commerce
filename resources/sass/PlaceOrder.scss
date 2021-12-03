@@ -4,17 +4,40 @@
     float: right;
     margin-right: 2%;
     margin-top: 16%;
-    padding: 100px 20px 60px 20px;
+    padding: 60px 20px 50px 20px;
     font-weight: lighter;
     border-radius: 5px;
     border-style: ridge;
     border-width: thin;
     border-color: #989898;
+
+    p {
+        color: red;
+        padding-left: 35%;
+    }
+
+    select {
+        margin-left: 2vw;
+        width: 200px;
+        padding: 5px;
+        font-family: "Agency FB";
+        font-size: 16px;
+        font-weight: lighter;
+        color: #3d623d;
+        background-color: inherit;
+
+        option {
+            color: #0f1a0d;
+        }
+    }
+
     .givenInfo {
+        margin-top: 12%;
         max-width: 15vw;
         margin-left: 2vw;
         font-family: "Agency FB";
         font-weight: lighter;
+
         span {
             float: right;
         }
@@ -36,7 +59,8 @@
             color: #9d5e5e;
             margin-top: -5px;
         }
-        hr{
+
+        hr {
             height: 1px;
             color: #d5d2d2;
         }
@@ -47,7 +71,7 @@
         input {
             font-size: 17px;
             font-family: "Agency FB";
-            width:80%;
+            width: 80%;
             margin-left: 7%;
             height: 29px;
             margin-top: 5px;
@@ -58,7 +82,18 @@
             background-color: #c2c2c2;
             padding-left: 15px;
         }
-        .button-glow{
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .button-glow {
             font-family: "Agency FB";
             height: 29px;
             width: 50%;
@@ -70,13 +105,15 @@
             border-radius: 5px;
             font-size: 16px;
         }
-        .button-dim{
+
+        .button-dim {
             font-family: "Agency FB";
             height: 29px;
             width: 50%;
             margin-top: 4%;
             margin-left: 27%;
-            background-color: #a4aba7;
+            background-color: #b4b2b2;
+            opacity: .6;
             color: #000000;
             cursor: crosshair;
             border-radius: 5px;
@@ -84,7 +121,8 @@
 
         }
     }
-    .goButton{
+
+    .goButton {
         font-family: "Agency FB";
         height: 29px;
         font-size: 16px;
