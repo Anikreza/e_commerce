@@ -54,7 +54,7 @@ const SingleProductCard = () => {
                     user_id: userID,
                     image: data.product_img,
                     stock: data.products_in_stock,
-                    status: 'Added To Cart',
+                    status: 'PROCESSING',
                 },
             });
 
@@ -65,7 +65,8 @@ const SingleProductCard = () => {
                     product_id: data.id,
                     quantity: quantity,
                     user_id: userID,
-                    status: 'Added To Cart',
+                    status: 'PROCESSING',
+                    orderID:111111,
                 },
             });
         } else {

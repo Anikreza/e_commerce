@@ -5,6 +5,7 @@ import {RiDeleteBin6Line} from 'react-icons/ri';
 import CartCard from "../card/CartCard";
 import PlaceOrder from "../card/PlaceOrder";
 import {useStateValue} from "../../states/StateProvider";
+import EmptyCart from "../card/EmptyCart";
 
 
 const DisplayCart = () => {
@@ -74,7 +75,7 @@ const DisplayCart = () => {
                         </div>
                         :
                         <div>
-                            <h2>NOTHING IN THE LIST</h2>
+                            <EmptyCart/>
                         </div>
                 }
 

@@ -57,29 +57,20 @@ const ShowOrders = () => {
                 </div>
             </div>
             <div className='orderInfo'>
-                {
-                    (data.length > 0) ?
-                        <div className='main'>
-                            <div className='row'>
-                                {data?.map(data => (
-                                    <CheckOut
-                                        key={data.title}
-                                        title={data.title}
-                                        author={data.author}
-                                        quantity={data.quantity}
-                                        price={data.price}
-                                        image={data.image}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                        :
-                        <div>
-                            <OrderStatus
-                                userID={userID}
+                <div className='main'>
+                    <div className='row'>
+                        {data?.map(data => (
+                            <CheckOut
+                                key={data.title}
+                                title={data.title}
+                                author={data.author}
+                                quantity={data.quantity}
+                                price={data.price}
+                                image={data.image}
                             />
-                        </div>
-                }
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     )

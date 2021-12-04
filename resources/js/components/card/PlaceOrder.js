@@ -6,14 +6,14 @@ import {useStateValue} from "../../states/StateProvider";
 
 const PlaceOrder = ({sum, userID}) => {
 
-    const [{}, dispatch] = useStateValue();
+    const [{cart}, dispatch] = useStateValue();
     let User = JSON.parse(window.localStorage.getItem('user'));
 
     const admin = process.env.MIX_ADMIN;
     const [name, setName] = useState('');
     const [error, setError] = useState('');
     const [address, setAddress] = useState('');
-    const [district, setDistrict] = useState('demo');
+    const [district, setDistrict] = useState('');
     const [deliveryFee, setDeliveryFee] = useState(0);
     const [mobile, setMobile] = useState('');
     const disabled = '';
@@ -23,7 +23,7 @@ const PlaceOrder = ({sum, userID}) => {
         e.preventDefault()
         if (User?.user.email === admin) {
             setError('You Cant do that')
-        } else if (name && mobile && address && district) {
+        } else if (name && mobile && address && district && cart.length>0) {
             dispatch({
                 type: "SET_USER_DETAIL",
                 item: {
@@ -34,16 +34,19 @@ const PlaceOrder = ({sum, userID}) => {
             });
             navigate('/orders')
         } else {
-            setError('Please Choose Your City')
+            if(cart.length===0){
+                setError('You Have Added Nothing Yet')
+            }
+            else{
+                setError('Please Choose Your City')
+            }
         }
     }
 
     useEffect(() => {
         if (district !== 'Dhaka') {
             setDeliveryFee(10)
-        } else if (district === 'demo') {
-            setDeliveryFee(0)
-        } else {
+        }else {
             setDeliveryFee(5)
         }
         setError('')
