@@ -36,7 +36,7 @@ Route::post('/newType/add/{type}',[ProductController::class, 'addNewType']);
 Route::delete('/products/delete/{id}',[ProductController::class, 'destroy']);
 
 
-Route::post('/cart/store',[CartController::class, 'store']);
+Route::post('/cart/store/{order}',[CartController::class, 'store']);
 Route::get('/cart/show/{user_id}',[CartController::class, 'show']);
 Route::post('/cart/update/{cart_id}',[CartController::class, 'update']);
 Route::post('/cart/updateStock',[CartController::class, 'updateStock']);

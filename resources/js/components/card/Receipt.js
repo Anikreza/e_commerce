@@ -1,6 +1,7 @@
-import React, {useState, useEffect,useCallback} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {useStateValue} from "../../states/StateProvider";
 import {useNavigate} from "react-router";
+import {toJSON} from "lodash/seq";
 
 const comp = ({name, email, userID, basketData}) => {
 
@@ -13,6 +14,7 @@ const comp = ({name, email, userID, basketData}) => {
     const [orderPlaced, setOrderPlaced] = useState('')
     const [logInFirst, setLogInFirst] = useState('')
     const [addSomething, setAddSomething] = useState('')
+    const [response, setResponse] = useState('')
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,27 +42,21 @@ const comp = ({name, email, userID, basketData}) => {
     const SendOrder = async (e) => {
         e.preventDefault()
         if (User?.token) {
-            if(data.length>0){
-                await fetch(`${api}/cart/store`, {
+            if (data.length > 0) {
+                await fetch(`${api}/cart/store/` + 1, {
                     body: JSON.stringify(data),
                     method: 'POST'
-                }).then(response => {
-                    console.log('response',response)
-                    if (response.status === 222) {
-                        setAlreadyAdded('You Already Added This to Your List')
-                    } else {
-                        setOrderPlaced('Order Placed')
-                    }
-                })
+                }).then(response => response.json())
+                    .then(json => setOrderPlaced(json.message))
+                    .catch(error=>console.log(error))
                 dispatch({
                     type: "EMPTY_BASKET",
                 });
-            }
-            else{
+            } else {
                 setAddSomething('You Have nothing in your list')
             }
 
-          //navigate('/home')
+            //navigate('/home')
         } else {
             setLogInFirst('Please Log In First')
             navigate('/login')
@@ -84,26 +80,26 @@ const comp = ({name, email, userID, basketData}) => {
             <br/>
             <button onClick={SendOrder}>Checkout</button>
             {
-                (orderPlaced)?
+                (orderPlaced) ?
                     <p>{orderPlaced}</p>
                     :
                     ''
-            }            {
-                (alreadyAdded)?
-                    <p>{alreadyAdded}</p>
-                    :
-                    ''
-            }            {
-                (logInFirst)?
-                    <p>{logInFirst}</p>
-                    :
-                    ''
-            }          {
-                (addSomething)?
-                    <p>{addSomething}</p>
-                    :
-                    ''
-            }
+            } {
+            (alreadyAdded) ?
+                <p>{alreadyAdded}</p>
+                :
+                ''
+        } {
+            (logInFirst) ?
+                <p>{logInFirst}</p>
+                :
+                ''
+        } {
+            (addSomething) ?
+                <p>{addSomething}</p>
+                :
+                ''
+        }
         </div>
     )
 }

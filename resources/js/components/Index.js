@@ -14,8 +14,13 @@ import ShowOrders from "./base/ShowOrders";
 import AdminOrderPage from "./base/AdminOrderPage";
 import AdminEdit from "./base/AdminEdit";
 import Mapper from "./card/Mapper";
+import OrderStatus from "./card/OrderStatus";
 
 function Index() {
+
+    let admin=process.env.MIX_ADMIN;
+    let User = JSON.parse(window.localStorage.getItem('user'));
+    let user=User?.user.email
 
     return (
         <div className='index-app'>
@@ -26,13 +31,23 @@ function Index() {
                     <Route path='/home' element={<Home/>}/>
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/login' element={<Login/>}/>
-                    <Route path='/add' element={<UploadProduct/>}/>
                     <Route path='/book/:id/:title' element={<SingleProductCard/>}/>
                     <Route exact path='books/:id' element={<DisplayProducts/>}/>
                     <Route path='/cart' element={<DisplayCart/>}/>
                     <Route path='/orders' element={<ShowOrders/>}/>
-                    <Route path='/adminOrders' element={<AdminOrderPage/>}/>
-                    <Route path='/edit' element={<AdminEdit/>}/>
+                    <Route path='/orderStatus' element={<OrderStatus/>}/>
+                    {
+                        (user===admin) &&
+                        <Route path='/add' element={<UploadProduct/>}/>
+                    }
+                    {
+                        (user===admin) &&
+                        <Route path='/adminOrders' element={<AdminOrderPage/>}/>
+                    }
+                    {
+                        (user===admin) &&
+                        <Route path='/edit' element={<AdminEdit/>}/>
+                    }
                 </Routes>
             </Router>
         </div>

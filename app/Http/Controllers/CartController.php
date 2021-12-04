@@ -37,19 +37,13 @@ class CartController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function store(Request $req)
+    public function store(Request $req, $order)
     {
         $payload = json_decode($req->getContent(), true);
         $accepted = [];
         $bounced = [];
 
         foreach ($payload as $element) {
-
-            if (DB::table('carts')
-                ->where('user_id', $element["user_id"])
-                ->where('product_id', $element["product_id"])
-                ->where('status','!=','Delivered')
-                ->doesntExist()) {
                 $arr = (array)$element;
                 Cart::create($arr);
                 array_push($accepted, $element["product_id"]);
@@ -59,22 +53,12 @@ class CartController extends Controller
                     ->where('user_id', $element["user_id"])
                     ->where('product_id', $element["product_id"])
                     ->decrement('products_in_stock', $element["quantity"]);
-
-                $response = [
-                    'accepted' => $accepted,
-                ];
-                return response($response,201);
-            } else {
-                array_push($bounced, $element["product_id"]);
-                $response = [
-                    'bounced' => $bounced
-                ];
-                return response($response,222);
-            }
         }
-
-
-
+        DB::table('carts')->decrement('orderID',$order);
+        $response = [
+            'message'=>'Order Placed'
+        ];
+        return response($response, 201);
     }
 
     public function orderInfoForAdmin(): \Illuminate\Support\Collection
@@ -117,7 +101,11 @@ class CartController extends Controller
      */
     public function showStatus($user_id)
     {
-        return Cart::select('status')->where('user_id', $user_id)->first();
+        return Cart::join('products', 'products.id', '=','carts.product_id')
+            ->select('carts.status','carts.quantity','carts.orderID','products.title','products.updated_at','products.price','products.product_img',)
+            ->where('user_id', $user_id)
+            ->where('carts.status','!=','Delivered')
+            ->get();
     }
     /**
      * Show the form for editing the specified resource.
