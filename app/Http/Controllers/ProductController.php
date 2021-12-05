@@ -48,28 +48,35 @@ class ProductController extends Controller
         return response($response, 201);
     }
 
+    /**
+     * Display ALl Book By Category.
+     *
+     * @param \App\Models\Product $product
+     * @return \Illuminate\Http\Response
+     */
     public function showProductsByCategory()
     {
+        $HardCover = Product::where('category_cover_type_id', 1)->get();
+        $SoftCover = Product::where('category_cover_type_id', 2)->get();
+        $AudioBook = Product::where('category_cover_type_id', 3)->get();
 
+        $ThrillerBooks = Product::where('category_book_type_id', 1)->get();
+        $AdventureBooks = Product::where('category_book_type_id', 2)->get();
+        $RomanceBooks = Product::where('category_book_type_id', 3)->get();
+        $KidsBooks = Product::where('category_book_type_id', 4)->get();
 
-        //
-//        $HardCover = Product::where('category_cover_type_id', 1)->get();
-//        $SoftCover = Product::where('category_cover_type_id', 2)->get();
-//        $AudioBook = Product::where('category_cover_type_id', 3)->get();
-//
-//        $FantasyBooks = Product::where('category_book_type_id', 1)->get();
-//        $AdventureBooks = Product::where('category_book_type_id', 2)->get();
-//        $RomanceBooks = Product::where('category_book_type_id', 3)->get();
+        $response = [
+            'HardCover' => $HardCover,
+            'SoftCover' => $SoftCover,
+            'AudioBook' => $AudioBook,
 
-
-        return DB::table('products')
-            ->join('category_book_types', 'category_book_types.id', '=', 'products.category_book_type_id')
-            ->join('category_cover_types', 'category_cover_types.id', '=', 'products.category_cover_type_id')
-            ->select('products.*','category_book_types.id as book_type_id','category_book_types.category_book_types','category_cover_types.category_cover_types')
-            ->where('status', '=', 'Published')
-            ->get();
+            'ThrillerBooks' => $ThrillerBooks,
+            'AdventureBooks' => $AdventureBooks,
+            'RomanceBooks' => $RomanceBooks,
+            'KidsBooks' => $KidsBooks
+        ];
+        return response($response, 201);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -135,6 +142,7 @@ class ProductController extends Controller
             $product->author = $request->author;
             $product->products_in_stock = $request->stock;
             $product->price = $request->price;
+            $product->sell_count = 0;
             $product->description = $request->description;
             $product->category_book_type_id = $request->bookType;
 
@@ -163,6 +171,7 @@ class ProductController extends Controller
             $product->author = $request->author;
             $product->products_in_stock = $request->stock;
             $product->price = $request->price;
+            $product->sell_count = 0;
             $product->description = $request->description;
             $product->category_book_type_id = $addBookType->id;
         }
@@ -225,13 +234,6 @@ class ProductController extends Controller
         //
     }
 
-    public function newType(Request $request)
-    {
-        $addBookType = new CategoryBookType();
-        $addBookType->category_book_types = $request->newBookType;
-        $addBookType->save();
-    }
-
     /**
      * List of Ordered Products for Admin Panel.
      *
@@ -251,6 +253,7 @@ class ProductController extends Controller
     {
         $updateUser = DB::table('carts')
             ->where('user_id', $request->userID)
+            ->where('orderID', $request->orderID)
             ->update([
                 'status' => $request->updatedStatus
             ]);

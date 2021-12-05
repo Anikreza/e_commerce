@@ -13,17 +13,22 @@ const Home = () => {
     const [{user,basket,cart}, dispatch] = useStateValue();
     const [height, setHeight] = useState(false);
     const api = process.env.MIX_API;
-    const [data, setData] = useState([])
-    let orders = JSON.parse(window.localStorage.getItem('orders'))
+    const [adventureBooks, setAdventureBooks] = useState([])
+    const [thrillerBooks, setThrillerBooks] = useState([])
+    const [romanceBooks, setRomanceBooks] = useState([])
+    const [kidsBooks, setKidsBooks] = useState([])
+
 
 
     const getBooks = useCallback(
         async () => {
             await axios.get(`${api}/products/byCategory`)
                 .then(async (res) => {
-                    setData(res.data)
+                    setAdventureBooks(res.data.AdventureBooks)
+                    setThrillerBooks(res.data.ThrillerBooks)
+                    setRomanceBooks(res.data.RomanceBooks)
+                    setKidsBooks(res.data.KidsBooks)
                     console.log('new data',res.data)
-                    console.log('new Red Data',orders)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -59,17 +64,39 @@ const Home = () => {
 
     window.addEventListener('scroll', ScrollHeight);
     const AdventureRef = useRef(null)
+    const RomanceRef = useRef(null)
+    const ThrillerRef = useRef(null)
+    const KidsRef = useRef(null)
     return (
         <div>
             <div className={!height ? 'home' : 'home2'}>
                 <NavBar
                     Adventure={AdventureRef}
+                    Romance={RomanceRef}
+                    Thriller={ThrillerRef}
+                    Kids={KidsRef}
                 />
                 <div className='bg'>
                 </div>
                 <div ref={AdventureRef}>
                     <CategoryCard
-                        bookData={data}
+                        bookData={adventureBooks}
+                    />
+                </div>
+                <div ref={RomanceRef}>
+                    <CategoryCard
+                        bookData={romanceBooks}
+                    />
+                </div>
+                <div ref={ThrillerRef}>
+                    <CategoryCard
+                        bookData={thrillerBooks
+                        }
+                    />
+                </div>
+                <div ref={KidsRef}>
+                    <CategoryCard
+                        bookData={kidsBooks}
                     />
                 </div>
             </div>

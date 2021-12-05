@@ -36,8 +36,8 @@ const Login = () => {
             console.log(user?.errors)
             setNotFound(user?.message)
         } else {
-            //navigate('/home')
-            window.location.replace('/home')
+            navigate('/home')
+           // window.location.replace('/home')
         }
     }
 

@@ -44,6 +44,7 @@ const Mapper = ({data}) => {
                             mobile={key.mobile}
                             stock={key.products_in_stock}
                             price={key.price}
+                            orderID={key.orderID}
                             userID={key.user_id}
                             name={key.name}
                         />

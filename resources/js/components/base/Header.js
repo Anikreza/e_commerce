@@ -20,14 +20,17 @@ const Header = () => {
     const [modal, setModal] = useState(false);
     const url = location.pathname
     const navigate=useNavigate()
+    const [{user, cart, basket, userDetail}, dispatch] = useStateValue();
 
 
     async function logout() {
         console.log('url', url)
         window.localStorage.clear();
+        dispatch({
+            type: "EMPTY_BASKET",
+        });
         navigate('/home')
         //window.location.replace('/home')
-
     }
 
     return (

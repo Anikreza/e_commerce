@@ -39,17 +39,10 @@ Route::delete('/products/delete/{id}',[ProductController::class, 'destroy']);
 Route::post('/cart/store/{order}',[CartController::class, 'store']);
 Route::get('/cart/show/{user_id}',[CartController::class, 'show']);
 Route::post('/cart/update/{cart_id}',[CartController::class, 'update']);
-Route::post('/cart/updateStock',[CartController::class, 'updateStock']);
-Route::post('/cart/depleteStock',[CartController::class, 'depleteStock']);
 Route::delete('/cart/delete',[CartController::class, 'destroy']);
 Route::get('/admin/orderInfo',[CartController::class, 'orderInfoForAdmin']);
 Route::get('/cart/showStatus/{user_id}',[CartController::class, 'showStatus']);
 
-
-
-Route::post('/productOrder/store',[ProductOrderController::class, 'store']);
-Route::get('/productOrder/orders/{user_id}',[ProductOrderController::class, 'orders']);
-Route::delete('/productOrder/delete',[ProductOrderController::class, 'destroy']);
 
 
 

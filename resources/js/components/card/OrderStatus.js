@@ -11,7 +11,8 @@ const OrderStatus = () => {
     const [time, setTime] = useState('')
     let User = JSON.parse(window.localStorage.getItem('user'));
     const userID = User?.user.id;
-    const [red, setdata] = useState({})
+    const [reducedData, setReducedData] = useState([])
+    let users=[]
 
     const getOrdersStatus = useCallback(
         async () => {
@@ -31,33 +32,52 @@ const OrderStatus = () => {
     }, [getOrdersStatus]);
 
 
-   async function groupBy(arr, property) {
-        return arr.reduce(function(memo, x) {
-            if (!memo[x[property]]) {
-                memo[x[property]] = [];
+   async function groupBy(array, property) {
+        return array.reduce(function(key, i) {
+            if (!key[i[property]]) {
+                key[i[property]] = [];
             }
-            memo[x[property]].push(x);
-            return memo;
-        }, {});
+            key[i[property]].push(i);
+            return key;
+        }, []);
    }
 
-    useEffect(() => {
-        groupBy(data,'orderID').then(r=>console.log(r))
-    }, [groupBy]);
+    useEffect(async () => {
+        groupBy(data,'orderID').then(async r => {
+            users = r.filter(obj => obj.title === data.title && obj.orderID === data.orderID)
+           // setReducedData(r)
+            console.log('new',users)
+            setReducedData(users)
+            console.log('red',reducedData)
+            // Object.values(r).map(val => console.log( val.map(d=>d)));
+                 //console.log('red',red)
+        })
+    }, [data]);
 
+    const [uniquea, setUnique] = useState([])
+
+    useEffect(() => {
+        const unique = [];
+        data.map(x => unique.filter(a => a.orderID === x.orderID).length > 0 ? null : unique.push(x));
+        setUnique(unique)
+    }, [data]);
 
     return (
         <div className='orderStatus'>
             {
-                data.map(Data=>(
-                    <div key={Data.orderID}>
-                        <p>Order NO: {Data.orderID}</p>
-                        <p>{Data.title}<span>({Data.quantity})</span></p>
-                    </div>
+               uniquea.map(d=>(
+                    <Test
+                        data={reducedData}
+                        key={d.id}
+                        title={d.title}
+                        quantity={d.quantity}
+                        status={d.status}
+                        orderID={d.orderID}
+                    />
                 ))
             }
-            <h2>ORDER STATUS: <span style={{color:'#974034', fontSize:'22px'}}>{status.status}</span> </h2>
-            <h4>LAST UPDATED: <span style={{color:'darkgreen', fontSize:'22px'}}>{time.updated_at}</span></h4>
+            {/*<h2>ORDER STATUS: <span style={{color:'#974034', fontSize:'22px'}}>{status?.status}</span> </h2>*/}
+            <h4>LAST UPDATED: <span style={{color:'darkgreen', fontSize:'22px'}}>{time?.updated_at}</span></h4>
             <hr width='40%'/>
         </div>
     )
