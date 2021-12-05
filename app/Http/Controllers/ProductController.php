@@ -251,6 +251,7 @@ class ProductController extends Controller
     {
         $updateUser = DB::table('carts')
             ->where('user_id', $request->userID)
+            ->where('orderID', $request->orderID)
             ->update([
                 'status' => $request->updatedStatus
             ]);

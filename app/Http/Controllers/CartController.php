@@ -55,6 +55,7 @@ class CartController extends Controller
                     ->decrement('products_in_stock', $element["quantity"]);
         }
         DB::table('carts')->decrement('orderID',$order);
+        DB::table('carts')->increment('sell_count',$order);
         $response = [
             'message'=>'Order Placed'
         ];
@@ -137,26 +138,6 @@ class CartController extends Controller
             'updateCart' => $updateCart,
         ];
         return response($response, 201);
-    }
-
-    public function updateStock(Request $request)
-    {
-        $Product = DB::table('products')
-            ->join('carts', 'products.id', '=', 'carts.product_id')
-            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-            ->where('products.id', '=', $request->productID)
-            ->where('carts.user_id', '=', $request->userID)
-            ->increment('products_in_stock', 1);
-    }
-
-    public function depleteStock(Request $request)
-    {
-        $Product = DB::table('products')
-            ->join('carts', 'products.id', '=', 'carts.product_id')
-            ->select('products.*', 'carts.user_id as user_id', 'carts.quantity as quantity')
-            ->where('products.id', '=', $request->productID)
-            ->where('carts.user_id', '=', $request->userID)
-            ->decrement('products_in_stock', 1);
     }
 
     /**

@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useCallback} from "react";
 import axios from "axios";
 
-const comp = ({name, mobile, email, userID, title, quantity, stock, status, price}) => {
+const comp = ({name, mobile, email, userID, title, quantity, stock, status, price,orderID}) => {
 
     const api = process.env.MIX_API;
     const [updatedStatus, setUpdatedStatus] = useState(status)
 
 
     async function updateStatus() {
-        let Data = {updatedStatus, userID}
+        let Data = {updatedStatus, userID,orderID}
         await fetch(`${api}/products/updateStatus`, {
             method: 'POST',
             body: JSON.stringify(Data),
@@ -28,10 +28,10 @@ const comp = ({name, mobile, email, userID, title, quantity, stock, status, pric
                 <p>{email}</p>
             </div>
             <div className={(updatedStatus !== 'Delivered') ? 'infoSide' : 'infoSide-Done'}>
+                <p>ORDER NO: : {orderID}</p>
                 <p>Product Name: {title}</p>
                 <p>Quantity Ordered: {quantity}</p>
                 <p>Order Total: {price * quantity}</p>
-                <p>Items Left In Stock: {stock}</p>
                 <p>Status: {status}</p>
                 <hr/>
             </div>
