@@ -80,7 +80,7 @@ const Header = () => {
                                     </li>
                                     <li >
                                         <NavLink to='/allBooks'>
-                                            SHOP
+                                            BOOKS
                                         </NavLink>
                                     </li>
                                     <SearchCard/>
