@@ -29,11 +29,11 @@ class Cart extends Model
     {
         return $this->belongsTo('App\Models\Product', 'product_id');
     }
-    public function category_book_type()
+    public function categoryBookType()
     {
         return $this->belongsTo('App\Models\CategoryBookType', 'category_book_type_id');
     }
-    public function category_cover_type()
+    public function categoryCoverType()
     {
         return $this->belongsTo('App\Models\CategoryCoverType', 'category_cover_type_id');
     }

@@ -29,12 +29,24 @@ class Product extends Model
 //        return $this->belongsTo(CategoryCoverType::class, 'category_book_type_id');
 //    }
 
-    public function CategoryBookType()
+    public function categoryBookType()
     {
         return $this->belongsTo('App\Models\CategoryBookType','category_book_type_id');
     }
     public function categoryCoverType()
     {
         return $this->belongsTo('App\Models\CategoryCoverType','category_cover_type_id');
+    }
+//    public function user()
+//    {
+//        return $this->belongsTo('App\Models\User','user_id');
+//    }
+    public function cart()
+    {
+        return $this->hasMany('App\Models\Cart');
+    }
+    public function review()
+    {
+        return $this->hasMany('App\Models\Review');
     }
 }
