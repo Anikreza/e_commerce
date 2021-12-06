@@ -84,6 +84,8 @@ const Home = () => {
                         bookData={bestSellers.slice(0,5)}
                     />
                 </div>
+                <div className='home-bg'>
+                </div>
                 <div>
                     <CategoryCard
                         title={'Top 10 Best Selling Books Of All Time...'}

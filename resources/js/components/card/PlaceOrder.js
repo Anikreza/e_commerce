@@ -62,7 +62,7 @@ const PlaceOrder = ({sum, userID}) => {
                     ''
             }
             <select onChange={(e) => setDistrict(e.target.value)}>
-                <option value='demo'>Choose Your City</option>
+                <option >Choose Your City</option>
                 <option value='Dhaka'> Dhaka</option>
                 <option value='Outside Dhaka'>Outside Dhaka</option>
             </select>
