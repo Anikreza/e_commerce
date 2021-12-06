@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useCallback} from "react";
 import axios from "axios";
 import '../../../sass/cartPage.scss';
-import {RiDeleteBin6Line} from 'react-icons/ri';
+import {RiAddFill, RiDeleteBin6Line} from 'react-icons/ri';
 import CartCard from "../card/CartCard";
 import PlaceOrder from "../card/PlaceOrder";
 import {useStateValue} from "../../states/StateProvider";
 import EmptyCart from "../card/EmptyCart";
+import {Link} from "react-router-dom";
 
 
 const DisplayCart = () => {
@@ -78,6 +79,10 @@ const DisplayCart = () => {
                             <EmptyCart/>
                         </div>
                 }
+                <Link to={'/allBooks'}> <span><RiAddFill size='22px' color='green'/></span> ADD MORE</Link>
+                <br/>
+                <br/>
+                <br/>
             </div>
         </div>
     )
