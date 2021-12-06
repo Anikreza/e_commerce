@@ -9,6 +9,7 @@ const Login = () => {
     const [password, setPassword] = useState();
     const navigate = useNavigate();
     const api=process.env.MIX_API;
+    const admin=process.env.MIX_ADMIN;
     const [{user,basket}, dispatch] = useStateValue();
     const [errors, setErrors] = useState([]);
     const [notFound, setNotFound] = useState('');
@@ -36,8 +37,16 @@ const Login = () => {
             console.log(user?.errors)
             setNotFound(user?.message)
         } else {
-            navigate('/home')
-           // window.location.replace('/home')
+            if(user?.user.email===admin){
+               // navigate('/edit')
+                window.location.replace('/edit')
+            }
+            else{
+                //  navigate('/home')
+               window.location.replace('/home')
+
+            }
+
         }
     }
 

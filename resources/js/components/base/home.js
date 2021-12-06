@@ -5,6 +5,7 @@ import CategoryCard from '../card/categoryCard'
 import NavBar from "../card/NavBar";
 import axios from "axios";
 import {useStateValue} from "../../states/StateProvider";
+import ImageGrid from "../../Views/ImageGrid";
 
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
     const [thrillerBooks, setThrillerBooks] = useState([])
     const [romanceBooks, setRomanceBooks] = useState([])
     const [kidsBooks, setKidsBooks] = useState([])
+    const [bestSellers, setBestSellers] = useState([])
 
 
 
@@ -28,6 +30,7 @@ const Home = () => {
                     setThrillerBooks(res.data.ThrillerBooks)
                     setRomanceBooks(res.data.RomanceBooks)
                     setKidsBooks(res.data.KidsBooks)
+                    setBestSellers(res.data.BestSellers)
                     console.log('new data',res.data)
                 })
                 .catch((error) => {
@@ -55,7 +58,7 @@ const Home = () => {
 
 
     const ScrollHeight = () => {
-        if (window.scrollY >= 400) {
+        if (window.scrollY >= 260) {
             setHeight(true)
         } else {
             setHeight(false)
@@ -77,25 +80,37 @@ const Home = () => {
                     Kids={KidsRef}
                 />
                 <div className='bg'>
+                    <ImageGrid
+                        bookData={bestSellers.slice(0,5)}
+                    />
+                </div>
+                <div>
+                    <CategoryCard
+                        title={'Top 10 Best Selling Books Of All Time...'}
+                        bookData={bestSellers.slice(0,10)}
+                    />
                 </div>
                 <div ref={AdventureRef}>
                     <CategoryCard
+                        title={'Adventure Books...'}
                         bookData={adventureBooks}
                     />
                 </div>
                 <div ref={RomanceRef}>
                     <CategoryCard
+                        title={'Romance Books...'}
                         bookData={romanceBooks}
                     />
                 </div>
                 <div ref={ThrillerRef}>
                     <CategoryCard
-                        bookData={thrillerBooks
-                        }
+                        title={'Thriller Books...'}
+                        bookData={thrillerBooks}
                     />
                 </div>
                 <div ref={KidsRef}>
                     <CategoryCard
+                        title={'Books For Kids...'}
                         bookData={kidsBooks}
                     />
                 </div>

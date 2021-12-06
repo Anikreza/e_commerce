@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router,Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {useLocation} from "react-router-dom";
 import Header from './base/Header';
 import Register from '../Views/register';
@@ -15,37 +15,60 @@ import AdminOrderPage from "./base/AdminOrderPage";
 import AdminEdit from "./base/AdminEdit";
 import Mapper from "./card/Mapper";
 import OrderStatus from "./card/OrderStatus";
+import AllBooksHome from "./base/AllBooksHome";
 
 function Index() {
 
-    let admin=process.env.MIX_ADMIN;
+    let admin = process.env.MIX_ADMIN;
     let User = JSON.parse(window.localStorage.getItem('user'));
-    let user=User?.user.email
+    let user = User?.user.email
 
     return (
         <div className='index-app'>
             <Router>
                 <Header/>
                 <Routes>
-                    <Route exact path='/' element={<Home/>}/>
-                    <Route path='/home' element={<Home/>}/>
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/login' element={<Login/>}/>
-                    <Route path='/book/:id/:title' element={<SingleProductCard/>}/>
-                    <Route exact path='books/:id' element={<DisplayProducts/>}/>
-                    <Route path='/cart' element={<DisplayCart/>}/>
-                    <Route path='/orders' element={<ShowOrders/>}/>
-                    <Route path='/orderStatus' element={<OrderStatus/>}/>
+
                     {
-                        (user===admin) &&
+                        (user !== admin) &&
+                        <Route path='/home' element={<Home/>}/>
+                    } {
+                    (user !== admin) &&
+                    <Route path='/book/:id/:title' element={<SingleProductCard/>}/>
+
+                } {
+                    (user !== admin) &&
+                    <Route path='/orderStatus' element={<OrderStatus/>}/>
+                } {
+                    (user !== admin) &&
+                    <Route path='/allBooks' element={<AllBooksHome/>}/>
+
+                } {
+                    (user !== admin) &&
+                    <Route path='/orders' element={<ShowOrders/>}/>
+                }
+                    {
+                        (user !== admin) &&
+                        <Route path='/cart' element={<DisplayCart/>}/>
+                    }
+                    {
+
+                        (user !== admin) &&
+                        <Route path='/' element={<Home/>}/>
+                    }
+
+                    {
+                        (user === admin) &&
                         <Route path='/add' element={<UploadProduct/>}/>
                     }
                     {
-                        (user===admin) &&
+                        (user === admin) &&
                         <Route path='/adminOrders' element={<AdminOrderPage/>}/>
                     }
                     {
-                        (user===admin) &&
+                        (user === admin) &&
                         <Route path='/edit' element={<AdminEdit/>}/>
                     }
                 </Routes>

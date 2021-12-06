@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function Sodium\increment;
 
 class CartController extends Controller
 {
@@ -41,7 +42,6 @@ class CartController extends Controller
     {
         $payload = json_decode($req->getContent(), true);
         $accepted = [];
-        $bounced = [];
 
         foreach ($payload as $element) {
                 $arr = (array)$element;
@@ -53,9 +53,15 @@ class CartController extends Controller
                     ->where('user_id', $element["user_id"])
                     ->where('product_id', $element["product_id"])
                     ->decrement('products_in_stock', $element["quantity"]);
+
+                DB::table('products')
+                    ->join('carts', 'carts.product_id', '=', 'products.id')
+                    ->select('products.*', 'carts.quantity')
+                    ->where('user_id', $element["user_id"])
+                    ->where('product_id', $element["product_id"])
+                    ->increment('sell_count', $element["quantity"]);
         }
         DB::table('carts')->decrement('orderID',$order);
-        DB::table('carts')->increment('sell_count',$order);
         $response = [
             'message'=>'Order Placed'
         ];
@@ -69,7 +75,7 @@ class CartController extends Controller
             ->join('users', 'users.id', '=', 'carts.user_id')
             ->select('carts.*', 'users.name', 'users.email', 'users.mobile', 'users.address',
                 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
-                'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
+                'products.products_in_stock as products_in_stock',
                 'products.description as description')
             ->get();
     }
@@ -86,7 +92,7 @@ class CartController extends Controller
         $listCarts = DB::table('carts')
             ->join('products', 'products.id', '=', 'carts.product_id')
             ->select('carts.*', 'products.title as title', 'products.price as price', 'products.author as author', 'products.product_img as product_img',
-                'products.products_in_stock as products_in_stock', 'products.order_number as order_number',
+                'products.products_in_stock as products_in_stock',
                 'products.description as description',
             )
             ->where('carts.user_id', $user_id)

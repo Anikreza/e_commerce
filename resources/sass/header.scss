@@ -13,8 +13,23 @@
     .nav-ul {
         ul {
             display: flex;
-            font-size: 18px;
+            font-size: 21px;
+            font-weight: bolder;
+            max-width: 29vw;
+        }
+        li {
+            list-style: none;
+            margin-left: 20px;
             font-weight: lighter;
+            text-decoration: none;
+        }
+    }
+    .nav-ul-admin{
+        ul {
+            display: flex;
+            font-size: 22px;
+            font-weight: bold;
+            max-width: 90vw;
         }
         li {
             list-style: none;
@@ -85,6 +100,7 @@
 .home-logo {
     margin-right: 40%;
 }
+
 .home-logo-admin {
     margin-right: 12%;
 }

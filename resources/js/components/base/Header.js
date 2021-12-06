@@ -19,7 +19,7 @@ const Header = () => {
     let admin = process.env.MIX_ADMIN;
     const [modal, setModal] = useState(false);
     const url = location.pathname
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const [{user, cart, basket, userDetail}, dispatch] = useStateValue();
 
 
@@ -50,14 +50,8 @@ const Header = () => {
                 {
                     (User?.user?.email === admin) ?
                         <>
-                            <div className='nav-ul'>
+                            <div className='nav-ul-admin'>
                                 <ul>
-                                    <li className='home-logo-admin'>
-                                        <NavLink to='/home'>
-                                            <img className='logo' src={a}/>
-                                        </NavLink>
-                                    </li>
-
                                     <li><NavLink to='/add'>
                                         <BiAddToQueue size='29px' color='#363636'/>
                                         Add
@@ -82,6 +76,11 @@ const Header = () => {
                                     <li className='home-logo'>
                                         <NavLink to='/home'>
                                             <img className='logo' src={a} alt=''/>
+                                        </NavLink>
+                                    </li>
+                                    <li >
+                                        <NavLink to='/allBooks'>
+                                            SHOP
                                         </NavLink>
                                     </li>
                                     <SearchCard/>
