@@ -11,7 +11,7 @@ const GridCard = ({title, author, quantity, price, description, image}) => {
             <div className='content'>
                 <img src={`${url}/` + image}/>
                 <p className='quantity'>Quantity: {quantity}</p>
-                <p className='Price'>Price: ${price}</p>
+                <p className='Price'>Price: ${price.toFixed(2)}</p>
             </div>
             <hr/>
         </div>

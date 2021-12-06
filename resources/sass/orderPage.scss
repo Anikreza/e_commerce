@@ -4,6 +4,13 @@
     text-align: center;
     letter-spacing: 1px;
     font-weight: lighter;
+    h1{
+        font-size: 22px;
+        color: #1c5d1f;
+        font-family: "Agency FB";
+        text-align: center;
+        padding: 10% 5% 10% 20%;
+    }
 
     .customerInfo {
         padding:2.9%;
@@ -14,6 +21,10 @@
         max-width: 29vw;
         background-color: whitesmoke;
         .receipt{
+            .orderPlaed{
+                font-size: 25px;
+                color: #132c13;
+            }
             h4{
                 font-family: "Agency FB";
                 color: #2d2626;
@@ -37,7 +48,10 @@
             font-family: "Agency FB";
             color: #601a11;
         }
-        button{
+        .button-dim{
+            display: none;
+        }
+        .button-glow{
             font-family: "Agency FB";
             font-size: 17px;
             letter-spacing: 1px;

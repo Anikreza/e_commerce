@@ -107,25 +107,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->newBookType) {
-            $validator = $request->validate([
-                'name' => 'required|string|max:50',
-                'author' => 'required|string|max:40',
-                'stock' => 'required|numeric',
-                'price' => 'required|numeric|regex:/^\d*(\.\d{2})?$/',
-                'description' => 'required|max:255',
-                'file' => 'image|mimes:jpeg,jpg,png|required|max:10000',
-                'newBookType' => 'required|string|max:50',
-            ],
-                [
-                    'name.required' => ':attribute can not be blank',
-                    'author.required' => ':attribute can not be blank Or Numeric',
-                    'stock.required' => ':attribute can not be blank Or non integer',
-                    'price.required' => ':attribute can not be blank and has to be a float of point 2 degree',
-                    'file.required' => 'product must have a :attribute',
-                    'newBookType.required' => 'please select a :attribute',
-                ]);
-        } else {
             $validator = $request->validate([
                 'name' => 'required|string|max:50',
                 'author' => 'required|string|max:40',
@@ -143,36 +124,6 @@ class ProductController extends Controller
                     'file.required' => 'product must have a :attribute',
                     'bookType.required' => 'please select a :attribute',
                 ]);
-        }
-
-        if ($request->category_book_type_id) {
-            $product = new Product();
-            $image = $request->file;
-            if ($image) {
-                $image_ext = $image->getClientOriginalExtension();
-                $image_full_name = time() . '.' . $image_ext;
-                $upload_path = 'assets/images/';
-                $image_url = $upload_path . $image_full_name;
-
-                $success = $image->move($upload_path, $image_full_name);
-            } else {
-                $image_url = '';
-            }
-
-            $product->product_img = $image_url;
-            $product->title = $request->name;
-            $product->author = $request->author;
-            $product->products_in_stock = $request->stock;
-            $product->price = $request->price;
-            $product->sell_count = 0;
-            $product->description = $request->description;
-            $product->category_book_type_id = $request->bookType;
-
-
-        } else {
-            $addBookType = new CategoryBookType();
-            $addBookType->category_book_types = $request->newBookType;
-            $addBookType->save();
 
             $product = new Product();
             $image = $request->file;
@@ -195,8 +146,6 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->sell_count = 0;
             $product->description = $request->description;
-            $product->category_book_type_id = $addBookType->id;
-        }
         $product->category_cover_type_id = $request->coverType;
         $product->save();
 
