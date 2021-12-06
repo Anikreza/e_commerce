@@ -78,7 +78,6 @@ const DisplayCart = () => {
                             <EmptyCart/>
                         </div>
                 }
-
             </div>
         </div>
     )

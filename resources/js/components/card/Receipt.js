@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback} from "react";
 import {useStateValue} from "../../states/StateProvider";
 import {useNavigate} from "react-router";
 import {toJSON} from "lodash/seq";
+import OrderStatus from "./OrderStatus";
 
 const comp = ({name, email, userID, basketData}) => {
 
@@ -16,6 +17,7 @@ const comp = ({name, email, userID, basketData}) => {
     const [addSomething, setAddSomething] = useState('')
     const [response, setResponse] = useState('')
     const navigate = useNavigate();
+    const disabled = '';
 
     useEffect(() => {
         const unique = [];
@@ -48,7 +50,7 @@ const comp = ({name, email, userID, basketData}) => {
                     method: 'POST'
                 }).then(response => response.json())
                     .then(json => setOrderPlaced(json.message))
-                    .catch(error=>console.log(error))
+                    .catch(error => console.log(error))
                 dispatch({
                     type: "EMPTY_BASKET",
                 });
@@ -66,30 +68,49 @@ const comp = ({name, email, userID, basketData}) => {
 
     return (
         <div>
-            <h4>{userDetail.name}</h4>
-            <h4>{userDetail.mobile}</h4>
-            <h4>{userDetail.address}</h4>
+            {
+                (orderPlaced) ?
+                    <h2 className='orderPlaed'>{orderPlaced}</h2>
+                    :
+                    ''
+            }
+            {
+                (basket.length > 0) ?
+                    <div>
+                        <h4>{userDetail.name}</h4>
+                        <h4>{userDetail.mobile}</h4>
+                        <h4>{userDetail.address}</h4>
+                    </div>
+                    :
+                    <OrderStatus/>
+            }
+
             {
                 basketData.map(Data => (
                     <div key={Data.title}>
-                        <p>{Data.title}<span> ({Data.quantity})  ${(Data.quantity * Data.price)}</span></p>
+                        <p>{Data.title}<span> ({Data.quantity})  ${(Data.quantity * Data.price).toFixed(2)}</span></p>
                     </div>
                 ))
             }
-            <h4>Total Payable: ${sum}</h4>
-            <br/>
-            <button onClick={SendOrder}>Checkout</button>
             {
-                (orderPlaced) ?
-                    <p>{orderPlaced}</p>
+                (basket.length > 0) ?
+                    <h4>Total Payable: ${sum.toFixed(2)}</h4>
+                    :
+                    ''
+            }
+            <br/>
+            <button
+                disabled={basket.length > 0 ? disabled : !disabled}
+                className={basket.length > 0 ? 'button-glow' : 'button-dim'}
+                onClick={SendOrder}
+            >Checkout
+            </button>
+            {
+                (alreadyAdded) ?
+                    <p>{alreadyAdded}</p>
                     :
                     ''
             } {
-            (alreadyAdded) ?
-                <p>{alreadyAdded}</p>
-                :
-                ''
-        } {
             (logInFirst) ?
                 <p>{logInFirst}</p>
                 :

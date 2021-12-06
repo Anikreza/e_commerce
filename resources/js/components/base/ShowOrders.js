@@ -46,7 +46,12 @@ const ShowOrders = () => {
         <div className='orderPage'>
             <div className='customerInfo'>
                 <div className='receipt'>
-                    <h2>Details About Your Order</h2>
+                    {
+                        (basket.length > 0) ?
+                            <h2>Details About Your Order</h2>
+                            :
+                            <h2>Your Current Orders</h2>
+                    }
                     <hr/>
                     <Receipt
                         userID={userID}
@@ -56,22 +61,28 @@ const ShowOrders = () => {
                     />
                 </div>
             </div>
-            <div className='orderInfo'>
-                <div className='main'>
-                    <div className='row'>
-                        {data?.map(data => (
-                            <CheckOut
-                                key={data.title}
-                                title={data.title}
-                                author={data.author}
-                                quantity={data.quantity}
-                                price={data.price}
-                                image={data.image}
-                            />
-                        ))}
+            {
+                (basket.length > 0) ?
+                    <div className='orderInfo'>
+                        <div className='main'>
+                            <div className='row'>
+                                {data?.map(data => (
+                                    <CheckOut
+                                        key={data.title}
+                                        title={data.title}
+                                        author={data.author}
+                                        quantity={data.quantity}
+                                        price={data.price}
+                                        image={data.image}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                    :
+                    <h1> HEY! YOU ARE FREE TO MAKE A NEW ORDER!!!</h1>
+            }
+
         </div>
     )
 }
