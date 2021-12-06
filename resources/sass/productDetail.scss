@@ -28,7 +28,12 @@
             background-color: #305b2a;
             cursor: pointer;
             font-size: 20px;
+            width: 100%;
             font-family: "Agency FB";
+            &:hover{
+                background-color: #ff6d6d;
+                color:  #305b2a;
+            }
         }
         .stockButton{
             padding: 7px;
@@ -38,6 +43,10 @@
             cursor: default;
             font-size: 20px;
             font-family: "Agency FB";
+            &:hover{
+                background-color: #000000;
+                color: #ffffff;
+            }
         }
     }
 

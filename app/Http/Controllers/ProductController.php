@@ -41,8 +41,9 @@ class ProductController extends Controller
     public function list()
     {
         $listProducts = Product::latest()->get();
-
+        $allProducts = Product::orderBy('updated_at', 'desc')->get();
         $response = [
+            'allProducts'=>$allProducts,
             'allBooks' => $listProducts
         ];
         return response($response, 201);
@@ -56,24 +57,45 @@ class ProductController extends Controller
      */
     public function showProductsByCategory()
     {
-        $HardCover = Product::where('category_cover_type_id', 1)->get();
-        $SoftCover = Product::where('category_cover_type_id', 2)->get();
-        $AudioBook = Product::where('category_cover_type_id', 3)->get();
+        $THRILLER = 1;
+        $ADVENTURE = 2;
+        $ROMANCE = 3;
+        $KIDS = 4;
 
-        $ThrillerBooks = Product::where('category_book_type_id', 1)->get();
-        $AdventureBooks = Product::where('category_book_type_id', 2)->get();
-        $RomanceBooks = Product::where('category_book_type_id', 3)->get();
-        $KidsBooks = Product::where('category_book_type_id', 4)->get();
+        $HARDCOVER = 1;
+        $SOFTCOVER = 2;
+        $AUDIOBOOK = 3;
+
+        $HardCover = Product::where('category_cover_type_id', $HARDCOVER)->get();
+        $SoftCover = Product::where('category_cover_type_id', $SOFTCOVER)->get();
+        $AudioBook = Product::where('category_cover_type_id', $AUDIOBOOK)->get();
+
+        $thrillerBooks = Product::where('category_book_type_id', $THRILLER)
+            ->orderBy('products.created_at')
+            ->get();
+        $adventureBooks = Product::where('category_book_type_id', $ADVENTURE)
+            ->orderBy('products.created_at')
+            ->get();
+        $romanceBooks = Product::where('category_book_type_id', $ROMANCE)
+            ->orderBy('products.created_at')
+            ->get();
+        $kidsBooks = Product::where('category_book_type_id', $KIDS)
+            ->orderBy('products.created_at')
+            ->get();
+
+       $BestSellers = Product::orderBy('sell_count', 'desc')->get();
 
         $response = [
             'HardCover' => $HardCover,
             'SoftCover' => $SoftCover,
             'AudioBook' => $AudioBook,
 
-            'ThrillerBooks' => $ThrillerBooks,
-            'AdventureBooks' => $AdventureBooks,
-            'RomanceBooks' => $RomanceBooks,
-            'KidsBooks' => $KidsBooks
+            'ThrillerBooks' => $thrillerBooks,
+            'AdventureBooks' => $adventureBooks,
+            'RomanceBooks' => $romanceBooks,
+            'KidsBooks' => $kidsBooks,
+
+            'BestSellers'=>$BestSellers
         ];
         return response($response, 201);
     }

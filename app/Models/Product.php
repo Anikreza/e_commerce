@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+
+
     protected $fillable = [
         'title',
         'product_img',
@@ -14,7 +16,8 @@ class Product extends Model
         'products_in_stock',
         'order_number',
         'description',
-        'status'
+        'status',
+        'order_count'
     ];
 
 //    public function categoryCoverType(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

@@ -1,9 +1,10 @@
 .home-search{
-    margin-left: -12%;
-    margin-top: -1%;
+
+    margin-top: -4.2%;
     font-weight: lighter;
     letter-spacing: .6px;
     form{
+        margin-left: 40%;
         input{
             width: 29vw;
             height: 45px;
@@ -13,7 +14,7 @@
             background-color: #f5f5f5;
         }
         button{
-            margin-left: -7%;
+            display: none;
             border-style: hidden;
             color: #0f1a0d;
             background-color: inherit;
