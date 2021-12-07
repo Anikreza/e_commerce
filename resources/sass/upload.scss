@@ -5,6 +5,14 @@
     background:url('../js/assets/bg.jpg');
     background-size: cover;
     filter:sepia(20%);
+    .addedDoneMessage{
+        background-color: #dbead6;
+        margin-left: 54%;
+        color: black;
+        padding: 20px;
+        width: fit-content;
+        border-radius: 10px;
+    }
     form{
         border-radius: 20px;
         opacity:1;

@@ -88,7 +88,7 @@ const Home = () => {
                             />
                             :
                             <div className='loader-position-top'>
-                                <BeatLoader size={40} color={'rgb(150,73,73)'}/>
+                                <BeatLoader size={20} color={'rgb(150,73,73)'}/>
                             </div>
                     }
                 </div>
@@ -102,8 +102,8 @@ const Home = () => {
                                 bookData={bestSellers.slice(0, 10)}
                             />
                             :
-                            <div className='loader-position'>
-                                <BeatLoader size={40} color={'grey'}/>
+                            <div className='loader-position-middle'>
+                                <BeatLoader size={20} color={'grey'}/>
                             </div>
                     }
                 </div>

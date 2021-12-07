@@ -27,14 +27,14 @@
             padding: 10px;
             color: #ffffff;
             border-style: none;
-            background-color: #313131;
+            background-color: #40573a;
             cursor: pointer;
             font-size: 20px;
             width: 100%;
             font-family: "Agency FB";
             &:hover{
-                color: #000000;
-                background-color: #ffffff;
+                color: #ffffff;
+                background-color: #000000;
             }
         }
         .stockButton{
@@ -68,23 +68,30 @@
     padding: 2%;
     margin-top: -2%;
     border-radius: 15px;
-    text-align: center;
+    text-align: justify;
     //box-shadow:  3px 2px 5px #202020;
     border-right-style: inset;
     border-width: 1px;
     border-color: #b6b6b6;
     .title-d{
-        font-size: 26px;
+        font-size: 25px;
         text-transform: uppercase;
         color: rgb(6, 44, 22);
+        text-align: right;
     }
     .price-d{
         font-size: 20px;
         color: rgb(169, 52, 52);
+        text-align: right;
+    }
+    .author-d{
+        font-size: 21px;
+        color: rgb(16, 14, 14);
+        text-align: right;
     }
     .description-d{
-        font-family: sans-serif;
-        letter-spacing: 1px;
+        font-family:sans-serif;
+
         font-size: 17px;
         color: rgb(14, 23, 14);
     }

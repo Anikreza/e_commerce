@@ -78,17 +78,17 @@ const PlaceOrder = ({sum, userID}) => {
                     name='name'
                     onChange={(e) => setName(e.target.value)}
                     type='text'
-                    placeholder='Name'/>
+                    placeholder='* Name'/>
                 <input name='mobile'
                        type='number'
                        maxLength='11'
                        onChange={(e) => setMobile(e.target.value)}
-                       placeholder='Mobile'/>
+                       placeholder='* Mobile'/>
                 <input
                     name='address'
                     type='text'
                     onChange={(e) => setAddress(e.target.value)}
-                    placeholder='Address'/>
+                    placeholder='* Address'/>
                 <button
                     disabled={name && mobile && address ? disabled : !disabled}
                     className={name && mobile && address ? 'button-glow' : 'button-dim'}

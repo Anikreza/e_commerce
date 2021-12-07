@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 
 const CartCard = ({image, title, author, quantity, price, sum, stock, productID}) => {
 
-    const [{ user,basket }, dispatch] = useStateValue();
+    const [{user, basket}, dispatch] = useStateValue();
     const url = process.env.MIX_URL;
     const api = process.env.MIX_API;
     const [updatedQuantity, setUpdatedQuantity] = useState(quantity)
@@ -20,7 +20,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     async function update() {
         dispatch({
             type: "INCREMENT_QUANTITY",
-            id:productID ,
+            id: productID,
             value: updatedQuantity
         });
     }
@@ -43,8 +43,8 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     async function Delete() {
         dispatch({
             type: "REMOVE_FROM_BASKET",
-            quantity:quantity,
-            id:productID
+            quantity: quantity,
+            id: productID
         });
     }
 
@@ -52,12 +52,14 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
         <div className='cart'>
             <div className='cartProducts'>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <img src={`${url}/` + image} alt=''/>
+                    <Link to={`/book/${productID}/${title}`}>
+                        <img src={`${url}/` + image} alt=''/>
+                    </Link>
                 </div>
                 <div className='bookInfo'>
                     <p>{title}</p>
                     <h4>{author}</h4>
-                    <h5><RiDeleteBin6Line onClick={Delete} style={{cursor:'pointer'}} size='20px'/></h5>
+                    <h5><RiDeleteBin6Line onClick={Delete} style={{cursor: 'pointer'}} size='20px'/></h5>
                 </div>
                 <div className='PricingInfo'>
                     <div style={{display: 'flex'}}>
@@ -71,7 +73,6 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
                 </div>
             </div>
             <hr/>
-
         </div>
     )
 }

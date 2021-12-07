@@ -8,7 +8,6 @@ import UploadProduct from './base/uploadProduct'
 import Home from './base/home';
 import '../../sass/app.scss';
 import SingleProductCard from "./base/SingleProductCard";
-import DisplayProducts from "./base/DisplayProducts";
 import DisplayCart from "./base/DisplayCart";
 import ShowOrders from "./base/ShowOrders";
 import AdminOrderPage from "./base/AdminOrderPage";

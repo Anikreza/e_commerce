@@ -122,16 +122,12 @@ const SingleProductCard = () => {
                     <button onClick={() => addToBasket()}>Add to Cart</button>
                 </div>
                 <div className='product-info'>
-                    <p>{basket.length}</p>
-                    <p>{basket.id}</p>
-                    <p>{basket.title}</p>
                     <p className='title-d'>{data.title}</p>
                     <p className='price-d'>${data.price}</p>
+                    <hr/>
                     <p className='description-d'>{data.description}</p>
                 </div>
             </div>
-
-
         </div>
     )
 }

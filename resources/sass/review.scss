@@ -5,6 +5,22 @@
     .hide {
         display: none;
     }
+    h5{
+        font-family: "Agency FB";
+        font-size: 25px;
+        margin-left: 17%;
+        color: #1f1f1f;
+        width: 600px;
+        span{
+            color: #974034;
+        }
+    }
+    hr{
+        height: 1px;
+        color: #e5e5e5;
+        width: 600px;
+        margin-left: 17%;
+    }
 
     h4 {
         font-size: 25px;
@@ -27,21 +43,31 @@
         background-color: inherit;
     }
 
-    button {
+    .button-glow {
+        cursor: pointer;
         padding: 10px 20px 10px 20px;
         background-color: #51674a;
         color: white;
         margin-top: 1%;
         border-radius: 5px;
     }
+    .button-dim{
+        cursor: none;
+        padding: 10px 20px 10px 20px;
+        background-color: #cbcbcb;
+        opacity: .7;
+        color: #000000;
+        margin-top: 1%;
+        border-radius: 5px;
+    }
 
     .auto_height {
+        white-space: pre-line;
         margin-left: 0%;
         width: 40%;
         padding: 10px;
         background-color: rgb(255, 255, 255);
         border-radius: 10px;
-        white-space: pre-line;
         color: #000000;
 
         &:focus {
@@ -50,8 +76,35 @@
     }
 
     .commentSection {
-        padding: 10%;
-        max-height: 50vh;
+        font-family: "Agency FB", cursive;
+        border-style: hidden;
+        border-width: thin;
+        border-color: #bdbdbd;
+        padding: 1% 4% 0% 10%;
+        width: 80%;
+        max-height: 40vh;
         overflow-y: scroll;
+        scrollbar-width: thin;
+        scrollbar-color: #505050;
+        text-align: left;
+        .reviewer{
+            color: #042c04;
+            font-size: 25px;
+            span{
+                color: black;
+                font-size: 12px;
+                margin-left: 29px;
+            }
+        }
+        .review{
+            margin-top: 1%;
+            font-size: 19px;
+            color: #311616;
+            text-align: left;
+            border-left-style: outset;
+            border-width: 1px;
+            border-color: #9f9f9f;
+            white-space: pre-line;
+        }
     }
 }

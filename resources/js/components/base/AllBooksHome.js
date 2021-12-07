@@ -56,7 +56,7 @@ const AllBooksHome = () => {
                     </div>
                     :
                     <div className='loader-position-middle'>
-                        <BeatLoader size={40} color={'rgb(71,94,66)'}/>
+                        <BeatLoader size={20} color={'rgb(71,94,66)'}/>
                     </div>
             }
         </div>
