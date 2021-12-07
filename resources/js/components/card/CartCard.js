@@ -35,7 +35,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
     }
 
     function Decrease() {
-        if (stock > 0 && updatedQuantity >= 1) {
+        if (stock > 0 && updatedQuantity > 1) {
             setUpdatedQuantity(updatedQuantity - 1)
         }
     }

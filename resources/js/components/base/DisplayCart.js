@@ -83,6 +83,23 @@ const DisplayCart = () => {
                 <br/>
                 <br/>
                 <br/>
+                <div>
+                    {
+                        data.map(Data => (
+                            <CartCard
+                                key={Data.id}
+                                image={Data.image}
+                                title={Data.title}
+                                author={Data.author}
+                                price={Data.price}
+                                quantity={Data.quantity}
+                                stock={data.products_in_stock}
+                                productID={Data.id}
+                                sum={sum}
+                            />
+                        ))
+                    }
+                </div>
             </div>
         </div>
     )

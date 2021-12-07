@@ -53,7 +53,7 @@ const Review = ({productID}) => {
             </div>
             <div className='commentSection'>
                 {
-
+<h2>hru</h2>
                 }
             </div>
         </div>
