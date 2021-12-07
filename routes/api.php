@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\BasketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\ProductOrderController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +26,8 @@ Route::post('/updateUser/{user_id}', [UserController::class, 'update']);
 Route::get('/addCategoryType', [ProductController::class, 'index']);
 Route::post('/store',[ProductController::class, 'store']);
 Route::get('/products/byCategory',[ProductController::class, 'showProductsByCategory']);
-Route::get('products/list',[ProductController::class, 'list']);
-Route::get('products/search/{key}',[ProductController::class, 'search']);
+Route::get('/products/list',[ProductController::class, 'list']);
+Route::get('/products/search/{key}',[ProductController::class, 'search']);
 Route::get('/products/{id}',[ProductController::class, 'show']);
 Route::post('/products/updateStatus',[ProductController::class, 'updateStatus']);
 Route::post('/products/updateProductInfo',[ProductController::class, 'updateProductInfo']);
@@ -43,7 +42,8 @@ Route::delete('/cart/delete',[CartController::class, 'destroy']);
 Route::get('/admin/orderInfo',[CartController::class, 'orderInfoForAdmin']);
 Route::get('/cart/showStatus/{user_id}',[CartController::class, 'showStatus']);
 
-
+Route::get('/review/{productID}', [ReviewController::class, 'get']);
+Route::post('/review/store',[ReviewController::class, 'store']);
 
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
