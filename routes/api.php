@@ -44,6 +44,7 @@ Route::get('/cart/showStatus/{user_id}',[CartController::class, 'showStatus']);
 
 Route::get('/review/{productID}', [ReviewController::class, 'get']);
 Route::post('/review/store',[ReviewController::class, 'store']);
+Route::post('/review/likes/{likeState}',[ReviewController::class, 'likeHandler']);
 
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
