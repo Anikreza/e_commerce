@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import '../../../sass/upload.scss'
 import TextareaAutosize from 'react-textarea-autosize';
-import {BsImage} from 'react-icons/bs';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
@@ -51,7 +50,7 @@ const Add = () => {
         Data.append('bookType', bookType);
         Data.append('coverType', coverType);
         Data.append('description', description);
-       // Data.append('newBookType', newBookType);
+        // Data.append('newBookType', newBookType);
         Data.append('status', status);
 
             await axios.post(`${api}/store`, Data
