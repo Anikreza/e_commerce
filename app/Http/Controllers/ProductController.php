@@ -146,8 +146,8 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->sell_count = 0;
             $product->description = $request->description;
-        $product->category_cover_type_id = $request->coverType;
-        $product->save();
+            $product->category_cover_type_id = $request->coverType;
+            $product->save();
 
         $response = [
             'product' => $product,

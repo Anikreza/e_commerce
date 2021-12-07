@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
@@ -12,9 +15,21 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function get($productID)
     {
-        //
+        $reviews = DB::table('reviews')
+            ->select(
+                DB::raw("DATE_FORMAT(reviews.created_at,'%Y-%m-%d %H:%i:00') as commentTime"),
+                'reviews.comment','reviews.rating','reviews.user_id','reviews.product_id',
+                'users.name as name','products.id')
+            ->join('users', 'users.id', '=', 'reviews.user_id')
+            ->join('products', 'products.id', '=', 'reviews.product_id')
+            ->where('reviews.product_id',$productID)
+            ->get();
+        $response = [
+            'reviews'=>$reviews
+        ];
+        return response($response, 201);
     }
 
     /**
@@ -35,7 +50,17 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $review = new Review();
+        $review->comment = $request->comment;
+        $review->rating = $request->rating;
+        $review->user_id = $request->userID;
+        $review->product_id = $request->productID;
+        $review->save();
+
+        $response = [
+            'review' => $review
+        ];
+        return response($response, 201);
     }
 
     /**
