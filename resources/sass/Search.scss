@@ -4,7 +4,8 @@
     font-weight: lighter;
     letter-spacing: .6px;
     form{
-        margin-left: 40%;
+        position: fixed;
+        margin-left: 12.8%;
         input{
             width: 29vw;
             height: 45px;
@@ -25,10 +26,10 @@
         background-color: #ffffff;
         min-width: 40vw;
         max-width: 40vw;
-        padding: 2vw;
-        margin-left: -5vw;
+        padding: 6vw 2vw 2vw 2vw;
         min-height: fit-content;
-        max-height: 50vh;
+        max-height: 8vh;
+        margin-left: 10%;
     }
     .hide{
         display: none;

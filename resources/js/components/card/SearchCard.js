@@ -1,36 +1,50 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {BsSearch} from 'react-icons/bs';
 import '../../../sass/Search.scss'
 import axios from "axios";
 import {Link, NavLink} from 'react-router-dom'
+import {useNavigate} from "react-router";
 
 const comp = () => {
 
+    const resultTabRef = useRef();
     const [data, setData] = useState([]);
+    const [open, setOpen] = useState(false);
     const api = process.env.MIX_API;
     const url = process.env.MIX_URL;
+    const navigate = useNavigate()
 
     async function search(searchKey) {
         let key = '`'
-        if (searchKey)
-        {
+        if (searchKey) {
             key = searchKey
-        }
-        else
-        {
+        } else {
             key = '`'
         }
-        if (key !== null && key.match(/^ *$/) === null)
-        {
+        if (key !== null && key.match(/^ *$/) === null) {
             await axios.get(`${api}/products/search/` + key)
                 .then(async (res) => {
                     setData(res.data.result)
+                    setOpen(true)
                 })
                 .catch((error) => {
                     alert(error)
                 })
         }
 
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', (e) => {
+            if (!resultTabRef.current.contains(e.target)) {
+                setOpen(false)
+            }
+        })
+    }, []);
+
+    function setLink(title, id) {
+        navigate(`/book/${id}/${title}`)
+        setOpen(false)
     }
 
     return (
@@ -43,11 +57,14 @@ const comp = () => {
                 />
                 <button><BsSearch size='22px'/></button>
             </form>
-            <div>
+            <div ref={resultTabRef}>
                 {
                     data.map((Data) => (
-                        <div key={Data.id} className={(Data?.length !== 0) ? 'resultTab' : 'hide'}>
-                            <Link to={`/book/${Data.id}/${Data.title}`}>
+                        <div
+                            key={Data.id}
+                            className={(Data?.length !== 0 && open) ? 'resultTab' : 'hide'}
+                            onClick={() => setLink(Data.title, Data.id)}
+                        >
                             <div className='SearchShow'>
                                 <img src={`${url}/` + Data.product_img} alt=''/>
                                 <div className='flexThis-column'>
@@ -56,7 +73,7 @@ const comp = () => {
                                 </div>
                                 <div className='rightSideInfo'>
                                     {
-                                        Data.products_in_stock > 0?
+                                        Data.products_in_stock > 0 ?
                                             <h5> Product In Stock</h5>
                                             :
                                             <h6> Out Of Stock</h6>
@@ -64,7 +81,6 @@ const comp = () => {
                                 </div>
                                 <h3> ${Data.price}</h3>
                             </div>
-                            </Link>
                             <hr/>
                         </div>
                     ))

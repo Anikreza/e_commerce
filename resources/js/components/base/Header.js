@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect, useCallback, useRef} from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import {useLocation} from "react-router-dom";
 import '../../../sass/header.scss'
@@ -21,6 +21,7 @@ const Header = () => {
     const url = location.pathname
     const navigate = useNavigate()
     const [{user, cart, basket, userDetail}, dispatch] = useStateValue();
+    const modalRef = useRef();
 
 
     async function logout() {
@@ -33,11 +34,24 @@ const Header = () => {
         //window.location.replace('/home')
     }
 
+    useEffect(() => {
+        document.addEventListener('mousedown', (e) => {
+            if (!modalRef.current.contains(e.target)) {
+                setModal(false)
+            }
+        })
+    }, []);
+
     return (
 
         <div>
             <div className='navbar'>
-                <CartBox/>
+                {
+                    (User?.user.email !== admin) ?
+                        <CartBox/>
+                        :
+                        ''
+                }
                 {/*{*/}
                 {/*    (user?.user)?*/}
                 {/*        <div>*/}
@@ -78,7 +92,7 @@ const Header = () => {
                                             <img className='logo' src={a} alt=''/>
                                         </NavLink>
                                     </li>
-                                    <li >
+                                    <li>
                                         <NavLink to='/allBooks'>
                                             BOOKS
                                         </NavLink>
@@ -91,7 +105,8 @@ const Header = () => {
             </div>
 
             {(User?.user?.email) ?
-                <div className='user-name-nav' style={{cursor: 'pointer'}} onClick={() => setModal(!modal)}>
+                <div ref={modalRef} className='user-name-nav' style={{cursor: 'pointer'}}
+                     onClick={() => setModal(!modal)}>
                     <p>
                         {User?.user?.name}
                         <span><IoIosArrowDropdown style={{cursor: 'pointer'}} color='black'/> </span>

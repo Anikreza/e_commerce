@@ -23,21 +23,20 @@ const PlaceOrder = ({sum, userID}) => {
         e.preventDefault()
         if (User?.user.email === admin) {
             setError('You Cant do that')
-        } else if (name && mobile && address && district && cart.length>0) {
+        } else if (name && mobile && address && district && cart.length > 0) {
             dispatch({
                 type: "SET_USER_DETAIL",
                 item: {
-                    address: address+district,
+                    address: address + district,
                     mobile: mobile,
                     name: name,
                 },
             });
             navigate('/orders')
         } else {
-            if(cart.length===0){
+            if (cart.length === 0) {
                 setError('You Have Added Nothing Yet')
-            }
-            else{
+            } else {
                 setError('Please Choose Your City')
             }
         }
@@ -46,7 +45,7 @@ const PlaceOrder = ({sum, userID}) => {
     useEffect(() => {
         if (district !== 'Dhaka') {
             setDeliveryFee(10)
-        }else {
+        } else {
             setDeliveryFee(5)
         }
         setError('')
@@ -62,7 +61,7 @@ const PlaceOrder = ({sum, userID}) => {
                     ''
             }
             <select onChange={(e) => setDistrict(e.target.value)}>
-                <option >Choose Your City</option>
+                <option>Choose Your City</option>
                 <option value='Dhaka'> Dhaka</option>
                 <option value='Outside Dhaka'>Outside Dhaka</option>
             </select>
@@ -79,17 +78,17 @@ const PlaceOrder = ({sum, userID}) => {
                     name='name'
                     onChange={(e) => setName(e.target.value)}
                     type='text'
-                    placeholder='Name'/>
+                    placeholder='* Name'/>
                 <input name='mobile'
                        type='number'
                        maxLength='11'
                        onChange={(e) => setMobile(e.target.value)}
-                       placeholder='Mobile'/>
+                       placeholder='* Mobile'/>
                 <input
                     name='address'
                     type='text'
                     onChange={(e) => setAddress(e.target.value)}
-                    placeholder='Address'/>
+                    placeholder='* Address'/>
                 <button
                     disabled={name && mobile && address ? disabled : !disabled}
                     className={name && mobile && address ? 'button-glow' : 'button-dim'}

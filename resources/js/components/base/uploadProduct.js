@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import '../../../sass/upload.scss'
 import TextareaAutosize from 'react-textarea-autosize';
-import {BsImage} from 'react-icons/bs';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
@@ -12,7 +11,7 @@ const Add = () => {
     const [price, setPrice] = useState('');
     const [status, setStatus] = useState('unPublished');
     const [bookType, setBookType] = useState('');
-   // const [newBookType, setNewBookType] = useState('');
+    // const [newBookType, setNewBookType] = useState('');
     const [coverType, setCoverType] = useState('');
     const [categoryType, setCategoryType] = useState([]);
     const [categoryCover, setCategoryCover] = useState([]);
@@ -20,8 +19,8 @@ const Add = () => {
     const [file, setFile] = useState('');
     const [res, setResponse] = useState('');
     const [errors, setErrors] = useState([]);
-  //  const [newType, setNewType] = useState(false);
-   // const [modal, setModal] = useState(true);
+    // const [newType, setNewType] = useState(false);
+    // const [modal, setModal] = useState(true);
     const api = process.env.MIX_API;
     const navigate=useNavigate()
 
@@ -51,14 +50,22 @@ const Add = () => {
         Data.append('bookType', bookType);
         Data.append('coverType', coverType);
         Data.append('description', description);
-       // Data.append('newBookType', newBookType);
+        // Data.append('newBookType', newBookType);
         Data.append('status', status);
 
             await axios.post(`${api}/store`, Data
             ).then((response) => {
                 if(response.status===201){
                     setResponse('Product Added Successfully!')
-                    navigate('/edit')
+                    //navigate('/edit')
+                    setName('')
+                    setAuthor('')
+                    setStock('')
+                    setPrice('')
+                    setBookType('')
+                    setCoverType('')
+                    setDescription('')
+                    setFile('')
                 }
             }).catch((e) => {
                 setErrors(e.response.data.errors)
@@ -80,6 +87,7 @@ const Add = () => {
                         type='text'
                         placeholder='* Title Of The Book'
                         name='name'
+                        value={name}
                         onChange={(e) => setName(e.target.value)}/>
                     {
                         (errors?.name)?
@@ -91,6 +99,7 @@ const Add = () => {
                         type='text'
                         placeholder='* Author Of The Book'
                         name='author'
+                        value={author}
                         onChange={(e) => setAuthor(e.target.value)}/>
                     {
                         (errors?.author)?
@@ -153,6 +162,7 @@ const Add = () => {
                         type='text'
                         placeholder='* Reserved Stock Of The Book'
                         name='stock'
+                        value={stock}
                         onChange={(e) => setStock(e.target.value)}/>
                     {
                         (errors?.stock)?
@@ -176,6 +186,7 @@ const Add = () => {
                         type='text'
                         placeholder='* Price'
                         name='price'
+                        value={price}
                         onChange={(e) => setPrice(e.target.value)}/>
                     {
                         (errors?.price)?
@@ -186,6 +197,7 @@ const Add = () => {
                     <TextareaAutosize
                         className='auto_height'
                         name='description'
+                        value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="* Product Description"
                         minRows={3}
@@ -204,7 +216,7 @@ const Add = () => {
                 </form>
                 {
                     (res)?
-                        <p>{res}</p>
+                        <p className='addedDoneMessage'>{res}</p>
                         :
                         ''
                 }

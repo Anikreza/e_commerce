@@ -20,14 +20,15 @@ class ReviewController extends Controller
         $reviews = DB::table('reviews')
             ->select(
                 DB::raw("DATE_FORMAT(reviews.created_at,'%Y-%m-%d %H:%i:00') as commentTime"),
-                'reviews.comment','reviews.rating','reviews.user_id','reviews.product_id',
-                'users.name as name','products.id')
+                'reviews.comment', 'reviews.rating', 'reviews.user_id', 'reviews.product_id',
+                'users.name as name', 'products.title')
             ->join('users', 'users.id', '=', 'reviews.user_id')
             ->join('products', 'products.id', '=', 'reviews.product_id')
-            ->where('reviews.product_id',$productID)
+            ->where('reviews.product_id', $productID)
+            ->orderBy('reviews.id', 'DESC')
             ->get();
         $response = [
-            'reviews'=>$reviews
+            'reviews' => $reviews
         ];
         return response($response, 201);
     }
@@ -45,13 +46,20 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        $validator = $request->validate([
+            'comment' => 'required|string|max:1000'
+        ],
+            [
+                'comment.required' => ':attribute can not be more than 1000 words'
+            ]);
+
         $review = new Review();
-        $review->comment = $request->comment;
+        $review->comment = $request->review;
         $review->rating = $request->rating;
         $review->user_id = $request->userID;
         $review->product_id = $request->productID;
@@ -66,7 +74,7 @@ class ReviewController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Review  $review
+     * @param \App\Models\Review $review
      * @return \Illuminate\Http\Response
      */
     public function show(Review $review)
@@ -77,7 +85,7 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Review  $review
+     * @param \App\Models\Review $review
      * @return \Illuminate\Http\Response
      */
     public function edit(Review $review)
@@ -88,8 +96,8 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Review  $review
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Review $review
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Review $review)
@@ -100,7 +108,7 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Review  $review
+     * @param \App\Models\Review $review
      * @return \Illuminate\Http\Response
      */
     public function destroy(Review $review)

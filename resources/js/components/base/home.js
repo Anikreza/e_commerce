@@ -6,12 +6,12 @@ import NavBar from "../card/NavBar";
 import axios from "axios";
 import {useStateValue} from "../../states/StateProvider";
 import ImageGrid from "../../Views/ImageGrid";
-
+import {BounceLoader, BeatLoader, BarlLoader} from 'react-spinners'
 
 const Home = () => {
 
     let User = JSON.parse(window.localStorage.getItem('user'));
-    const [{user,basket,cart}, dispatch] = useStateValue();
+    const [{user, basket, cart}, dispatch] = useStateValue();
     const [height, setHeight] = useState(false);
     const api = process.env.MIX_API;
     const [adventureBooks, setAdventureBooks] = useState([])
@@ -19,7 +19,7 @@ const Home = () => {
     const [romanceBooks, setRomanceBooks] = useState([])
     const [kidsBooks, setKidsBooks] = useState([])
     const [bestSellers, setBestSellers] = useState([])
-
+    const [loading, setLoading] = useState(true)
 
 
     const getBooks = useCallback(
@@ -31,18 +31,19 @@ const Home = () => {
                     setRomanceBooks(res.data.RomanceBooks)
                     setKidsBooks(res.data.KidsBooks)
                     setBestSellers(res.data.BestSellers)
-                    console.log('new data',res.data)
+                    console.log('new data', res.data)
+                    setLoading(false)
                 })
                 .catch((error) => {
                     console.log(error);
                 })
             dispatch({
-                type:"SET_USER",
+                type: "SET_USER",
                 item: {
                     name: User.user.name,
                     email: User.user.email,
-                    id:User.user.id,
-                    token:User.token,
+                    id: User.user.id,
+                    token: User.token,
                 },
             })
         },
@@ -53,8 +54,8 @@ const Home = () => {
     }, [getBooks]);
 
     useEffect(() => {
-       console.log('basket and cart:',basket,cart)
-    }, [cart,basket]);
+        console.log('basket and cart:', basket, cart)
+    }, [cart, basket]);
 
 
     const ScrollHeight = () => {
@@ -80,17 +81,31 @@ const Home = () => {
                     Kids={KidsRef}
                 />
                 <div className='bg'>
-                    <ImageGrid
-                        bookData={bestSellers.slice(0,5)}
-                    />
+                    {
+                        (!loading) ?
+                            <ImageGrid
+                                bookData={bestSellers.slice(0, 5)}
+                            />
+                            :
+                            <div className='loader-position-top'>
+                                <BeatLoader size={20} color={'rgb(150,73,73)'}/>
+                            </div>
+                    }
                 </div>
                 <div className='home-bg'>
                 </div>
                 <div>
-                    <CategoryCard
-                        title={'Top 10 Best Selling Books Of All Time...'}
-                        bookData={bestSellers.slice(0,10)}
-                    />
+                    {
+                        (!loading) ?
+                            <CategoryCard
+                                title={'Top 10 Best Selling Books Of All Time...'}
+                                bookData={bestSellers.slice(0, 10)}
+                            />
+                            :
+                            <div className='loader-position-middle'>
+                                <BeatLoader size={20} color={'grey'}/>
+                            </div>
+                    }
                 </div>
                 <div ref={AdventureRef}>
                     <CategoryCard
