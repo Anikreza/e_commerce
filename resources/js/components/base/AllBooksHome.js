@@ -14,8 +14,8 @@ const AllBooksHome = () => {
         async () => {
             await axios.get(`${api}/products/list`)
                 .then(async (response) => {
-                    setData(response.data.allBooks);
-                    console.log(response.data.allBooks)
+                    setData(response.data.allProductsWIthLike);
+                    console.log(response.data.allProductsWIthLike)
                     setLoading(false)
                 })
                 .catch((error) => {

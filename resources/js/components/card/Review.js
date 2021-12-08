@@ -6,7 +6,7 @@ import axios from "axios";
 import ReviewData from "../../helpers/ReviewData";
 import {useStateValue} from "../../states/StateProvider";
 
-const Review = ({productID}) => {
+const Review = ({productID,likes}) => {
 
     const [{likeState}, dispatch] = useStateValue();
     const [review, setReview] = useState('')
@@ -109,8 +109,9 @@ const Review = ({productID}) => {
                             name={review.name}
                             commentTime={review.commentTime}
                             comment={review.comment}
+                            productID={productID}
                             reviewID={review.id}
-                            like={review.like}
+                            like={likes}
                             dislike={review.dislike}
                         />
                     ))

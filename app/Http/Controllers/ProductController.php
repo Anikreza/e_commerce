@@ -7,6 +7,7 @@ use App\Models\CategoryCoverType;
 use App\Models\CategoryBookType;
 use App\Models\Like;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -41,11 +42,9 @@ class ProductController extends Controller
 
     public function list()
     {
-        $listProducts = Product::latest()->get();
-        $allProducts = Product::with('likes')->orderBy('updated_at', 'desc')->get();
+        $allProducts = Product::orderBy('updated_at', 'desc')->get();
         $response = [
-            'allProducts'=>$allProducts,
-            'allBooks' => $listProducts
+            'allProductsWIthLike'=>$allProducts,
         ];
         return response($response, 201);
     }
@@ -165,8 +164,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $showProduct = Product::with('categoryBookType', 'categoryCoverType')->find($id);
-
+        $showProduct = Product::with('likes')->find($id);
         $response = [
             'showProduct' => $showProduct
         ];
@@ -256,12 +254,18 @@ class ProductController extends Controller
      */
     public function saveLike(Request $request)
     {
-        $like =  new Like();
-        $like->user_id = User::id();
-        $like->user_id = $request->id;
-        $like->save();
+        $likeCheck = Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->first();
+        if ($likeCheck){
+            Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->delete();
+        }
+        else{
+            $like =  new Like();
+            $like->user_id = $request->userID;
+            $like->product_id = $request->productID;
+            $like->review_id = $request->reviewID;
+            $like->save();
+        }
     }
-
     /**
      * Remove the specified resource from storage.
      *
