@@ -10,7 +10,9 @@ const ReviewData = ({name, commentTime, comment, reviewID, like,dislike}) => {
     let userID = User?.user.id
     //const [likeState, setLikeState] = useState(0)
     const api = process.env.MIX_API
-    const [{likeState,DislikeState}, dispatch] = useStateValue();
+    const [{likeState}, dispatch] = useStateValue();
+    const [liked, setLiked] = useState(false)
+    const [disLiked, setDisLiked] = useState(false)
 
 
     async function likesHandler() {
@@ -22,36 +24,9 @@ const ReviewData = ({name, commentTime, comment, reviewID, like,dislike}) => {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
-        }).then(response => console.log(response))
+        })
     }
 
-    async function dislikesHandler() {
-        let Data = {userID, reviewID, DislikeState}
-        await fetch(`${api}/review/likes`, {
-            method: 'POST',
-            body: JSON.stringify(Data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(response => console.log(response))
-    }
-
-    async function SetLikeState() {
-        dispatch({
-            type: "SET_LIKE",
-            item:0
-        });
-        likesHandler().then(r => r)
-    }
-
-    async function SetDisLikeState() {
-        dispatch({
-            type: "SET_DISLIKE",
-            item:1
-        });
-        dislikesHandler().then(r => r)
-    }
 
     return (
         <div>
@@ -63,16 +38,22 @@ const ReviewData = ({name, commentTime, comment, reviewID, like,dislike}) => {
                 <AiFillLike
                     color='darkgreen'
                     size='24px'
-                    style={{position: 'relative', top: '2px', cursor: 'pointer', marginRight:'10px'}}
-                    onClick={SetLikeState}
+                    style={{position: 'relative', top: '2px', cursor: 'pointer', marginRight: '10px'}}
+                   // onClick={SetLikeState}
                 />
-                {like}  People Upvoated
+                {like} People Upvoated
                 <span>
                     <AiFillDislike
                         color=' #50271e'
                         size='24px'
-                        style={{position: 'relative', top: '5px', cursor: 'pointer', marginRight:'5px',marginLeft:'10px'}}
-                        onClick={SetDisLikeState}
+                        style={{
+                            position: 'relative',
+                            top: '5px',
+                            cursor: 'pointer',
+                            marginRight: '5px',
+                            marginLeft: '10px'
+                        }}
+                       // onClick={SetDIsLikeState}
                     />
                 </span>
                 {dislike} people Devoted

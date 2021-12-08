@@ -8,7 +8,7 @@ import {useStateValue} from "../../states/StateProvider";
 
 const Review = ({productID}) => {
 
-    const [{likeState,DislikeState}, dispatch] = useStateValue();
+    const [{likeState}, dispatch] = useStateValue();
     const [review, setReview] = useState('')
     const [data, setData] = useState([])
     const [title, setTitle] = useState('')
@@ -46,7 +46,6 @@ const Review = ({productID}) => {
                 .then(async (res) => {
                     setData(res.data.reviews);
                     setTitle(res.data.reviews[0]);
-                    console.log('reviews',res.data.reviews)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -57,7 +56,7 @@ const Review = ({productID}) => {
 
     useEffect(async () => {
         gerReviews().then(r => r)
-    }, [gerReviews,likeState,DislikeState]);
+    }, [gerReviews]);
 
     return (
         <div className='review'>
