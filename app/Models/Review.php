@@ -14,7 +14,9 @@ class Review extends Model
         'like_count',
         'liker',
         'user_id',
-        'product_id'
+        'product_id',
+        'like_count',
+        'liker'
     ];
 
     public function user()

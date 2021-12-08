@@ -3,9 +3,12 @@ import '../../../sass/review.scss'
 import TextareaAutosize from "react-textarea-autosize";
 import {MdReviews} from 'react-icons/md';
 import axios from "axios";
+import ReviewData from "../../helpers/ReviewData";
+import {useStateValue} from "../../states/StateProvider";
 
 const Review = ({productID}) => {
 
+    const [{likeState,DislikeState}, dispatch] = useStateValue();
     const [review, setReview] = useState('')
     const [data, setData] = useState([])
     const [title, setTitle] = useState('')
@@ -43,6 +46,7 @@ const Review = ({productID}) => {
                 .then(async (res) => {
                     setData(res.data.reviews);
                     setTitle(res.data.reviews[0]);
+                    console.log('reviews',res.data.reviews)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -53,7 +57,7 @@ const Review = ({productID}) => {
 
     useEffect(async () => {
         gerReviews().then(r => r)
-    }, [gerReviews]);
+    }, [gerReviews,likeState,DislikeState]);
 
     return (
         <div className='review'>
@@ -98,17 +102,18 @@ const Review = ({productID}) => {
                     :
                     ''
             }
-
             <div className='commentSection'>
                 {
                     data?.map(review => (
-                        <div>
-                            <p className='reviewer'>{review.name}
-                                <span>{review.commentTime}</span>
-                            </p>
-                            <p className='review'>{review.comment}</p>
-                        </div>
-
+                        <ReviewData
+                            key={review.id}
+                            name={review.name}
+                            commentTime={review.commentTime}
+                            comment={review.comment}
+                            reviewID={review.id}
+                            like={review.like}
+                            dislike={review.dislike}
+                        />
                     ))
                 }
             </div>
