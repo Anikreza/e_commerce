@@ -20,11 +20,11 @@ class ReviewController extends Controller
         $reviews = DB::table('reviews')
             ->select(
                 DB::raw("DATE_FORMAT(reviews.created_at,'%Y-%m-%d %H:%i:00') as commentTime"),
-                'reviews.comment', 'reviews.rating', 'reviews.user_id', 'reviews.product_id','reviews.like_count as like',
+                'reviews.comment', 'reviews.rating', 'reviews.id', 'reviews.user_id', 'reviews.product_id', 'reviews.like_count as like',
+                'reviews.dislike_count as dislike',
                 'users.name as name', 'products.title')
             ->join('users', 'users.id', '=', 'reviews.user_id')
             ->join('products', 'products.id', '=', 'reviews.product_id')
-//            ->where('reviews.product_id', $productID)
             ->orderBy('reviews.id', 'DESC')
             ->get();
         $response = [
@@ -32,36 +32,21 @@ class ReviewController extends Controller
         ];
         return response($response, 201);
     }
-    public function likeHandler(Request $request, $likeState)
+
+    public function likeHandler(Request $request)
     {
-        if($likeState == 0){
+        if ($request->likeState == 1) {
             $likeHandler = DB::table('reviews')
                 ->where('reviews.id', $request->reviewID)
-                ->where('reviews.user_id', $request->UserID)
-                ->increment('reviews.like_count',1);
-//            DB::table('reviews')
-//            ->where('reviews.id', $request->reviewID)
-//            ->where('reviews.user_id', $request->UserID)
-//            ->increment('reviews.like_count',1);
+                ->increment('reviews.like_count', 1);
+
         }
-        elseif($likeState == 1){
-        $likeHandler = DB::table('reviews')
-            ->where('reviews.id', $request->reviewID)
-            ->where('reviews.user_id', $request->UserID)
-            ->decrement('reviews.like_count',1);
-//            DB::table('reviews')
-//            ->where('reviews.id', $request->reviewID)
-//            ->where('reviews.user_id', $request->UserID)
-//            ->decrement('reviews.like_count',1);
+        if ($request->DislikeState == 2) {
+            $likeHandler = DB::table('reviews')
+                ->where('reviews.id', $request->reviewID)
+                ->increment('reviews.dislike_count', 1);
         }
-        else{
-//          $error_massage =  'Some Error Found';
-        }
-        $response = [
-            'likeHandler' => $likeHandler,
-//            'error_massage' => $error_massage
-        ];
-        return response($response, 201);
+
     }
 
 

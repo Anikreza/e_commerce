@@ -3,6 +3,8 @@ export const initialState = {
     cart:[],
     user: {},
     userDetail: {},
+    likeState:1,
+    DislikeState:2
 };
 
 // Selector
@@ -43,6 +45,7 @@ const reducer = (state, action) => {
             );
             return {
                 ...state,
+
                 basket: newBasket
             }
         case "SET_USER":
@@ -54,6 +57,16 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 userDetail: action.item
+            }
+        case "SET_LIKE":
+            return {
+                ...state,
+                likeState: action.item
+            }
+            case "SET_DISLIKE":
+            return {
+                ...state,
+                DislikeState: action.item
             }
 
         default:

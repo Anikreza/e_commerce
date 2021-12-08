@@ -19,7 +19,6 @@ class CreateReviewsTable extends Migration
             $table->string('rating')->nullable();
             $table->bigInteger('like_count')->nullable();
             $table->string('liker')->nullable();
-
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('product_id');
