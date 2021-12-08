@@ -33,23 +33,6 @@ class ReviewController extends Controller
         return response($response, 201);
     }
 
-    public function likeHandler(Request $request)
-    {
-        if ($request->likeState == 1) {
-            $likeHandler = DB::table('reviews')
-                ->where('reviews.id', $request->reviewID)
-                ->increment('reviews.like_count', 1);
-
-        }
-        if ($request->DislikeState == 2) {
-            $likeHandler = DB::table('reviews')
-                ->where('reviews.id', $request->reviewID)
-                ->increment('reviews.dislike_count', 1);
-        }
-
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *
