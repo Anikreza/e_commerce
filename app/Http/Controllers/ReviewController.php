@@ -34,6 +34,17 @@ class ReviewController extends Controller
         return response($response, 201);
     }
 
+    public function getLikes($productID,$reviewID,$userID)
+    {
+        $reviews = Like::where('review_id', $reviewID)
+            ->where('product_id',$productID)
+            ->get();
+        $response = [
+            'likes' => $reviews
+        ];
+        return response($response, 201);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -52,12 +63,12 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
-            'comment' => 'required|string|max:1000'
-        ],
-            [
-                'comment.required' => ':attribute can not be more than 1000 words'
-            ]);
+//        $validator = $request->validate([
+//            'comment' => 'required|string|max:1000'
+//        ],
+//            [
+//                'comment.required' => ':attribute can not be more than 1000 words'
+//            ]);
 
         $review = new Review();
         $review->comment = $request->review;

@@ -44,6 +44,7 @@ Route::get('/admin/orderInfo',[CartController::class, 'orderInfoForAdmin']);
 Route::get('/cart/showStatus/{user_id}',[CartController::class, 'showStatus']);
 
 Route::get('/review/{productID}', [ReviewController::class, 'get']);
+Route::get('/review/likes/{pid}/{rid}/{uid}', [ReviewController::class, 'getLikes']);
 Route::post('/review/store',[ReviewController::class, 'store']);
 
 

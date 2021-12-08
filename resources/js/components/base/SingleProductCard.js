@@ -10,24 +10,27 @@ import Review from "../card/Review";
 const SingleProductCard = () => {
 
     const [data, setData] = useState([])
+    const [likes, setLikes] = useState()
     const api = process.env.MIX_API;
     const url = process.env.MIX_URL;
     const [loading, setLoading] = useState(true)
     const productID = window.location.href.split('/')[4]
+    const [{likeState,dislikeState}, dispatch] = useStateValue();
+
 
     const getBooks = useCallback(
         async () => {
             await axios.get(`${api}/products/` + productID)
                 .then(async (res) => {
                     setData(res.data.showProduct);
-                    console.log('this', res.data)
+                    setLikes(res.data.showProduct.likes)
                     setLoading(false)
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         },
-        [data.products_in_stock],
+        [data.products_in_stock,likes],
     );
 
     useEffect(async () => {
@@ -60,6 +63,7 @@ const SingleProductCard = () => {
                     </div>
                     <Review
                         productID={productID}
+                        likes={likes.length}
                     />
                 </div>
             </div>
