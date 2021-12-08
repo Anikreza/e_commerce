@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Like extends Model
+class Dislike extends Model
 {
+
+
     protected $fillable = [
         'id',
         'user_id',
@@ -15,10 +17,11 @@ class Like extends Model
     ];
     public function user()
     {
-        return $this->belongsTo('App\Models\User','like');
+        return $this->belongsTo('App\Models\User','dislike');
     }
     public function product()
     {
-        return $this->belongsTo('App\Models\Product','like');
+        return $this->belongsTo('App\Models\Product','dislike');
     }
+
 }

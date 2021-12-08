@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Dislike;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Like;
@@ -34,13 +35,24 @@ class ReviewController extends Controller
         return response($response, 201);
     }
 
-    public function getLikes($productID,$reviewID,$userID)
+    public function getLikes($productID,$reviewID)
     {
         $reviews = Like::where('review_id', $reviewID)
             ->where('product_id',$productID)
             ->get();
         $response = [
             'likes' => $reviews
+        ];
+        return response($response, 201);
+    }
+
+    public function getDislikes($productID,$reviewID)
+    {
+        $reviews = Dislike::where('review_id', $reviewID)
+            ->where('product_id',$productID)
+            ->get();
+        $response = [
+            'dislikes' => $reviews
         ];
         return response($response, 201);
     }

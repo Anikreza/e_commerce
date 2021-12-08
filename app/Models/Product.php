@@ -53,4 +53,8 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\Like');
     }
+    public function dislikes()
+    {
+        return $this->hasMany('App\Models\Dislike');
+    }
 }

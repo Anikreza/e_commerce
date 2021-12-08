@@ -267,6 +267,26 @@ class ProductController extends Controller
         }
     }
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function saveDislike(Request $request)
+    {
+        $dislikeCheck = Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->first();
+        if ($dislikeCheck){
+            Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->delete();
+        }
+        else{
+            $disLike =  new UnLike();
+            $disLike->user_id = $request->userID;
+            $disLike->product_id = $request->productID;
+            $disLike->review_id = $request->reviewID;
+            $disLike->save();
+        }
+    }
+    /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Product $product

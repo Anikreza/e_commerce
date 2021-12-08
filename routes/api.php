@@ -34,6 +34,7 @@ Route::post('/products/updateProductInfo',[ProductController::class, 'updateProd
 Route::post('/newType/add/{type}',[ProductController::class, 'addNewType']);
 Route::delete('/products/delete/{id}',[ProductController::class, 'destroy']);
 Route::post('/products/like',[ProductController::class, 'saveLike']);
+Route::post('/products/dislike',[ProductController::class, 'saveDislike']);
 
 
 Route::post('/cart/store/{order}',[CartController::class, 'store']);
@@ -44,7 +45,8 @@ Route::get('/admin/orderInfo',[CartController::class, 'orderInfoForAdmin']);
 Route::get('/cart/showStatus/{user_id}',[CartController::class, 'showStatus']);
 
 Route::get('/review/{productID}', [ReviewController::class, 'get']);
-Route::get('/review/likes/{pid}/{rid}/{uid}', [ReviewController::class, 'getLikes']);
+Route::get('/review/likes/{pid}/{rid}', [ReviewController::class, 'getLikes']);
+Route::get('/review/dislikes/{pid}/{rid}', [ReviewController::class, 'getDislikes']);
 Route::post('/review/store',[ReviewController::class, 'store']);
 
 

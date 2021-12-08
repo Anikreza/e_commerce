@@ -17,6 +17,7 @@ class CreateLikesTable extends Migration
                 $table->increments('id');
                 $table->integer('user_id');
                 $table->integer('product_id');
+                $table->integer('review_id');
 
 //                $table->unsignedBigInteger('user_id');
 //                $table->foreign('user_id')->references('id')->on('users');
