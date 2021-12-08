@@ -12,15 +12,7 @@
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         "ext-json": "*"
-=======
-      "ext-json": "*"
->>>>>>> Stashed changes
-=======
-      "ext-json": "*"
->>>>>>> Stashed changes
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\CategoryCoverType;
 use App\Models\CategoryBookType;
+use App\Models\Like;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,7 @@ class ProductController extends Controller
     public function list()
     {
         $listProducts = Product::latest()->get();
-        $allProducts = Product::orderBy('updated_at', 'desc')->get();
+        $allProducts = Product::with('likes')->orderBy('updated_at', 'desc')->get();
         $response = [
             'allProducts'=>$allProducts,
             'allBooks' => $listProducts
@@ -246,6 +247,19 @@ class ProductController extends Controller
             'result' => $updateUser
         ];
         return response($response, 201);
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function saveLike(Request $request)
+    {
+        $like =  new Like();
+        $like->user_id = User::id();
+        $like->user_id = $request->id;
+        $like->save();
     }
 
     /**

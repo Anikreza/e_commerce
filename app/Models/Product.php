@@ -49,4 +49,8 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\Review');
     }
+    public function likes()
+    {
+        return $this->hasMany('App\Models\Like');
+    }
 }
