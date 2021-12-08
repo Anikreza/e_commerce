@@ -63,6 +63,11 @@ const reducer = (state, action) => {
                 ...state,
                 likeState: action.item
             }
+            case "SET_DISLIKE":
+            return {
+                ...state,
+                dislikeState: action.item
+            }
         default:
             return state;
     }

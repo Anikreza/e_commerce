@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\CategoryCoverType;
 use App\Models\CategoryBookType;
+use App\Models\Dislike;
 use App\Models\Like;
 use App\Models\Product;
 use App\Models\User;
@@ -70,16 +71,16 @@ class ProductController extends Controller
         $SoftCover = Product::where('category_cover_type_id', $SOFTCOVER)->get();
         $AudioBook = Product::where('category_cover_type_id', $AUDIOBOOK)->get();
 
-        $thrillerBooks = Product::where('category_book_type_id', $THRILLER)
+        $thrillerBooks = Product::with('review')->where('category_book_type_id', $THRILLER)
             ->orderBy('products.created_at')
             ->get();
-        $adventureBooks = Product::where('category_book_type_id', $ADVENTURE)
+        $adventureBooks = Product::with('review')->where('category_book_type_id', $ADVENTURE)
             ->orderBy('products.created_at')
             ->get();
-        $romanceBooks = Product::where('category_book_type_id', $ROMANCE)
+        $romanceBooks = Product::with('review')->where('category_book_type_id', $ROMANCE)
             ->orderBy('products.created_at')
             ->get();
-        $kidsBooks = Product::where('category_book_type_id', $KIDS)
+        $kidsBooks = Product::with('review')->where('category_book_type_id', $KIDS)
             ->orderBy('products.created_at')
             ->get();
 
@@ -164,7 +165,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $showProduct = Product::with('likes')->find($id);
+        $showProduct = Product::all()->find($id);
         $response = [
             'showProduct' => $showProduct
         ];
@@ -259,11 +260,23 @@ class ProductController extends Controller
             Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->delete();
         }
         else{
-            $like =  new Like();
-            $like->user_id = $request->userID;
-            $like->product_id = $request->productID;
-            $like->review_id = $request->reviewID;
-            $like->save();
+            $dislikeCheck = Dislike::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->first();
+            if($dislikeCheck){
+                $like =  new Like();
+                $like->user_id = $request->userID;
+                $like->product_id = $request->productID;
+                $like->review_id = $request->reviewID;
+                $like->save();
+
+                Dislike::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->delete();
+            }
+            else{
+                $like =  new Like();
+                $like->user_id = $request->userID;
+                $like->product_id = $request->productID;
+                $like->review_id = $request->reviewID;
+                $like->save();
+            }
         }
     }
     /**
@@ -274,16 +287,28 @@ class ProductController extends Controller
      */
     public function saveDislike(Request $request)
     {
-        $dislikeCheck = Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->first();
+        $dislikeCheck = Dislike::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->first();
         if ($dislikeCheck){
-            Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->delete();
+            Dislike::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->delete();
         }
         else{
-            $disLike =  new UnLike();
-            $disLike->user_id = $request->userID;
-            $disLike->product_id = $request->productID;
-            $disLike->review_id = $request->reviewID;
-            $disLike->save();
+            $likeCheck = Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->first();
+            if($likeCheck){
+                $disLike =  new Dislike();
+                $disLike->user_id = $request->userID;
+                $disLike->product_id = $request->productID;
+                $disLike->review_id = $request->reviewID;
+                $disLike->save();
+
+                Like::where(['user_id'=>$request->userID,'product_id'=>$request->productID,'review_id'=>$request->reviewID])->delete();
+            }
+            else{
+                $disLike =  new Dislike();
+                $disLike->user_id = $request->userID;
+                $disLike->product_id = $request->productID;
+                $disLike->review_id = $request->reviewID;
+                $disLike->save();
+            }
         }
     }
     /**

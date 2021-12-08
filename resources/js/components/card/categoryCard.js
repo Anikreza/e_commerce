@@ -7,7 +7,7 @@ import SliderData from "../../helpers/sliderData";
 
 
 
-const comp = ({title, bookData}) => {
+const categoryCard = ({title, bookData}) => {
 
     const responsive = {
         superLargeDesktop: {
@@ -55,7 +55,6 @@ const comp = ({title, bookData}) => {
                 {
                     bookData.map((data) =>
                         (
-                            <div>
                                 <SliderData
                                     key={data.id}
                                     id={data.id}
@@ -66,7 +65,6 @@ const comp = ({title, bookData}) => {
                                     productID={data.id}
                                     price={data.price}
                                 />
-                            </div>
                         ))
                 }
             </DivCarousel>
@@ -74,4 +72,4 @@ const comp = ({title, bookData}) => {
     )
 }
 
-export default comp
+export default categoryCard

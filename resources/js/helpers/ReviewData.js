@@ -4,7 +4,7 @@ import {AiFillLike} from 'react-icons/ai';
 import {AiFillDislike} from 'react-icons/ai';
 import {useStateValue} from "../states/StateProvider";
 
-const ReviewData = ({name, commentTime, comment, productID,reviewID, like,dislike}) => {
+const ReviewData = ({name, commentTime, comment, productID,reviewID}) => {
 
     let User = JSON.parse(window.localStorage.getItem('user'));
     let userID = User?.user.id
@@ -12,28 +12,34 @@ const ReviewData = ({name, commentTime, comment, productID,reviewID, like,dislik
     const api = process.env.MIX_API
     const [{likeState,dislikeState}, dispatch] = useStateValue();
     const [liked, setLiked] = useState([])
-    const [disLiked, setDisLiked] = useState(false)
+    const [disliked, setDisLiked] = useState([])
+    const [state, setState] = useState(false)
 
 
     const gerReviewLikes = useCallback(
         async () => {
-            await axios.get(`${api}/review/likes/ ${+ productID}/${+reviewID}/${+userID}`)
+            await axios.get(`${api}/review/likes/ ${+productID}/${+reviewID}`)
                 .then(async (res) => {
-                    setLiked(res.data.likes)
-                    console.log('ThisLike:',res.data.likes)
+                    setLiked(res?.data.likes)
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+
+            await axios.get(`${api}/review/dislikes/ ${+productID}/${+reviewID}`)
+                .then(async (res) => {
+                    setDisLiked(res?.data.dislikes)
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         },
-        [liked],
+        [disliked],
     );
 
     useEffect(async () => {
         gerReviewLikes().then(r => r)
     }, [gerReviewLikes]);
-
-
 
     async function likesHandler() {
         let Data = {userID, productID,reviewID}
@@ -46,8 +52,17 @@ const ReviewData = ({name, commentTime, comment, productID,reviewID, like,dislik
             }
         })
     }
-
-
+    async function DislikesHandler() {
+        let Data = {userID, productID,reviewID}
+        await fetch(`${api}/products/dislike`, {
+            method: 'POST',
+            body: JSON.stringify(Data),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+    }
     return (
         <div>
             <p className='reviewer'>{name}
@@ -56,15 +71,15 @@ const ReviewData = ({name, commentTime, comment, productID,reviewID, like,dislik
             <p className='review'>{comment}</p>
             <p className='likes'>
                 <AiFillLike
-                    color='darkgreen'
+                    color={(liked?.length>0)?'darkgreen':'#703636'}
                     size='24px'
                     style={{position: 'relative', top: '2px', cursor: 'pointer', marginRight: '10px'}}
                     onClick={likesHandler}
                 />
-                {liked.length} People Upvoated
+                {liked?.length} People Upvoated
                 <span>
                     <AiFillDislike
-                        color=' #50271e'
+                        color={(disliked?.length>0)?'darkred':'#5c935c'}
                         size='24px'
                         style={{
                             position: 'relative',
@@ -73,10 +88,10 @@ const ReviewData = ({name, commentTime, comment, productID,reviewID, like,dislik
                             marginRight: '5px',
                             marginLeft: '10px'
                         }}
-                       // onClick={SetDIsLikeState}
+                       onClick={DislikesHandler}
                     />
                 </span>
-                {dislike} people Devoted
+                {disliked?.length} people Devoted
             </p>
         </div>
     )
