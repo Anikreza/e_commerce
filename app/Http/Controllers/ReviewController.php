@@ -27,6 +27,7 @@ class ReviewController extends Controller
                 'users.name as name', 'products.title')
             ->join('users', 'users.id', '=', 'reviews.user_id')
             ->join('products', 'products.id', '=', 'reviews.product_id')
+            ->where('reviews.product_id','=',$productID)
             ->orderBy('reviews.id', 'DESC')
             ->get();
         $response = [

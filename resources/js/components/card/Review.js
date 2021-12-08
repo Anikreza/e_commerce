@@ -1,17 +1,19 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect, useCallback} from "react"
 import '../../../sass/review.scss'
-import TextareaAutosize from "react-textarea-autosize";
-import {MdReviews} from 'react-icons/md';
-import axios from "axios";
-import ReviewData from "../../helpers/ReviewData";
-import {useStateValue} from "../../states/StateProvider";
+import TextareaAutosize from "react-textarea-autosize"
+import {MdReviews} from 'react-icons/md'
+import axios from "axios"
+import ReviewData from "../../helpers/ReviewData"
+import {useStateValue} from "../../states/StateProvider"
+import { Rating } from 'react-simple-star-rating'
 
-const Review = ({productID,likes}) => {
+const Review = ({productID}) => {
 
     const [{likeState}, dispatch] = useStateValue();
     const [review, setReview] = useState('')
     const [data, setData] = useState([])
     const [title, setTitle] = useState('')
+    const [rating, setRating] = useState(0)
     const [emptyError, setEmptyError] = useState('')
     const [open, setOpen] = useState(false)
     const [error, setErrors] = useState('')
@@ -25,6 +27,7 @@ const Review = ({productID,likes}) => {
         reviewData.append('review', review);
         reviewData.append('userID', userID);
         reviewData.append('productID', productID);
+        reviewData.append('rating', rating);
         if (review) {
             await axios.post(`${api}/review/store`, reviewData
             ).then(response => {
@@ -45,6 +48,7 @@ const Review = ({productID,likes}) => {
             await axios.get(`${api}/review/` + productID)
                 .then(async (res) => {
                     setData(res.data.reviews);
+                    console.log('res.data.reviews',res.data.reviews);
                     setTitle(res.data.reviews[0]);
                 })
                 .catch((error) => {
@@ -56,8 +60,14 @@ const Review = ({productID,likes}) => {
 
     useEffect(async () => {
         gerReviews().then(r => r)
-    }, [gerReviews]);
+        console.log('rating',rating)
+    }, [gerReviews,rating]);
 
+    const handleRating = (rate) => {
+        setRating(rate)
+        console.log('rating',rating)
+        // other logic
+    }
     return (
         <div className='review'>
             <h4
@@ -77,6 +87,10 @@ const Review = ({productID,likes}) => {
                         minRows={3}
                         maxRows={20}
                         value={review}
+                    />
+                    <Rating
+                        ratingValue={rating} /* Available Props */
+                        onClick={handleRating}
                     />
                 </form>
                 <button
@@ -111,8 +125,6 @@ const Review = ({productID,likes}) => {
                             comment={review.comment}
                             productID={productID}
                             reviewID={review.id}
-                            like={likes}
-                            dislike={review.dislike}
                         />
                     ))
                 }

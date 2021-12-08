@@ -2,15 +2,13 @@ import React, {useState, useEffect, useCallback} from "react";
 import axios from "axios";
 import {useStateValue} from "../../states/StateProvider";
 import '../../../sass/productDetail.scss';
-import {useNavigate} from "react-router";
 import AddToList from "../../helpers/addToList";
-import {BounceLoader, BeatLoader, BarlLoader} from 'react-spinners'
+import {BeatLoader} from 'react-spinners'
 import Review from "../card/Review";
 
 const SingleProductCard = () => {
 
     const [data, setData] = useState([])
-    const [likes, setLikes] = useState()
     const api = process.env.MIX_API;
     const url = process.env.MIX_URL;
     const [loading, setLoading] = useState(true)
@@ -23,14 +21,13 @@ const SingleProductCard = () => {
             await axios.get(`${api}/products/` + productID)
                 .then(async (res) => {
                     setData(res.data.showProduct);
-                    setLikes(res.data.showProduct.likes)
                     setLoading(false)
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         },
-        [data.products_in_stock,likes],
+        [data.products_in_stock],
     );
 
     useEffect(async () => {
@@ -43,7 +40,7 @@ const SingleProductCard = () => {
                 <div className='detail'>
                     <div className='detailed'>
                         <div className='detailed-left'>
-                            <img src={`${url}/` + data.product_img}/>
+                            <img src={`${url}/` + data.product_img} alt=''/>
                             <button className='stockButton'>Only {data.products_in_stock} Copies left</button>
                             <AddToList
                                 title={data.title}
@@ -63,7 +60,6 @@ const SingleProductCard = () => {
                     </div>
                     <Review
                         productID={productID}
-                        likes={likes.length}
                     />
                 </div>
             </div>
