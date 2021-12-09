@@ -1,13 +1,12 @@
 import React, {useState, useEffect, useCallback} from "react";
 import {RiAddFill, RiDeleteBin6Line} from "react-icons/ri";
-import axios from "axios";
-import PlaceOrder from "./PlaceOrder";
+
 import {useStateValue} from "../../states/StateProvider";
 import {Link} from "react-router-dom";
 
 const CartCard = ({image, title, author, quantity, price, sum, stock, productID}) => {
 
-    const [{user, basket}, dispatch] = useStateValue();
+    const [{}, dispatch] = useStateValue();
     const url = process.env.MIX_URL;
     const api = process.env.MIX_API;
     const [updatedQuantity, setUpdatedQuantity] = useState(quantity)
@@ -53,7 +52,7 @@ const CartCard = ({image, title, author, quantity, price, sum, stock, productID}
             <div className='cartProducts'>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <Link to={`/book/${productID}/${title}`}>
-                        <img src={`${url}/` + image} alt=''/>
+                    <img src={`${url}/` + image} alt=''/>
                     </Link>
                 </div>
                 <div className='bookInfo'>

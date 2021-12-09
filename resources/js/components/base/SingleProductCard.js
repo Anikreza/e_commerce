@@ -5,6 +5,7 @@ import '../../../sass/productDetail.scss';
 import AddToList from "../../helpers/addToList";
 import {BeatLoader} from 'react-spinners'
 import Review from "../card/Review";
+import { Rating } from '@mui/material';
 
 const SingleProductCard = () => {
 
@@ -12,8 +13,9 @@ const SingleProductCard = () => {
     const api = process.env.MIX_API;
     const url = process.env.MIX_URL;
     const [loading, setLoading] = useState(true)
+    const [rating, setRating] = useState(0)
+    const [rater, setRater] = useState([])
     const productID = window.location.href.split('/')[4]
-    const [{likeState,dislikeState}, dispatch] = useStateValue();
 
 
     const getBooks = useCallback(
@@ -21,18 +23,21 @@ const SingleProductCard = () => {
             await axios.get(`${api}/products/` + productID)
                 .then(async (res) => {
                     setData(res.data.showProduct);
+                   // console.log('single',res.data.showProduct);
                     setLoading(false)
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         },
-        [data.products_in_stock],
+        [data?.products_in_stock],
     );
 
     useEffect(async () => {
         getBooks().then(r => r)
-    }, [getBooks, data.products_in_stock]);
+        let sum=data.review?.reduce((amount, item) => item.rating + amount, 0);
+        setRating(sum/data.review?.length)
+    }, [getBooks, data?.products_in_stock,rating]);
 
     if (!loading) {
         return (
@@ -41,6 +46,14 @@ const SingleProductCard = () => {
                     <div className='detailed'>
                         <div className='detailed-left'>
                             <img src={`${url}/` + data.product_img} alt=''/>
+                            <Rating
+                                style={{marginLeft:'21%'}}
+                                name="simple-controlled"
+                                value={rating}
+                                precision={0.1}
+                                readOnly={true}
+                                size={'large'}
+                            />
                             <button className='stockButton'>Only {data.products_in_stock} Copies left</button>
                             <AddToList
                                 title={data.title}
