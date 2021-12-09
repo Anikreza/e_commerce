@@ -5,7 +5,8 @@ import {MdReviews} from 'react-icons/md'
 import axios from "axios"
 import ReviewData from "../../helpers/ReviewData"
 import {useStateValue} from "../../states/StateProvider"
-import { Rating } from 'react-simple-star-rating'
+//import { Rating } from 'react-simple-star-rating'
+import { Rating } from '@mui/material';
 
 const Review = ({productID}) => {
 
@@ -48,26 +49,21 @@ const Review = ({productID}) => {
             await axios.get(`${api}/review/` + productID)
                 .then(async (res) => {
                     setData(res.data.reviews);
-                    console.log('res.data.reviews',res.data.reviews);
+                    console.log('reviews',res.data.reviews);
+                    //console.log('rating',rating);
                     setTitle(res.data.reviews[0]);
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         },
-        [review],
+        [review,rating],
     );
 
     useEffect(async () => {
         gerReviews().then(r => r)
-        console.log('rating',rating)
     }, [gerReviews,rating]);
 
-    const handleRating = (rate) => {
-        setRating(rate)
-        console.log('rating',rating)
-        // other logic
-    }
     return (
         <div className='review'>
             <h4
@@ -84,19 +80,25 @@ const Review = ({productID}) => {
                         name='review'
                         onChange={(e) => setReview(e.target.value)}
                         placeholder="Write A Review"
-                        minRows={3}
+                        minRows={5}
                         maxRows={20}
                         value={review}
                     />
-                    <Rating
-                        ratingValue={rating} /* Available Props */
-                        onClick={handleRating}
-                    />
                 </form>
+                <Rating
+                    style={{marginLeft:'20%'}}
+                    name="simple-controlled"
+                    value={rating}
+                    precision={0.1}
+                    size={'large'}
+                    onChange={(event, newValue) => {
+                        setRating(newValue);
+                    }}
+                />
                 <button
                     onClick={sendReview}
-                    disabled={review ? disabled : !disabled}
-                    className={review ? 'button-glow' : 'button-dim'}
+                    disabled={review && rating? disabled : !disabled}
+                    className={review && rating? 'button-glow' : 'button-dim'}
                 >POST
                 </button>
                 {
@@ -125,6 +127,7 @@ const Review = ({productID}) => {
                             comment={review.comment}
                             productID={productID}
                             reviewID={review.id}
+                            rating={review.rating}
                         />
                     ))
                 }

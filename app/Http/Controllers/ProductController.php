@@ -43,7 +43,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        $allProducts = Product::orderBy('updated_at', 'desc')->get();
+        $allProducts = Product::with('review')->orderBy('updated_at', 'desc')->get();
         $response = [
             'allProductsWIthLike'=>$allProducts,
         ];
@@ -165,7 +165,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $showProduct = Product::all()->find($id);
+        $showProduct = Product::with('review')->find($id);
         $response = [
             'showProduct' => $showProduct
         ];

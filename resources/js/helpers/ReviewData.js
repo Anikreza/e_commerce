@@ -3,8 +3,9 @@ import axios from "axios";
 import {AiFillLike} from 'react-icons/ai';
 import {AiFillDislike} from 'react-icons/ai';
 import {useStateValue} from "../states/StateProvider";
+import {Rating} from "@mui/material";
 
-const ReviewData = ({name, commentTime, comment, productID,reviewID}) => {
+const ReviewData = ({name, commentTime, comment, productID,reviewID,rating}) => {
 
     let User = JSON.parse(window.localStorage.getItem('user'));
     let userID = User?.user.id
@@ -39,6 +40,7 @@ const ReviewData = ({name, commentTime, comment, productID,reviewID}) => {
 
     useEffect(async () => {
         gerReviewLikes().then(r => r)
+        console.log('rating',rating);
     }, [gerReviewLikes]);
 
     async function likesHandler() {
@@ -68,6 +70,14 @@ const ReviewData = ({name, commentTime, comment, productID,reviewID}) => {
             <p className='reviewer'>{name}
                 <span>{commentTime}</span>
             </p>
+            <Rating
+               // style={{marginLeft:'21%'}}
+                name="simple-controlled"
+                value={rating}
+                precision={0.1}
+                readOnly={true}
+                size={'large'}
+            />
             <p className='review'>{comment}</p>
             <p className='likes'>
                 <AiFillLike
